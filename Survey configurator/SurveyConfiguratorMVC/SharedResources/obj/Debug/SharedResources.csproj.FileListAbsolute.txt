@@ -81,3 +81,4 @@ D:\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SharedResou
 D:\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SharedResources\bin\Debug\zh-Hans\Microsoft.Data.SqlClient.resources.dll
 D:\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SharedResources\bin\Debug\zh-Hant\Microsoft.Data.SqlClient.resources.dll
 D:\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SharedResources\obj\Debug\SharedRe.D6ED5658.Up2Date
+D:\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SharedResources\bin\Debug\System.ComponentModel.Annotations.dll
