@@ -13,7 +13,10 @@ namespace SharedResources.Models
         public int Order { get; set; }
         public eQuestionType Type { get; set; }
 
+        public Question()
+        {
 
+        }
         public Question(int pId, string pText, int pOrder, eQuestionType pType)
         {
             Id = pId;
