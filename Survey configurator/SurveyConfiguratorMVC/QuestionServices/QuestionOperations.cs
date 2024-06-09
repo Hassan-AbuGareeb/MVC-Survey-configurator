@@ -183,18 +183,26 @@ namespace QuestionServices
         /// </summary>
         /// <param name="pSelectedQuestions"></param>
         /// <returns>OperationResult to indicate whether the question data go deleted or not</returns>
-        public static OperationResult DeleteQuestion(List<Question> pSelectedQuestions)
+        public static OperationResult DeleteQuestion(List<int> pSelectedQuestionsIds)
         {
             try
             {
-                OperationResult tDeleteQuestionsResult = Database.DeleteQuestionFromDB(pSelectedQuestions);
+                //obtain the questions Data through the ids
+                List<Question> tSelectedQuestions = new List<Question>();
+                foreach(int tId in  pSelectedQuestionsIds)
+                {
+                    Question tQuestionData = mQuestionsList.Find(question => question.Id == tId);
+                    tSelectedQuestions.Add(tQuestionData);
+                }
+
+                OperationResult tDeleteQuestionsResult = Database.DeleteQuestionFromDB(tSelectedQuestions);
 
                 if (!tDeleteQuestionsResult.IsSuccess)
                 {
                     return tDeleteQuestionsResult;
                 }
                 //delete question from List (Questions)
-                foreach (Question tQuestion in pSelectedQuestions)
+                foreach (Question tQuestion in tSelectedQuestions)
                 {
                     mQuestionsList.Remove(tQuestion);
                 }
