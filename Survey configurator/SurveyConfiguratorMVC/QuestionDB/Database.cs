@@ -37,8 +37,6 @@ namespace QuestionDB
         private const string cEndValueColumn = "EndValue";
         private const string cStartValueCaptionColumn = "StartValueCaption";
         private const string cEndValueCaptionColumn = "EndValueCaption";
-        //your type name here
-        //your type columns names constsants here
 
 
         private Database() { }

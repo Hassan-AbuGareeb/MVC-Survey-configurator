@@ -15,6 +15,20 @@ namespace SurveyConfiguratorWeb.Controllers
 
         //constants
         private const string cQuestionsView = "Questions";
+        private const string cStarsOptionsView = "_StarsQuestionOptions";
+        private const string cSmileyOptionsView = "_SmileyQuestionOptions";
+        private const string cSliderOptionsView = "_SliderQuestionOptions";
+
+            //stars question properties
+        const string cNumberOfStars = "NumberOfStars";
+        //Smiley table
+        private const string cNumberOfFaces = "NumberOfSmileyFaces";
+        //Slider table
+        private const string cStartValue = "StartValue";
+        private const string cEndValue = "EndValue";
+        private const string cStartValueCaption = "StartValueCaption";
+        private const string cEndValueCaption = "EndValueCaption";
+
 
         public HomeController()
         {
@@ -55,12 +69,16 @@ namespace SurveyConfiguratorWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Question pQuestionData, FormCollection data)
+        public ActionResult Create(Question pQuestionData, FormCollection pFormData)
         {
             try
             {
-                StarsQuestion hello = new StarsQuestion(pQuestionData, Convert.ToInt32(data["NumberOfStars"]));
-                OperationResult tIsQuestionAdded = QuestionOperations.AddQuestion(hello);
+                //based on the type of question create a new object and
+                //fill its respective fields
+
+                Question tQuestionToAdd = CreateQuestionObject(pQuestionData, pFormData);
+
+                OperationResult tIsQuestionAdded = QuestionOperations.AddQuestion(tQuestionToAdd);
                 if (tIsQuestionAdded.IsSuccess)
                 {
                     //on a successful question creation
@@ -76,12 +94,13 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
+
         [HttpGet]
-        public ActionResult Delete(int PQuestionId)
+        public ActionResult Delete(int id)
         {
             try 
             { 
-                var tQuestionData = QuestionOperations.GetQuestionData(PQuestionId);
+                var tQuestionData = QuestionOperations.GetQuestionData(id);
                 if(tQuestionData != null)
                 {
                     return View(tQuestionData);
@@ -122,10 +141,54 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
-        public ActionResult GetQuetsionTypeOptions()
+
+        #region class utility functions
+        [HttpGet]
+        public ActionResult GetQuestionTypeOptions(int pType)
         {
+            eQuestionType tQuestionType = (eQuestionType)pType;
+            string tOptionsViewType = "";
+            switch (tQuestionType)
+            {
+                case eQuestionType.Stars:
+                    tOptionsViewType = cStarsOptionsView;
+                    break;
+                case eQuestionType.Smiley:
+                    tOptionsViewType = cSmileyOptionsView;
+                    break;
+                case eQuestionType.Slider:
+                    tOptionsViewType = cSliderOptionsView;
+                    break;
+            }
             //return view based on switch decision
-            return PartialView("_StarsQuestionOptions");
+            return PartialView(tOptionsViewType);
         }
+
+        private Question CreateQuestionObject(Question pQuestionData, FormCollection pFormData)
+        {
+            Question tCreatedQuestion = null;
+            switch (pQuestionData.Type)
+            {
+                case eQuestionType.Stars:
+                    tCreatedQuestion = new StarsQuestion(pQuestionData, Convert.ToInt32(pFormData[cNumberOfStars]));
+                    break;
+                case eQuestionType.Smiley:
+                    tCreatedQuestion = new SmileyQuestion(pQuestionData, Convert.ToInt32(pFormData[cNumberOfFaces]));
+                    break;
+                case eQuestionType.Slider:
+                    tCreatedQuestion = new SliderQuestion
+                        (
+                        pQuestionData,
+                        Convert.ToInt32(pFormData[cStartValue]),
+                        Convert.ToInt32(pFormData[cEndValue]),
+                        pFormData[cStartValueCaption],
+                        pFormData[cEndValueCaption]
+                        );
+                    break;
+            }
+            return tCreatedQuestion;
+        }
+
+        #endregion
     }
 }

@@ -42,7 +42,7 @@
         </div>
 
         <!-- render additional fields based on chosen question type -->
-        <div id="@cQuestionTypeOptionsId" class="form-group">
+        <div id="@cQuestionTypeOptionsId">
             <!--render the partial view here-->
         </div>
 
@@ -69,11 +69,15 @@
             $("#QuestionTypeDropDown").change(function () {
                 let selectedType = $(this).val();
                 $.ajax({
-                    url: '@Url.Action("GetQuetsionTypeOptions", "Home")',
+                    url: '@Url.Action("GetQuestionTypeOptions", "Home")',
                     type: "GET",
-                    data: { type: selectedType },
+                    data: { pType: selectedType },
                     success: function (partial) {
+                        $('#'+'@cQuestionTypeOptionsId').empty();
                         $('#'+'@cQuestionTypeOptionsId').html(partial);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
                     }
                 })
             })
