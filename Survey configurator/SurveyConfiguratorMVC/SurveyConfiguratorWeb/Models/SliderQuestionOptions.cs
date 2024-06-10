@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Security.RightsManagement;
 namespace SurveyConfiguratorWeb.Models
 {
     public class SliderQuestionOptions
@@ -23,5 +24,18 @@ namespace SurveyConfiguratorWeb.Models
         [Required(ErrorMessage = "The end value caption is required")]
         [DisplayName("End value caption")]
         public string EndValueCaption { get; set; }
+
+        public SliderQuestionOptions()
+        {
+
+        }
+
+        public SliderQuestionOptions(int startValue, int endValue, string startValueCaption, string endValueCaption)
+        {
+            StartValue = startValue;
+            EndValue = endValue;
+            StartValueCaption = startValueCaption;
+            EndValueCaption = endValueCaption;
+        }
     }
 }
