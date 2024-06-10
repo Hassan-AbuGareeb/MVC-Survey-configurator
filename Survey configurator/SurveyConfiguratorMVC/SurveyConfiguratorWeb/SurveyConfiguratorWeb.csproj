@@ -292,6 +292,7 @@
     <Content Include="Views\Home\_StarsQuestionDetails.cshtml" />
     <Content Include="Views\Home\_SmileyQuestionDetails.cshtml" />
     <Content Include="Views\Home\_SliderQuestionDetails.cshtml" />
+    <Content Include="Views\Home\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
