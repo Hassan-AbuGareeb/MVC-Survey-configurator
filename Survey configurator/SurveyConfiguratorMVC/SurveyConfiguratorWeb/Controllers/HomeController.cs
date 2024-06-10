@@ -98,6 +98,52 @@ namespace SurveyConfiguratorWeb.Controllers
         }
 
         [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            try
+            {
+                //fetch all question data
+                Question tQuestionData = QuestionOperations.GetQuestionData(id);
+                if (tQuestionData != null)
+                {
+                    return View(tQuestionData);
+                }
+                //handle the case of question not found
+                return RedirectToAction("index");
+            }
+            catch(Exception ex)
+            {
+                //log err
+                return RedirectToAction("Questions");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Question pQuestionData, FormCollection pFormData)
+        {
+            try
+            {
+
+                Question tQuestionToAdd = CreateQuestionObject(pQuestionData, pFormData);
+
+                OperationResult tIsQuestionAdded = QuestionOperations.UpdateQuestion(tQuestionToAdd);
+                if (tIsQuestionAdded.IsSuccess)
+                {
+                    //on a successful question creation
+                    return RedirectToAction(cQuestionsView);
+                }
+                //show error notfication or error page
+                return RedirectToAction(cQuestionsView);
+            }
+            catch (Exception ex)
+            {
+                //log err
+                return RedirectToAction("Questions");
+            }
+        }
+
+        [HttpGet]
         public ActionResult Delete(int id)
         {
             try
@@ -183,7 +229,52 @@ namespace SurveyConfiguratorWeb.Controllers
                     break;
             }
             //return view based on switch decision
-            return PartialView(tOptionsViewType);
+            return PartialView(tOptionsViewType,null);
+        }
+
+        [HttpGet]
+        public ActionResult GetQuestionTypeDetailsEdit(int id)
+        {
+            try
+            {
+                Question tQuestionTypeData = null;
+                OperationResult tCanGetQuestionTypeData = QuestionOperations.GetQuestionSpecificData(id, ref tQuestionTypeData);
+                if (tCanGetQuestionTypeData.IsSuccess)
+                {
+                    //return the required partial view filled with data based on question type
+                    return GetQuestionTypeDetailsPartialViewEdit(tQuestionTypeData);
+                }
+                //handle failure case
+                return RedirectToAction("Questions");
+            }
+            catch (Exception ex)
+            {
+                //log error
+                return RedirectToAction("Questions");
+            }
+        }
+
+        [HttpGet]
+        private ActionResult GetQuestionTypeDetailsPartialViewEdit(Question pQuestionData)
+        {
+            switch (pQuestionData.Type)
+            {
+                case eQuestionType.Stars:
+                    StarsQuestion tStarsQuestionData = (StarsQuestion)pQuestionData;
+                    return PartialView(cStarsOptionsView, new StarsQuestionOptions(tStarsQuestionData.NumberOfStars));
+                case eQuestionType.Smiley:
+                    SmileyQuestion tSmileyQuestionData = (SmileyQuestion)pQuestionData;
+                    return PartialView(cSmileyOptionsView, new SmileyQuestionOptions(tSmileyQuestionData.NumberOfSmileyFaces));
+                case eQuestionType.Slider:
+                    SliderQuestion tSliderQuestionData = (SliderQuestion)pQuestionData;
+                    return PartialView(cSliderOptionsView, new SliderQuestionOptions(
+                        tSliderQuestionData.StartValue,
+                        tSliderQuestionData.EndValue,
+                        tSliderQuestionData.StartValueCaption,
+                        tSliderQuestionData.EndValueCaption
+                        ));
+            }
+            return null;
         }
 
         [HttpGet]
@@ -205,6 +296,29 @@ namespace SurveyConfiguratorWeb.Controllers
                 //log error
                 return RedirectToAction("Questions");
             }
+        }
+
+        [HttpGet]
+        private ActionResult GetQuestionTypeDetailsPartialView(Question pQuestionData)
+        {
+            switch (pQuestionData.Type)
+            {
+                case eQuestionType.Stars:
+                    StarsQuestion tStarsQuestionData = (StarsQuestion)pQuestionData;
+                    return PartialView(cStarsOptionsDetailsView, new StarsQuestionOptions(tStarsQuestionData.NumberOfStars));
+                case eQuestionType.Smiley:
+                    SmileyQuestion tSmileyQuestionData = (SmileyQuestion)pQuestionData;
+                    return PartialView(cSmileyOptionsDetailsView, new SmileyQuestionOptions(tSmileyQuestionData.NumberOfSmileyFaces));
+                case eQuestionType.Slider:
+                    SliderQuestion tSliderQuestionData = (SliderQuestion)pQuestionData;
+                    return PartialView(cSliderOptionsDetailsView, new SliderQuestionOptions(
+                        tSliderQuestionData.StartValue,
+                        tSliderQuestionData.EndValue,
+                        tSliderQuestionData.StartValueCaption,
+                        tSliderQuestionData.EndValueCaption
+                        ));
+            }
+            return null;
         }
 
         private Question CreateQuestionObject(Question pQuestionData, FormCollection pFormData)
@@ -232,27 +346,6 @@ namespace SurveyConfiguratorWeb.Controllers
             return tCreatedQuestion;
         }
 
-        private ActionResult GetQuestionTypeDetailsPartialView(Question pQuestionData)
-        {
-            switch(pQuestionData.Type)
-            {
-                case eQuestionType.Stars:
-                    StarsQuestion tStarsQuestionData = (StarsQuestion)pQuestionData;
-                    return PartialView(cStarsOptionsDetailsView, new StarsQuestionOptions(tStarsQuestionData.NumberOfStars));
-                case eQuestionType.Smiley:
-                    SmileyQuestion tSmileyQuestionData = (SmileyQuestion)pQuestionData;
-                    return PartialView(cSmileyOptionsDetailsView, new SmileyQuestionOptions(tSmileyQuestionData.NumberOfSmileyFaces));
-                case eQuestionType.Slider:
-                    SliderQuestion tSliderQuestionData = (SliderQuestion)pQuestionData;
-                    return PartialView(cSliderOptionsDetailsView, new SliderQuestionOptions(
-                        tSliderQuestionData.StartValue,
-                        tSliderQuestionData.EndValue,
-                        tSliderQuestionData.StartValueCaption,
-                        tSliderQuestionData.EndValueCaption
-                        ));
-            }
-            return null;
-        }
 
         #endregion
     }
