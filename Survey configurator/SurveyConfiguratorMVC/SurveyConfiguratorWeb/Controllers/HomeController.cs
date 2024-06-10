@@ -1,6 +1,7 @@
 ﻿using QuestionServices;
 using SharedResources;
 using SharedResources.Models;
+using SurveyConfiguratorWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,8 +19,10 @@ namespace SurveyConfiguratorWeb.Controllers
         private const string cStarsOptionsView = "_StarsQuestionOptions";
         private const string cSmileyOptionsView = "_SmileyQuestionOptions";
         private const string cSliderOptionsView = "_SliderQuestionOptions";
-
-            //stars question properties
+        private const string cStarsOptionsDetailsView = "_StarsQuestionDetails";
+        private const string cSmileyOptionsDetailsView = "_SmileyQuestionDetails";
+        private const string cSliderOptionsDetailsView = "_SliderQuestionDetails";
+        //stars question properties
         const string cNumberOfStars = "NumberOfStars";
         //Smiley table
         private const string cNumberOfFaces = "NumberOfSmileyFaces";
@@ -87,21 +90,20 @@ namespace SurveyConfiguratorWeb.Controllers
                 //show error notfication or error page
                 return RedirectToAction(cQuestionsView);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //log err
                 return RedirectToAction(cQuestionsView);
             }
         }
 
-
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            try 
-            { 
-                var tQuestionData = QuestionOperations.GetQuestionData(id);
-                if(tQuestionData != null)
+            try
+            {
+                Question tQuestionData = QuestionOperations.GetQuestionData(id);
+                if (tQuestionData != null)
                 {
                     return View(tQuestionData);
                 }
@@ -141,6 +143,26 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult Details(int id)
+        {
+            try
+            {
+                Question tQuestionData = QuestionOperations.GetQuestionData(id);
+                if (tQuestionData != null)
+                {
+                    return View(tQuestionData);
+                }
+                //handle the case of question not found
+                return RedirectToAction("index");
+            }
+            catch (Exception ex)
+            {
+                //log error
+                return RedirectToAction("Questions");
+            }
+        }
+
 
         #region class utility functions
         [HttpGet]
@@ -162,6 +184,27 @@ namespace SurveyConfiguratorWeb.Controllers
             }
             //return view based on switch decision
             return PartialView(tOptionsViewType);
+        }
+
+        [HttpGet]
+        public ActionResult GetQuestionTypeDetails(int id)
+        {
+            try { 
+                Question tQuestionTypeData = null;
+                OperationResult tCanGetQuestionTypeData = QuestionOperations.GetQuestionSpecificData(id, ref tQuestionTypeData);
+                if (tCanGetQuestionTypeData.IsSuccess)
+                {
+                    //return the required partial view filled with data based on question type
+                    return GetQuestionTypeDetailsPartialView(tQuestionTypeData);
+                }
+                //handle failure case
+                return RedirectToAction("Questions");
+            }
+            catch(Exception ex)
+            {
+                //log error
+                return RedirectToAction("Questions");
+            }
         }
 
         private Question CreateQuestionObject(Question pQuestionData, FormCollection pFormData)
@@ -187,6 +230,28 @@ namespace SurveyConfiguratorWeb.Controllers
                     break;
             }
             return tCreatedQuestion;
+        }
+
+        private ActionResult GetQuestionTypeDetailsPartialView(Question pQuestionData)
+        {
+            switch(pQuestionData.Type)
+            {
+                case eQuestionType.Stars:
+                    StarsQuestion tStarsQuestionData = (StarsQuestion)pQuestionData;
+                    return PartialView(cStarsOptionsDetailsView, new StarsQuestionOptions(tStarsQuestionData.NumberOfStars));
+                case eQuestionType.Smiley:
+                    SmileyQuestion tSmileyQuestionData = (SmileyQuestion)pQuestionData;
+                    return PartialView(cSmileyOptionsDetailsView, new SmileyQuestionOptions(tSmileyQuestionData.NumberOfSmileyFaces));
+                case eQuestionType.Slider:
+                    SliderQuestion tSliderQuestionData = (SliderQuestion)pQuestionData;
+                    return PartialView(cSliderOptionsDetailsView, new SliderQuestionOptions(
+                        tSliderQuestionData.StartValue,
+                        tSliderQuestionData.EndValue,
+                        tSliderQuestionData.StartValueCaption,
+                        tSliderQuestionData.EndValueCaption
+                        ));
+            }
+            return null;
         }
 
         #endregion

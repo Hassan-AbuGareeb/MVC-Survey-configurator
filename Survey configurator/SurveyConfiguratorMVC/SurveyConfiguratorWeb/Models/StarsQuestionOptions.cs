@@ -9,5 +9,12 @@ namespace SurveyConfiguratorWeb.Models
         [Range(3,10,ErrorMessage ="The number of stars must be between 3 and 10")]
         [DisplayName("Number of stars")]
         public int NumberOfStars { get; set; }
+
+        public StarsQuestionOptions() { }
+
+        public StarsQuestionOptions(int numberOfStars) 
+        {
+            NumberOfStars = numberOfStars;
+        }
     }
 }

@@ -10,5 +10,14 @@ namespace SurveyConfiguratorWeb.Models
         [DisplayName("Number of smiley faces")]
         public int NumberOfSmileyFaces { get; set; }
 
+        public SmileyQuestionOptions()
+        {
+
+        }
+
+        public SmileyQuestionOptions(int numberOfSmileyFaces)
+        {
+            NumberOfSmileyFaces = numberOfSmileyFaces;
+        }
     }
 }

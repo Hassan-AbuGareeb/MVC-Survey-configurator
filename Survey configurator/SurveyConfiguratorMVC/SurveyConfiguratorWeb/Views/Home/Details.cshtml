@@ -1,0 +1,69 @@
+﻿@model SharedResources.Models.Question
+
+@{
+    ViewBag.Title = "Details";
+    const string cQuestionTypeInfoId = "QuestionTypeInfo";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Question</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Text)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Text)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Order)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Order)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+        
+        <span id="@cQuestionTypeInfoId">
+
+        </span>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+
+@Scripts.Render("~/bundles/jquery")
+<script>
+    $(document).ready(function ()
+    {
+        let tQuestionId = @Model.Id;
+        console.log(tQuestionId);
+         $.ajax({
+             url: '@Url.Action("GetQuestionTypeDetails", "Home")',
+             type: "GET",
+             data: { id: tQuestionId },
+             success: function (partial) {
+                 $('#'+'@cQuestionTypeInfoId').empty();
+                 $('#'+'@cQuestionTypeInfoId').html(partial);
+             },
+             error: function (xhr, status, error) {
+                 console.log(xhr.responseText);
+             }
+     })
+ });
+</script>
