@@ -32,6 +32,18 @@ namespace SurveyConfiguratorWeb.Controllers
         private const string cStartValueCaption = "StartValueCaption";
         private const string cEndValueCaption = "EndValueCaption";
 
+        public QuestionsController()
+        {
+            ConnectionString conno = new ConnectionString();
+            conno.mServer = "HASSANABUGHREEB";
+            conno.mDatabase = "Questions_DB";
+            conno.mEncrypt = false;
+            conno.mIntegratedSecurity = true;
+            conno.mUser = "sa";
+            conno.mPassword = "sedco123";
+            QuestionOperations.SetConnectionString(conno);
+            QuestionOperations.GetConnectionString();
+        }
 
         // GET: Questions
         public ActionResult Index()
@@ -334,6 +346,13 @@ namespace SurveyConfiguratorWeb.Controllers
                     break;
             }
             return tCreatedQuestion;
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            //error should be logged
+            filterContext.Result = View("Error");
+            filterContext.ExceptionHandled = true;
         }
 
         #endregion
