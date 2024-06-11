@@ -224,7 +224,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -281,18 +281,17 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Questions.cshtml" />
-    <Content Include="Views\Home\Delete.cshtml" />
-    <Content Include="Views\Home\Create.cshtml" />
-    <Content Include="Views\Home\_StarsQuestionOptions.cshtml" />
-    <Content Include="Views\Home\_SmileyQuestionOptions.cshtml" />
-    <Content Include="Views\Home\_SliderQuestionOptions.cshtml" />
-    <Content Include="Views\Home\Details.cshtml" />
-    <Content Include="Views\Home\_StarsQuestionDetails.cshtml" />
-    <Content Include="Views\Home\_SmileyQuestionDetails.cshtml" />
-    <Content Include="Views\Home\_SliderQuestionDetails.cshtml" />
-    <Content Include="Views\Home\Edit.cshtml" />
+    <Content Include="Views\Questions\Delete.cshtml" />
+    <Content Include="Views\Questions\Create.cshtml" />
+    <Content Include="Views\Questions\Details.cshtml" />
+    <Content Include="Views\Questions\Edit.cshtml" />
+    <Content Include="Views\Questions\Index.cshtml" />
+    <Content Include="Views\Questions\PartialViews\_StarsQuestionOptions.cshtml" />
+    <Content Include="Views\Questions\PartialViews\_SliderQuestionDetails.cshtml" />
+    <Content Include="Views\Questions\PartialViews\_SliderQuestionOptions.cshtml" />
+    <Content Include="Views\Questions\PartialViews\_SmileyQuestionDetails.cshtml" />
+    <Content Include="Views\Questions\PartialViews\_SmileyQuestionOptions.cshtml" />
+    <Content Include="Views\Questions\PartialViews\_StarsQuestionDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

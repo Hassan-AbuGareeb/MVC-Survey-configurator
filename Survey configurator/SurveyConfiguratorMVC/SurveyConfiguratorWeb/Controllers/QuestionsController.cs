@@ -4,24 +4,24 @@ using SharedResources.Models;
 using SurveyConfiguratorWeb.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace SurveyConfiguratorWeb.Controllers
 {
-    public class HomeController : Controller
+    public class QuestionsController : Controller
     {
 
         //constants
-        private const string cQuestionsView = "Questions";
-        private const string cStarsOptionsView = "_StarsQuestionOptions";
-        private const string cSmileyOptionsView = "_SmileyQuestionOptions";
-        private const string cSliderOptionsView = "_SliderQuestionOptions";
-        private const string cStarsOptionsDetailsView = "_StarsQuestionDetails";
-        private const string cSmileyOptionsDetailsView = "_SmileyQuestionDetails";
-        private const string cSliderOptionsDetailsView = "_SliderQuestionDetails";
+        private const string cQuestionsView = "Index";
+        private const string cPartialViewsFolder = "PartialViews";
+        private const string cStarsOptionsView = cPartialViewsFolder+"/_StarsQuestionOptions";
+        private const string cSmileyOptionsView = cPartialViewsFolder + "/_SmileyQuestionOptions";
+        private const string cSliderOptionsView = cPartialViewsFolder + "/_SliderQuestionOptions";
+        private const string cStarsOptionsDetailsView = cPartialViewsFolder + "/_StarsQuestionDetails";
+        private const string cSmileyOptionsDetailsView = cPartialViewsFolder + "/_SmileyQuestionDetails";
+        private const string cSliderOptionsDetailsView = cPartialViewsFolder + "/_SliderQuestionDetails";
         //stars question properties
         const string cNumberOfStars = "NumberOfStars";
         //Smiley table
@@ -33,18 +33,8 @@ namespace SurveyConfiguratorWeb.Controllers
         private const string cEndValueCaption = "EndValueCaption";
 
 
-        public HomeController()
-        {
-            //Initialize the questions List and do the 
-            //stuff that was done in the winforms load method
-        }
-
+        // GET: Questions
         public ActionResult Index()
-        {
-            return View();
-        }
-
-        public ActionResult Questions()
         {
             var canGetQuesitons = QuestionOperations.GetQuestions();
             if (canGetQuesitons.IsSuccess)
@@ -109,12 +99,12 @@ namespace SurveyConfiguratorWeb.Controllers
                     return View(tQuestionData);
                 }
                 //handle the case of question not found
-                return RedirectToAction("index");
+                return RedirectToAction(cQuestionsView);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //log err
-                return RedirectToAction("Questions");
+                return RedirectToAction(cQuestionsView);
             }
         }
 
@@ -139,7 +129,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 //log err
-                return RedirectToAction("Questions");
+                return RedirectToAction(cQuestionsView);
             }
         }
 
@@ -154,12 +144,12 @@ namespace SurveyConfiguratorWeb.Controllers
                     return View(tQuestionData);
                 }
                 //handle the case of question not found
-                return RedirectToAction("index");
+                return RedirectToAction(cQuestionsView);
             }
             catch (Exception ex)
             {
                 //log error and show error page
-                return RedirectToAction("Index");
+                return RedirectToAction(cQuestionsView);
             }
         }
 
@@ -185,7 +175,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 //log error and show error page
-                return RedirectToAction("Index");
+                return RedirectToAction(cQuestionsView);
             }
         }
 
@@ -200,15 +190,14 @@ namespace SurveyConfiguratorWeb.Controllers
                     return View(tQuestionData);
                 }
                 //handle the case of question not found
-                return RedirectToAction("index");
+                return RedirectToAction(cQuestionsView);
             }
             catch (Exception ex)
             {
                 //log error
-                return RedirectToAction("Questions");
+                return RedirectToAction(cQuestionsView);
             }
         }
-
 
         #region class utility functions
         [HttpGet]
@@ -229,7 +218,7 @@ namespace SurveyConfiguratorWeb.Controllers
                     break;
             }
             //return view based on switch decision
-            return PartialView(tOptionsViewType,null);
+            return PartialView(tOptionsViewType, null);
         }
 
         [HttpGet]
@@ -280,7 +269,8 @@ namespace SurveyConfiguratorWeb.Controllers
         [HttpGet]
         public ActionResult GetQuestionTypeDetails(int id)
         {
-            try { 
+            try
+            {
                 Question tQuestionTypeData = null;
                 OperationResult tCanGetQuestionTypeData = QuestionOperations.GetQuestionSpecificData(id, ref tQuestionTypeData);
                 if (tCanGetQuestionTypeData.IsSuccess)
@@ -291,7 +281,7 @@ namespace SurveyConfiguratorWeb.Controllers
                 //handle failure case
                 return RedirectToAction("Questions");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //log error
                 return RedirectToAction("Questions");
@@ -345,7 +335,6 @@ namespace SurveyConfiguratorWeb.Controllers
             }
             return tCreatedQuestion;
         }
-
 
         #endregion
     }
