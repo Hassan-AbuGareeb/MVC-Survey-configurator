@@ -18,6 +18,12 @@ namespace SurveyConfiguratorWeb
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Questions", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Errors",
+                url: "Error/{action}/{ErrorMessage}",
+                defaults: new { controller = "Error", action = "ErrorPage", ErrorMessage = "Page not found", id = UrlParameter.Optional }
+            );
         }
     }
 }
