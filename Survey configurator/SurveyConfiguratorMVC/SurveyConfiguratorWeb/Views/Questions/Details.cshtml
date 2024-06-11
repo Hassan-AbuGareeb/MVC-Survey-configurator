@@ -54,7 +54,7 @@
         let tQuestionId = @Model.Id;
         console.log(tQuestionId);
          $.ajax({
-             url: '@Url.Action("GetQuestionTypeDetails", "Home")',
+             url: '@Url.Action("GetQuestionTypeDetails", "Questions")',
              type: "GET",
              data: { id: tQuestionId },
              success: function (partial) {

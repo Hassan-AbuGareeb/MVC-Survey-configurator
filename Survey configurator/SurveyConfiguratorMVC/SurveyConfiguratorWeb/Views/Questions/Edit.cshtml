@@ -67,7 +67,7 @@
     {
         //show the fields of the already selected question type
         $.ajax({
-            url: '@Url.Action("GetQuestionTypeDetailsEdit", "Home")',
+            url: '@Url.Action("GetQuestionTypeDetailsEdit", "Questions")',
             type: "GET",
             data: { id: @Model.Id },
             success: function (partial) {
@@ -84,7 +84,7 @@
         $("#"+'@cQuestionTypeDropDownId').change(function () {
             let tChangedType = $(this).val();
             $.ajax({
-                url: '@Url.Action("GetQuestionTypeOptions", "Home")',
+                url: '@Url.Action("GetQuestionTypeOptions", "Questions")',
                 type: "GET",
                 data: { pType: tChangedType },
                 success: function (partial) {
