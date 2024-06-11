@@ -16,7 +16,7 @@ namespace SurveyConfiguratorWeb.Controllers
         //constants
         private const string cQuestionsView = "Index";
         private const string cPartialViewsFolder = "PartialViews";
-        private const string cStarsOptionsView = cPartialViewsFolder+"/_StarsQuestionOptions";
+        private const string cStarsOptionsView = cPartialViewsFolder + "/_StarsQuestionOptions";
         private const string cSmileyOptionsView = cPartialViewsFolder + "/_SmileyQuestionOptions";
         private const string cSliderOptionsView = cPartialViewsFolder + "/_SliderQuestionOptions";
         private const string cStarsOptionsDetailsView = cPartialViewsFolder + "/_StarsQuestionDetails";
@@ -32,19 +32,29 @@ namespace SurveyConfiguratorWeb.Controllers
         private const string cStartValueCaption = "StartValueCaption";
         private const string cEndValueCaption = "EndValueCaption";
 
+        public QuestionsController()
+        {
+            QuestionOperations.GetConnectionString();
+        }
 
         // GET: Questions
         public ActionResult Index()
         {
-            var canGetQuesitons = QuestionOperations.GetQuestions();
-            if (canGetQuesitons.IsSuccess)
-            {
-                var model = QuestionOperations.mQuestionsList;
-                return View(model);
+            try 
+            { 
+                var canGetQuesitons = QuestionOperations.GetQuestions();
+                if (canGetQuesitons.IsSuccess)
+                {
+                    var model = QuestionOperations.mQuestionsList;
+                    return View(model);
             }
             //handle case of failure to obtain questions
             return View(new List<Question>());
-        }
+            }
+            catch(Exception ex){
+                return View("Error");
+            }
+}
 
         [HttpGet]
         public ActionResult Create()
@@ -56,7 +66,8 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 //log error
-                return RedirectToAction(cQuestionsView);
+                UtilityMethods.LogError(ex);
+                return View(cQuestionsView);
             }
         }
 
@@ -334,6 +345,16 @@ namespace SurveyConfiguratorWeb.Controllers
                     break;
             }
             return tCreatedQuestion;
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            //extract exception
+            Exception ex = filterContext.Exception;
+            UtilityMethods.LogError(ex);
+
+            filterContext.Result = View("Error");
+            filterContext.ExceptionHandled = true;
         }
 
         #endregion

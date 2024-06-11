@@ -18,7 +18,7 @@ namespace QuestionDB
         /// </summary>
 
 
-        public static string mConnectionString = "Server = HASSANABUGHREEB; DATABASE = Questions_DB; Trusted_Connection = true; Encrypt = false";
+        public static string mConnectionString = "";
 
         //constants
         //Question table constants
