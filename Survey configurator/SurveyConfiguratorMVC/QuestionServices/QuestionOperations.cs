@@ -19,7 +19,6 @@ namespace QuestionServices
         /// for any change and informing the UI layer when it occurs, and more operations mentioned below.
         /// </summary>
 
-
         //event handlers
         //event handler for any change that happens to the database from any source
         public static event EventHandler DataBaseChangedEvent;
@@ -34,6 +33,8 @@ namespace QuestionServices
         //changed to true when the user is performing adding, updating or deleting operation
         public static bool mOperationOngoing = false;
         public static string mFilePath = Directory.GetCurrentDirectory() + cConnectionStringFileName;
+
+        //create a class member thread for database monitoring
 
         //a list to temporarily contain the questions data fetched from the database, 
         //and acts as a data source for the UI to faciltate data transfer and fetching.
@@ -312,6 +313,7 @@ namespace QuestionServices
         {
             try
             {
+                //check if a thread is already running
                 Thread tCheckThread = new Thread(() => CheckDataBaseChange(Thread.CurrentThread));
                 tCheckThread.IsBackground = true;
                 tCheckThread.Start();

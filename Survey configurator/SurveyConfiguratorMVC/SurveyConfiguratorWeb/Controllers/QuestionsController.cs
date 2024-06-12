@@ -1,18 +1,16 @@
 ﻿using QuestionServices;
 using SharedResources;
 using SharedResources.Models;
+using SurveyConfiguratorWeb.Filters;
 using SurveyConfiguratorWeb.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-
 namespace SurveyConfiguratorWeb.Controllers
 {
+    [GlobalExceptionFilter]
     public class QuestionsController : Controller
     {
-
         //constants
         private const string cQuestionsView = "Index";
         private const string cPartialViewsFolder = "PartialViews";
@@ -34,27 +32,35 @@ namespace SurveyConfiguratorWeb.Controllers
 
         public QuestionsController()
         {
+            try
+            {
             QuestionOperations.GetConnectionString();
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                RedirectToErrorPage("An error occured while loading the data");
+            }
         }
-
         // GET: Questions
         public ActionResult Index()
         {
             try 
             { 
                 var canGetQuesitons = QuestionOperations.GetQuestions();
-                if (canGetQuesitons.IsSuccess)
+                if (canGetQuesitons.IsSuccess && canGetQuesitons!=null)
                 {
                     var model = QuestionOperations.mQuestionsList;
                     return View(model);
-            }
-            //handle case of failure to obtain questions
-            return View(new List<Question>());
+                }
+                //handle case of failure to obtain questions
+                return RedirectToErrorPage("An error occured while loading the data");
             }
             catch(Exception ex){
-                return View("Error");
+                UtilityMethods.LogError(ex);
+                return RedirectToErrorPage();
             }
-}
+        }
 
         [HttpGet]
         public ActionResult Create()
@@ -67,7 +73,7 @@ namespace SurveyConfiguratorWeb.Controllers
             {
                 //log error
                 UtilityMethods.LogError(ex);
-                return View(cQuestionsView);
+                return RedirectToErrorPage();
             }
         }
 
@@ -79,22 +85,24 @@ namespace SurveyConfiguratorWeb.Controllers
             {
                 //based on the type of question create a new object and
                 //fill its respective fields
-
                 Question tQuestionToAdd = CreateQuestionObject(pQuestionData, pFormData);
-
-                OperationResult tIsQuestionAdded = QuestionOperations.AddQuestion(tQuestionToAdd);
-                if (tIsQuestionAdded.IsSuccess)
-                {
-                    //on a successful question creation
-                    return RedirectToAction(cQuestionsView);
+                if (tQuestionToAdd != null) 
+                { 
+                    OperationResult tIsQuestionAdded = QuestionOperations.AddQuestion(tQuestionToAdd);
+                    if (tIsQuestionAdded.IsSuccess)
+                    {
+                        //show pop up message
+                        //on a successful question creation
+                        return RedirectToAction(cQuestionsView);
+                    }
                 }
-                //show error notfication or error page
+                //show error pop up
                 return RedirectToAction(cQuestionsView);
             }
             catch (Exception ex)
             {
-                //log err
-                return RedirectToAction(cQuestionsView);
+                UtilityMethods.LogError(ex);
+                return RedirectToErrorPage();
             }
         }
 
@@ -114,8 +122,8 @@ namespace SurveyConfiguratorWeb.Controllers
             }
             catch (Exception ex)
             {
-                //log err
-                return RedirectToAction(cQuestionsView);
+                UtilityMethods.LogError(ex);
+                return RedirectToErrorPage();
             }
         }
 
@@ -131,16 +139,17 @@ namespace SurveyConfiguratorWeb.Controllers
                 OperationResult tIsQuestionAdded = QuestionOperations.UpdateQuestion(tQuestionToAdd);
                 if (tIsQuestionAdded.IsSuccess)
                 {
+                    //show pop up message
                     //on a successful question creation
                     return RedirectToAction(cQuestionsView);
                 }
-                //show error notfication or error page
+                //show error pop up
                 return RedirectToAction(cQuestionsView);
             }
             catch (Exception ex)
             {
-                //log err
-                return RedirectToAction(cQuestionsView);
+                UtilityMethods.LogError(ex);
+                return RedirectToErrorPage();
             }
         }
 
@@ -154,13 +163,13 @@ namespace SurveyConfiguratorWeb.Controllers
                 {
                     return View(tQuestionData);
                 }
-                //handle the case of question not found
-                return RedirectToAction(cQuestionsView);
+                //maybe change this ?
+                return RedirectToErrorPage("Question was not found");
             }
             catch (Exception ex)
             {
-                //log error and show error page
-                return RedirectToAction(cQuestionsView);
+                UtilityMethods.LogError(ex);
+                return RedirectToErrorPage();
             }
         }
 
@@ -179,14 +188,15 @@ namespace SurveyConfiguratorWeb.Controllers
                 }
                 else
                 {
+                    //show popup message
                     //show error in deletion
                     return RedirectToAction(cQuestionsView);
                 }
             }
             catch (Exception ex)
             {
-                //log error and show error page
-                return RedirectToAction(cQuestionsView);
+                UtilityMethods.LogError(ex);
+                return RedirectToErrorPage();
             }
         }
 
@@ -200,13 +210,14 @@ namespace SurveyConfiguratorWeb.Controllers
                 {
                     return View(tQuestionData);
                 }
-                //handle the case of question not found
+                //show popup message
+                //show error in deletion
                 return RedirectToAction(cQuestionsView);
             }
             catch (Exception ex)
             {
-                //log error
-                return RedirectToAction(cQuestionsView);
+                UtilityMethods.LogError(ex);
+                return RedirectToErrorPage();
             }
         }
 
@@ -214,22 +225,30 @@ namespace SurveyConfiguratorWeb.Controllers
         [HttpGet]
         public ActionResult GetQuestionTypeOptions(int pType)
         {
-            eQuestionType tQuestionType = (eQuestionType)pType;
-            string tOptionsViewType = "";
-            switch (tQuestionType)
+            try 
             {
-                case eQuestionType.Stars:
-                    tOptionsViewType = cStarsOptionsView;
-                    break;
-                case eQuestionType.Smiley:
-                    tOptionsViewType = cSmileyOptionsView;
-                    break;
-                case eQuestionType.Slider:
-                    tOptionsViewType = cSliderOptionsView;
-                    break;
+                eQuestionType tQuestionType = (eQuestionType)pType;
+                string tOptionsViewType = "";
+                switch (tQuestionType)
+                {
+                    case eQuestionType.Stars:
+                        tOptionsViewType = cStarsOptionsView;
+                        break;
+                    case eQuestionType.Smiley:
+                        tOptionsViewType = cSmileyOptionsView;
+                        break;
+                    case eQuestionType.Slider:
+                        tOptionsViewType = cSliderOptionsView;
+                        break;
+                }
+                //return view based on switch decision
+                return PartialView(tOptionsViewType);
             }
-            //return view based on switch decision
-            return PartialView(tOptionsViewType, null);
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return RedirectToErrorPage();
+            }
         }
 
         [HttpGet]
@@ -245,36 +264,45 @@ namespace SurveyConfiguratorWeb.Controllers
                     return GetQuestionTypeDetailsPartialViewEdit(tQuestionTypeData);
                 }
                 //handle failure case
-                return RedirectToAction("Questions");
+                //show pop up
+                return RedirectToAction(cQuestionsView);
             }
             catch (Exception ex)
             {
-                //log error
-                return RedirectToAction("Questions");
+                UtilityMethods.LogError(ex);
+                return RedirectToErrorPage();
             }
         }
 
         [HttpGet]
         private ActionResult GetQuestionTypeDetailsPartialViewEdit(Question pQuestionData)
         {
-            switch (pQuestionData.Type)
-            {
-                case eQuestionType.Stars:
-                    StarsQuestion tStarsQuestionData = (StarsQuestion)pQuestionData;
-                    return PartialView(cStarsOptionsView, new StarsQuestionOptions(tStarsQuestionData.NumberOfStars));
-                case eQuestionType.Smiley:
-                    SmileyQuestion tSmileyQuestionData = (SmileyQuestion)pQuestionData;
-                    return PartialView(cSmileyOptionsView, new SmileyQuestionOptions(tSmileyQuestionData.NumberOfSmileyFaces));
-                case eQuestionType.Slider:
-                    SliderQuestion tSliderQuestionData = (SliderQuestion)pQuestionData;
-                    return PartialView(cSliderOptionsView, new SliderQuestionOptions(
-                        tSliderQuestionData.StartValue,
-                        tSliderQuestionData.EndValue,
-                        tSliderQuestionData.StartValueCaption,
-                        tSliderQuestionData.EndValueCaption
-                        ));
+            try 
+            { 
+                switch (pQuestionData.Type)
+                {
+                    case eQuestionType.Stars:
+                        StarsQuestion tStarsQuestionData = (StarsQuestion)pQuestionData;
+                        return PartialView(cStarsOptionsView, new StarsQuestionOptions(tStarsQuestionData.NumberOfStars));
+                    case eQuestionType.Smiley:
+                        SmileyQuestion tSmileyQuestionData = (SmileyQuestion)pQuestionData;
+                        return PartialView(cSmileyOptionsView, new SmileyQuestionOptions(tSmileyQuestionData.NumberOfSmileyFaces));
+                    case eQuestionType.Slider:
+                        SliderQuestion tSliderQuestionData = (SliderQuestion)pQuestionData;
+                        return PartialView(cSliderOptionsView, new SliderQuestionOptions(
+                            tSliderQuestionData.StartValue,
+                            tSliderQuestionData.EndValue,
+                            tSliderQuestionData.StartValueCaption,
+                            tSliderQuestionData.EndValueCaption
+                            ));
+                }
+                return null;
             }
-            return null;
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return RedirectToErrorPage();
+            }
         }
 
         [HttpGet]
@@ -290,73 +318,92 @@ namespace SurveyConfiguratorWeb.Controllers
                     return GetQuestionTypeDetailsPartialView(tQuestionTypeData);
                 }
                 //handle failure case
-                return RedirectToAction("Questions");
+                //show pop up
+                return RedirectToAction(cQuestionsView);
             }
             catch (Exception ex)
             {
-                //log error
-                return RedirectToAction("Questions");
+                UtilityMethods.LogError(ex);
+                return RedirectToErrorPage();
             }
         }
 
         [HttpGet]
         private ActionResult GetQuestionTypeDetailsPartialView(Question pQuestionData)
         {
-            switch (pQuestionData.Type)
-            {
-                case eQuestionType.Stars:
-                    StarsQuestion tStarsQuestionData = (StarsQuestion)pQuestionData;
-                    return PartialView(cStarsOptionsDetailsView, new StarsQuestionOptions(tStarsQuestionData.NumberOfStars));
-                case eQuestionType.Smiley:
-                    SmileyQuestion tSmileyQuestionData = (SmileyQuestion)pQuestionData;
-                    return PartialView(cSmileyOptionsDetailsView, new SmileyQuestionOptions(tSmileyQuestionData.NumberOfSmileyFaces));
-                case eQuestionType.Slider:
-                    SliderQuestion tSliderQuestionData = (SliderQuestion)pQuestionData;
-                    return PartialView(cSliderOptionsDetailsView, new SliderQuestionOptions(
-                        tSliderQuestionData.StartValue,
-                        tSliderQuestionData.EndValue,
-                        tSliderQuestionData.StartValueCaption,
-                        tSliderQuestionData.EndValueCaption
-                        ));
+            try 
+            { 
+                switch (pQuestionData.Type)
+                {
+                    case eQuestionType.Stars:
+                        StarsQuestion tStarsQuestionData = (StarsQuestion)pQuestionData;
+                        return PartialView(cStarsOptionsDetailsView, new StarsQuestionOptions(tStarsQuestionData.NumberOfStars));
+                    case eQuestionType.Smiley:
+                        SmileyQuestion tSmileyQuestionData = (SmileyQuestion)pQuestionData;
+                        return PartialView(cSmileyOptionsDetailsView, new SmileyQuestionOptions(tSmileyQuestionData.NumberOfSmileyFaces));
+                    case eQuestionType.Slider:
+                        SliderQuestion tSliderQuestionData = (SliderQuestion)pQuestionData;
+                        return PartialView(cSliderOptionsDetailsView, new SliderQuestionOptions(
+                            tSliderQuestionData.StartValue,
+                            tSliderQuestionData.EndValue,
+                            tSliderQuestionData.StartValueCaption,
+                            tSliderQuestionData.EndValueCaption
+                            ));
+                }
+                return null;
             }
-            return null;
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return RedirectToErrorPage();
+            }
         }
 
         private Question CreateQuestionObject(Question pQuestionData, FormCollection pFormData)
         {
-            Question tCreatedQuestion = null;
-            switch (pQuestionData.Type)
-            {
-                case eQuestionType.Stars:
-                    tCreatedQuestion = new StarsQuestion(pQuestionData, Convert.ToInt32(pFormData[cNumberOfStars]));
-                    break;
-                case eQuestionType.Smiley:
-                    tCreatedQuestion = new SmileyQuestion(pQuestionData, Convert.ToInt32(pFormData[cNumberOfFaces]));
-                    break;
-                case eQuestionType.Slider:
-                    tCreatedQuestion = new SliderQuestion
-                        (
-                        pQuestionData,
-                        Convert.ToInt32(pFormData[cStartValue]),
-                        Convert.ToInt32(pFormData[cEndValue]),
-                        pFormData[cStartValueCaption],
-                        pFormData[cEndValueCaption]
-                        );
-                    break;
+            try 
+            { 
+                Question tCreatedQuestion = null;
+                switch (pQuestionData.Type)
+                {
+                    case eQuestionType.Stars:
+                        tCreatedQuestion = new StarsQuestion(pQuestionData, Convert.ToInt32(pFormData[cNumberOfStars]));
+                        break;
+                    case eQuestionType.Smiley:
+                        tCreatedQuestion = new SmileyQuestion(pQuestionData, Convert.ToInt32(pFormData[cNumberOfFaces]));
+                        break;
+                    case eQuestionType.Slider:
+                        tCreatedQuestion = new SliderQuestion
+                            (
+                            pQuestionData,
+                            Convert.ToInt32(pFormData[cStartValue]),
+                            Convert.ToInt32(pFormData[cEndValue]),
+                            pFormData[cStartValueCaption],
+                            pFormData[cEndValueCaption]
+                            );
+                        break;
+                }
+                return tCreatedQuestion;
             }
-            return tCreatedQuestion;
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return null;
+            }
         }
 
-        protected override void OnException(ExceptionContext filterContext)
+        private ActionResult RedirectToErrorPage(string pErrorMessage = "Error occured while Loading your page, please try again")
         {
-            //extract exception
-            Exception ex = filterContext.Exception;
-            UtilityMethods.LogError(ex);
-
-            filterContext.Result = View("Error");
-            filterContext.ExceptionHandled = true;
+            try 
+            { 
+            return RedirectToAction("ErrorPage", "Error", new { ErrorMessage = pErrorMessage });
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return View("Error)");
+            }
         }
-
         #endregion
     }
 }
