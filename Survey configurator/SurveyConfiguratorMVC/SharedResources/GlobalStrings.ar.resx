@@ -143,16 +143,22 @@
     <value>قاعدة البيانات غير متصلة</value>
   </data>
   <data name="DataFetchingError" xml:space="preserve">
-    <value>حدث خطأ اثناء تحميل البيانات, قم بإعادة تشغيل البرنامج اذا تكرر حدوث هذا الخطأ</value>
+    <value>حدث خطأ اثناء تحميل البيانات</value>
   </data>
   <data name="DataFetchingErrorTitle" xml:space="preserve">
     <value>خطأ في تحميل البيانات</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>حذف</value>
   </data>
   <data name="DeleteOperationTitle" xml:space="preserve">
     <value>حذف سؤال</value>
   </data>
   <data name="DeleteQuestionConfirm" xml:space="preserve">
     <value>هل أنت متأكد من تنفيذ عملية الحذف؟</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>تفاصيل</value>
   </data>
   <data name="EditOperation" xml:space="preserve">
     <value>تعديل</value>
@@ -181,6 +187,15 @@
   <data name="OperationSuccessfulTitle" xml:space="preserve">
     <value>نجحت العملية</value>
   </data>
+  <data name="Order" xml:space="preserve">
+    <value>الرقم</value>
+  </data>
+  <data name="PageLoadingError" xml:space="preserve">
+    <value>حدث خطأ أثناء تحميل الصفحة, قم بالمحاولة مجددا</value>
+  </data>
+  <data name="Questions" xml:space="preserve">
+    <value>الأسئلة</value>
+  </data>
   <data name="QuestionText" xml:space="preserve">
     <value>نص السؤال</value>
   </data>
@@ -198,6 +213,12 @@
   </data>
   <data name="SqlErrorTitle" xml:space="preserve">
     <value>خطأ في قاعدة البيانات</value>
+  </data>
+  <data name="Text" xml:space="preserve">
+    <value>النص</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>النوع</value>
   </data>
   <data name="UnAuthorizedAccessError" xml:space="preserve">
     <value>خطأ في الصلاحيات</value>

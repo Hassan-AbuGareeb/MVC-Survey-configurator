@@ -19,7 +19,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToAction("ErrorPage", "Error", new { ErrorMessage = "Error occured while Loading your page, please try again" });
+                return RedirectToAction("ErrorPage", "Error", new { ErrorMessage = GlobalStrings.PageLoadingError });
             }
         }
     }

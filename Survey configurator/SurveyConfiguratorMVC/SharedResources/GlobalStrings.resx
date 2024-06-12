@@ -149,11 +149,17 @@ if you keep getting this error restart the app</value>
   <data name="DataFetchingErrorTitle" xml:space="preserve">
     <value>Data Loading Error</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="DeleteOperationTitle" xml:space="preserve">
     <value>Delete question</value>
   </data>
   <data name="DeleteQuestionConfirm" xml:space="preserve">
     <value>Are you sure you want to delete the selected questions?</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
   </data>
   <data name="EditOperation" xml:space="preserve">
     <value>Edit</value>
@@ -182,6 +188,15 @@ if you keep getting this error restart the app</value>
   <data name="OperationSuccessfulTitle" xml:space="preserve">
     <value>Operation successful</value>
   </data>
+  <data name="Order" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="PageLoadingError" xml:space="preserve">
+    <value>Error occured while Loading your page, please try again</value>
+  </data>
+  <data name="Questions" xml:space="preserve">
+    <value>Questions</value>
+  </data>
   <data name="QuestionText" xml:space="preserve">
     <value>Question text</value>
   </data>
@@ -199,6 +214,12 @@ if you keep getting this error restart the app</value>
   </data>
   <data name="SqlErrorTitle" xml:space="preserve">
     <value>Database error</value>
+  </data>
+  <data name="Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
   </data>
   <data name="UnAuthorizedAccessError" xml:space="preserve">
     <value>Unauthorized access error</value>

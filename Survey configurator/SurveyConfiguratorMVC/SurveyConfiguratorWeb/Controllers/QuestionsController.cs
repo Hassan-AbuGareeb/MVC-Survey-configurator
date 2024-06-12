@@ -4,8 +4,10 @@ using SharedResources.Models;
 using SurveyConfiguratorWeb.Filters;
 using SurveyConfiguratorWeb.Models;
 using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Globalization;
 namespace SurveyConfiguratorWeb.Controllers
 {
     [GlobalExceptionFilter]
@@ -20,6 +22,8 @@ namespace SurveyConfiguratorWeb.Controllers
         private const string cStarsOptionsDetailsView = cPartialViewsFolder + "/_StarsQuestionDetails";
         private const string cSmileyOptionsDetailsView = cPartialViewsFolder + "/_SmileyQuestionDetails";
         private const string cSliderOptionsDetailsView = cPartialViewsFolder + "/_SliderQuestionDetails";
+        private string cDefaultErrorMessage = GlobalStrings.PageLoadingError;
+
         //stars question properties
         const string cNumberOfStars = "NumberOfStars";
         //Smiley table
@@ -30,16 +34,21 @@ namespace SurveyConfiguratorWeb.Controllers
         private const string cStartValueCaption = "StartValueCaption";
         private const string cEndValueCaption = "EndValueCaption";
 
+
         public QuestionsController()
         {
             try
             {
-            QuestionOperations.GetConnectionString();
+                QuestionOperations.GetConnectionString();
+                CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo("ar");
+                CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo("ar");
+                //Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo("ar");
+                //Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo("ar");
             }
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                RedirectToErrorPage("An error occured while loading the data");
+                RedirectToErrorPage(cDefaultErrorMessage);
             }
         }
         // GET: Questions
@@ -54,11 +63,11 @@ namespace SurveyConfiguratorWeb.Controllers
                     return View(model);
                 }
                 //handle case of failure to obtain questions
-                return RedirectToErrorPage("An error occured while loading the data");
+                return RedirectToErrorPage(GlobalStrings.DataFetchingError);
             }
             catch(Exception ex){
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage();
+                return RedirectToErrorPage(cDefaultErrorMessage);
             }
         }
 
@@ -67,13 +76,14 @@ namespace SurveyConfiguratorWeb.Controllers
         {
             try
             {
+                throw new Exception();
                 return View();
             }
             catch (Exception ex)
             {
                 //log error
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage();
+                return RedirectToErrorPage(cDefaultErrorMessage);
             }
         }
 
@@ -102,7 +112,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage();
+                return RedirectToErrorPage(cDefaultErrorMessage);
             }
         }
 
@@ -123,7 +133,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage();
+                return RedirectToErrorPage(cDefaultErrorMessage);
             }
         }
 
@@ -149,7 +159,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage();
+                return RedirectToErrorPage(cDefaultErrorMessage);
             }
         }
 
@@ -164,12 +174,13 @@ namespace SurveyConfiguratorWeb.Controllers
                     return View(tQuestionData);
                 }
                 //maybe change this ?
+               //to pop up
                 return RedirectToErrorPage("Question was not found");
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage();
+                return RedirectToErrorPage(cDefaultErrorMessage);
             }
         }
 
@@ -196,7 +207,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage();
+                return RedirectToErrorPage(cDefaultErrorMessage);
             }
         }
 
@@ -217,7 +228,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage();
+                return RedirectToErrorPage(cDefaultErrorMessage);
             }
         }
 
@@ -247,7 +258,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage();
+                return RedirectToErrorPage(cDefaultErrorMessage);
             }
         }
 
@@ -270,7 +281,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage();
+                return RedirectToErrorPage(cDefaultErrorMessage);
             }
         }
 
@@ -301,7 +312,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage();
+                return RedirectToErrorPage(cDefaultErrorMessage);
             }
         }
 
@@ -324,7 +335,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage();
+                return RedirectToErrorPage(cDefaultErrorMessage);
             }
         }
 
@@ -355,7 +366,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage();
+                return RedirectToErrorPage(cDefaultErrorMessage);
             }
         }
 
@@ -392,7 +403,7 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
-        private ActionResult RedirectToErrorPage(string pErrorMessage = "Error occured while Loading your page, please try again")
+        private ActionResult RedirectToErrorPage(string pErrorMessage)
         {
             try 
             { 
