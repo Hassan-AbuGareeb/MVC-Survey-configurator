@@ -1,15 +1,16 @@
 ﻿using QuestionServices;
 using SharedResources;
 using SharedResources.Models;
+using SurveyConfiguratorWeb.Filters;
 using SurveyConfiguratorWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
 namespace SurveyConfiguratorWeb.Controllers
 {
+    [GlobalExceptionFilter]
     public class QuestionsController : Controller
     {
 
@@ -36,18 +37,17 @@ namespace SurveyConfiguratorWeb.Controllers
         {
             QuestionOperations.GetConnectionString();
         }
-
         // GET: Questions
         public ActionResult Index()
         {
             try 
             { 
                 var canGetQuesitons = QuestionOperations.GetQuestions();
-                if (canGetQuesitons.IsSuccess)
+                if (canGetQuesitons.IsSuccess && canGetQuesitons!=null)
                 {
                     var model = QuestionOperations.mQuestionsList;
                     return View(model);
-            }
+                }
             //handle case of failure to obtain questions
             return View(new List<Question>());
             }
@@ -61,13 +61,14 @@ namespace SurveyConfiguratorWeb.Controllers
         {
             try
             {
+                throw new Exception();
                 return View();
             }
             catch (Exception ex)
             {
                 //log error
                 UtilityMethods.LogError(ex);
-                return View(cQuestionsView);
+                return RedirectToAction("ErrorPage", "Error", new {ErrorMessage= "nice error yooo"});
             }
         }
 
@@ -345,16 +346,6 @@ namespace SurveyConfiguratorWeb.Controllers
                     break;
             }
             return tCreatedQuestion;
-        }
-
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            //extract exception
-            Exception ex = filterContext.Exception;
-            UtilityMethods.LogError(ex);
-
-            filterContext.Result = View("Error");
-            filterContext.ExceptionHandled = true;
         }
 
         #endregion

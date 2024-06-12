@@ -9,9 +9,9 @@ namespace SurveyConfiguratorWeb.Controllers
     public class ErrorController : Controller
     {
         // GET: Error
-        public ActionResult ErrorPage(string pErrorMessage)
+        public ActionResult ErrorPage(string ErrorMessage)
         {
-            ViewBag.ErrorMessage = pErrorMessage;
+            ViewBag.ErrorMessage = ErrorMessage;
             return View();
         }
     }
