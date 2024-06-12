@@ -8,6 +8,7 @@ namespace SurveyConfiguratorWeb.Filters
     {
         public void OnException(ExceptionContext pfilterContext)
         {
+            try { 
             //log error redirect 
             Exception tException = pfilterContext.Exception;
             UtilityMethods.LogError(tException);
@@ -15,11 +16,13 @@ namespace SurveyConfiguratorWeb.Filters
             pfilterContext.ExceptionHandled = true;
 
             //assign the error view to the result to show it
-
-            ViewResult tErrorResult = new ViewResult();
-            tErrorResult.ViewName = "Error";
-
+            ViewResult tErrorResult = new ViewResult { ViewName="Error"};
             pfilterContext.Result = tErrorResult;
+            }
+            catch (Exception e)
+            {
+                UtilityMethods.LogError(e);
+            }
         }
     }
 }
