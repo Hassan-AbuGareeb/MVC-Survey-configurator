@@ -15,8 +15,8 @@ namespace SurveyConfiguratorWeb
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             
             //set language for the app
-            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo("ar");
-            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo("ar");
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo("en");
+            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo("en");
         } 
     }
 }

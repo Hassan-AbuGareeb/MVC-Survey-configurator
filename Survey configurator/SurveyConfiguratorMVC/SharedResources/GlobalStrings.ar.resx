@@ -208,6 +208,9 @@
   <data name="PageLoadingError" xml:space="preserve">
     <value>حدث خطأ أثناء تحميل الصفحة, قم بالمحاولة مجددا</value>
   </data>
+  <data name="QuestionDataFetchingError" xml:space="preserve">
+    <value>حدث خطأ أثناء تحميل بيانات السؤال</value>
+  </data>
   <data name="QuestionDetails" xml:space="preserve">
     <value>تفاصيل السؤال</value>
   </data>

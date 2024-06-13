@@ -23,7 +23,7 @@ namespace SurveyConfiguratorWeb.Controllers
         private const string cSmileyOptionsDetailsView = cPartialViewsFolder + "/_SmileyQuestionDetails";
         private const string cSliderOptionsDetailsView = cPartialViewsFolder + "/_SliderQuestionDetails";
         private string cDefaultErrorMessage = GlobalStrings.PageLoadingError;
-
+        private const string cMessageKey = "Message";
         //stars question properties
         const string cNumberOfStars = "NumberOfStars";
         //Smiley table
@@ -60,7 +60,7 @@ namespace SurveyConfiguratorWeb.Controllers
                     return View(model);
                 }
                 //handle case of failure to obtain questions
-                return RedirectToErrorPage(GlobalStrings.DataFetchingError);
+                return RedirectToAction(GlobalStrings.DataFetchingError);
             }
             catch(Exception ex){
                 UtilityMethods.LogError(ex);
@@ -92,16 +92,18 @@ namespace SurveyConfiguratorWeb.Controllers
                 //based on the type of question create a new object and
                 //fill its respective fields
                 Question tQuestionToAdd = CreateQuestionObject(pQuestionData, pFormData);
-                if (tQuestionToAdd != null) 
-                { 
+                if (tQuestionToAdd != null)
+                {
                     OperationResult tIsQuestionAdded = QuestionOperations.AddQuestion(tQuestionToAdd);
                     if (tIsQuestionAdded.IsSuccess)
                     {
                         //show pop up message
                         //on a successful question creation
+                        TempData[cMessageKey] = GlobalStrings.OperationSuccessful;
                         return RedirectToAction(cQuestionsView);
                     }
                 }
+                TempData[cMessageKey] = GlobalStrings.OperationError;
                 //show error pop up
                 return RedirectToAction(cQuestionsView);
             }
@@ -123,7 +125,7 @@ namespace SurveyConfiguratorWeb.Controllers
                 {
                     return View(tQuestionData);
                 }
-                //handle the case of question not found
+                TempData[cMessageKey] = GlobalStrings.QuestionDataFetchingError;
                 return RedirectToAction(cQuestionsView);
             }
             catch (Exception ex)
@@ -145,10 +147,10 @@ namespace SurveyConfiguratorWeb.Controllers
                 OperationResult tIsQuestionAdded = QuestionOperations.UpdateQuestion(tQuestionToAdd);
                 if (tIsQuestionAdded.IsSuccess)
                 {
-                    //show pop up message
-                    //on a successful question creation
+                    TempData[cMessageKey] = GlobalStrings.OperationSuccessful;
                     return RedirectToAction(cQuestionsView);
                 }
+                TempData[cMessageKey] = GlobalStrings.OperationError;
                 //show error pop up
                 return RedirectToAction(cQuestionsView);
             }
@@ -169,9 +171,8 @@ namespace SurveyConfiguratorWeb.Controllers
                 {
                     return View(tQuestionData);
                 }
-                //maybe change this ?
-               //to pop up
-                return RedirectToErrorPage("Question was not found");
+                TempData["Message"] = GlobalStrings.QuestionDataFetchingError;
+                return RedirectToAction(cQuestionsView);
             }
             catch (Exception ex)
             {
@@ -191,12 +192,12 @@ namespace SurveyConfiguratorWeb.Controllers
                 OperationResult tAreQuestionsDeleted = QuestionOperations.DeleteQuestion(tQuestionsIds);
                 if (tAreQuestionsDeleted.IsSuccess)
                 {
+                    TempData[cMessageKey] = GlobalStrings.OperationSuccessful;
                     return RedirectToAction(cQuestionsView);
                 }
                 else
                 {
-                    //show popup message
-                    //show error in deletion
+                    TempData["Message"] = GlobalStrings.OperationError;
                     return RedirectToAction(cQuestionsView);
                 }
             }
@@ -217,8 +218,7 @@ namespace SurveyConfiguratorWeb.Controllers
                 {
                     return View(tQuestionData);
                 }
-                //show popup message
-                //show error in deletion
+                TempData[cMessageKey] = GlobalStrings.OperationError;
                 return RedirectToAction(cQuestionsView);
             }
             catch (Exception ex)

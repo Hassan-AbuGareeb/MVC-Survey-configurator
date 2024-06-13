@@ -192,10 +192,10 @@ if you keep getting this error restart the app</value>
     <value>Number of stars</value>
   </data>
   <data name="OperationError" xml:space="preserve">
-    <value>Operation Error</value>
+    <value>Operation Failed, please try again</value>
   </data>
   <data name="OperationErrorTitle" xml:space="preserve">
-    <value>Operation Failed, please try again</value>
+    <value>Operation Error</value>
   </data>
   <data name="OperationSuccessful" xml:space="preserve">
     <value>Operation completed successfully!</value>
@@ -208,6 +208,9 @@ if you keep getting this error restart the app</value>
   </data>
   <data name="PageLoadingError" xml:space="preserve">
     <value>Error occured while Loading your page, please try again</value>
+  </data>
+  <data name="QuestionDataFetchingError" xml:space="preserve">
+    <value>An error occured while getting the questions data</value>
   </data>
   <data name="QuestionDetails" xml:space="preserve">
     <value>Question details</value>
