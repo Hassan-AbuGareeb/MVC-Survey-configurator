@@ -79,6 +79,15 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Back to questions list.
+        /// </summary>
+        public static string BackToList {
+            get {
+                return ResourceManager.GetString("BackToList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Any changes made won&apos;t be saved.
         /// </summary>
         public static string CancelOperation {
@@ -207,6 +216,24 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to End value.
+        /// </summary>
+        public static string EndValue {
+            get {
+                return ResourceManager.GetString("EndValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End value caption.
+        /// </summary>
+        public static string EndValueCaption {
+            get {
+                return ResourceManager.GetString("EndValueCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to error.
         /// </summary>
         public static string Error {
@@ -230,6 +257,24 @@ namespace SharedResources {
         public static string MissingFields {
             get {
                 return ResourceManager.GetString("MissingFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of smileys.
+        /// </summary>
+        public static string NumberOfSmileys {
+            get {
+                return ResourceManager.GetString("NumberOfSmileys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of stars.
+        /// </summary>
+        public static string NumberOfStars {
+            get {
+                return ResourceManager.GetString("NumberOfStars", resourceCulture);
             }
         }
         
@@ -288,6 +333,33 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Question details.
+        /// </summary>
+        public static string QuestionDetails {
+            get {
+                return ResourceManager.GetString("QuestionDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The question order is required.
+        /// </summary>
+        public static string QuestionOrderRequiredError {
+            get {
+                return ResourceManager.GetString("QuestionOrderRequiredError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The question order must be between 1 and 120.
+        /// </summary>
+        public static string QuestionOrderValueError {
+            get {
+                return ResourceManager.GetString("QuestionOrderValueError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Questions.
         /// </summary>
         public static string Questions {
@@ -306,11 +378,47 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The question text can&apos;t be more than 350 characters.
+        /// </summary>
+        public static string QuestionTextLengthError {
+            get {
+                return ResourceManager.GetString("QuestionTextLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The question text can&apos;t be empty.
+        /// </summary>
+        public static string QuestionTextRequiredError {
+            get {
+                return ResourceManager.GetString("QuestionTextRequiredError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Question type.
         /// </summary>
         public static string QuestionType {
             get {
                 return ResourceManager.GetString("QuestionType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The question type is required.
+        /// </summary>
+        public static string QuestionTypeError {
+            get {
+                return ResourceManager.GetString("QuestionTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred while processing your request.
+        /// </summary>
+        public static string RequestProcessingError {
+            get {
+                return ResourceManager.GetString("RequestProcessingError", resourceCulture);
             }
         }
         
@@ -324,11 +432,38 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start value cannot be greater than end value.
         /// </summary>
         public static string SliderInvalidInput {
             get {
                 return ResourceManager.GetString("SliderInvalidInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The number of smiley faces must be between 2 and 5.
+        /// </summary>
+        public static string SmileyNumberError {
+            get {
+                return ResourceManager.GetString("SmileyNumberError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The number of smiley faces is required.
+        /// </summary>
+        public static string SmileyRequiredError {
+            get {
+                return ResourceManager.GetString("SmileyRequiredError", resourceCulture);
             }
         }
         
@@ -347,6 +482,42 @@ namespace SharedResources {
         public static string SqlErrorTitle {
             get {
                 return ResourceManager.GetString("SqlErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The number of stars must be between 1 and 10.
+        /// </summary>
+        public static string StarsNumberError {
+            get {
+                return ResourceManager.GetString("StarsNumberError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The number of stars is required.
+        /// </summary>
+        public static string StarsRequiredError {
+            get {
+                return ResourceManager.GetString("StarsRequiredError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start value.
+        /// </summary>
+        public static string StartValue {
+            get {
+                return ResourceManager.GetString("StartValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start value caption.
+        /// </summary>
+        public static string StartValueCaption {
+            get {
+                return ResourceManager.GetString("StartValueCaption", resourceCulture);
             }
         }
         

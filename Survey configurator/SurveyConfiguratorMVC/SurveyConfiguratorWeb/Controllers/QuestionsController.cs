@@ -40,10 +40,7 @@ namespace SurveyConfiguratorWeb.Controllers
             try
             {
                 QuestionOperations.GetConnectionString();
-                CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo("ar");
-                CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo("ar");
-                //Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo("ar");
-                //Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo("ar");
+
             }
             catch(Exception ex)
             {
@@ -76,7 +73,6 @@ namespace SurveyConfiguratorWeb.Controllers
         {
             try
             {
-                throw new Exception();
                 return View();
             }
             catch (Exception ex)

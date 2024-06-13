@@ -1,7 +1,7 @@
 ﻿@model SurveyConfiguratorWeb.Models.SliderQuestionOptions
 
 <div class="form-group">
-    @Html.LabelFor(model => model.StartValue, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.Label(SharedResources.GlobalStrings.StartValue, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @Html.EditorFor(model => model.StartValue, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.StartValue, "", new { @class = "text-danger" })
@@ -9,7 +9,7 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.EndValue, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.Label(SharedResources.GlobalStrings.EndValue, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @Html.EditorFor(model => model.EndValue, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.EndValue, "", new { @class = "text-danger" })
@@ -17,7 +17,7 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.StartValueCaption, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.Label(SharedResources.GlobalStrings.StartValueCaption, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @Html.EditorFor(model => model.StartValueCaption, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.StartValueCaption, "", new { @class = "text-danger" })
@@ -25,7 +25,7 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.EndValueCaption, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.Label(SharedResources.GlobalStrings.EndValueCaption, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @Html.EditorFor(model => model.EndValueCaption, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.EndValueCaption, "", new { @class = "text-danger" })
