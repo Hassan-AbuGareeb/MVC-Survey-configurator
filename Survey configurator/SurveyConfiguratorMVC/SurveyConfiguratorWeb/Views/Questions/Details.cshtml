@@ -1,18 +1,16 @@
 ﻿@model SharedResources.Models.Question
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = SharedResources.GlobalStrings.Details;
     const string cQuestionTypeInfoId = "QuestionTypeInfo";
 }
 
-<h2>Details</h2>
-
+<h2>@SharedResources.GlobalStrings.QuestionDetails</h2>
 <div>
-    <h4>Question</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Text)
+            @SharedResources.GlobalStrings.Text
         </dt>
 
         <dd>
@@ -20,7 +18,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Order)
+            @SharedResources.GlobalStrings.Order
         </dt>
 
         <dd>
@@ -28,7 +26,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Type)
+            @SharedResources.GlobalStrings.Type
         </dt>
 
         <dd>
@@ -42,8 +40,8 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink(SharedResources.GlobalStrings.EditOperation, "Edit", new { id = Model.Id }) |
+    @Html.ActionLink(SharedResources.GlobalStrings.BackToList, "Index")
 </p>
 
 

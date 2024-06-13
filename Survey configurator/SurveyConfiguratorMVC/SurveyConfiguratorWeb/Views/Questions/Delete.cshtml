@@ -1,18 +1,15 @@
 ﻿@model SharedResources.Models.Question
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = SharedResources.GlobalStrings.Delete;
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h3>@SharedResources.GlobalStrings.DeleteQuestionConfirm</h3>
 <div>
-    <h4>Question</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Text)
+            @SharedResources.GlobalStrings.Text
         </dt>
 
         <dd>
@@ -20,7 +17,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Order)
+            @SharedResources.GlobalStrings.Order
         </dt>
 
         <dd>
@@ -28,7 +25,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Type)
+            @SharedResources.GlobalStrings.Type
         </dt>
 
         <dd>
@@ -41,8 +38,8 @@
     {
         @Html.AntiForgeryToken()
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="@SharedResources.GlobalStrings.Delete" class="btn btn-default" /> |
+            @Html.ActionLink(SharedResources.GlobalStrings.BackToList, "Index")
         </div>
     }
 </div>

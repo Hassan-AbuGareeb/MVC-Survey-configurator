@@ -123,6 +123,9 @@
   <data name="AddQuestion" xml:space="preserve">
     <value>إضافة سؤال</value>
   </data>
+  <data name="BackToList" xml:space="preserve">
+    <value>العودة الى قائمة الاسئلة</value>
+  </data>
   <data name="CancelOperation" xml:space="preserve">
     <value>لن يتم الإحتفاظ بأية تعديلات تم القيام بها</value>
   </data>
@@ -143,10 +146,13 @@
     <value>قاعدة البيانات غير متصلة</value>
   </data>
   <data name="DataFetchingError" xml:space="preserve">
-    <value>حدث خطأ اثناء تحميل البيانات, قم بإعادة تشغيل البرنامج اذا تكرر حدوث هذا الخطأ</value>
+    <value>حدث خطأ اثناء تحميل البيانات</value>
   </data>
   <data name="DataFetchingErrorTitle" xml:space="preserve">
     <value>خطأ في تحميل البيانات</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>حذف</value>
   </data>
   <data name="DeleteOperationTitle" xml:space="preserve">
     <value>حذف سؤال</value>
@@ -154,11 +160,20 @@
   <data name="DeleteQuestionConfirm" xml:space="preserve">
     <value>هل أنت متأكد من تنفيذ عملية الحذف؟</value>
   </data>
+  <data name="Details" xml:space="preserve">
+    <value>تفاصيل</value>
+  </data>
   <data name="EditOperation" xml:space="preserve">
     <value>تعديل</value>
   </data>
   <data name="EditQuestion" xml:space="preserve">
     <value>تعديل سؤال</value>
+  </data>
+  <data name="EndValue" xml:space="preserve">
+    <value>القيمة العظمى</value>
+  </data>
+  <data name="EndValueCaption" xml:space="preserve">
+    <value>نص القيمة الكبرى</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>خطأ</value>
@@ -168,6 +183,12 @@
   </data>
   <data name="MissingFields" xml:space="preserve">
     <value>الحقول التالية مطلوبة:</value>
+  </data>
+  <data name="NumberOfSmileys" xml:space="preserve">
+    <value>عدد الوجوه المبتسمة</value>
+  </data>
+  <data name="NumberOfStars" xml:space="preserve">
+    <value>عدد النجوم</value>
   </data>
   <data name="OperationError" xml:space="preserve">
     <value>فشلت العملية</value>
@@ -181,23 +202,98 @@
   <data name="OperationSuccessfulTitle" xml:space="preserve">
     <value>نجحت العملية</value>
   </data>
+  <data name="Order" xml:space="preserve">
+    <value>الرقم</value>
+  </data>
+  <data name="PageLoadingError" xml:space="preserve">
+    <value>حدث خطأ أثناء تحميل الصفحة, قم بالمحاولة مجددا</value>
+  </data>
+  <data name="QuestionDetails" xml:space="preserve">
+    <value>تفاصيل السؤال</value>
+  </data>
+  <data name="QuestionOrderRequiredError" xml:space="preserve">
+    <value>الرجاء ادخال قيمة حقل رقم السؤال</value>
+  </data>
+  <data name="QuestionOrderValueError" xml:space="preserve">
+    <value>رقم السؤال يجب ان يكون بين 1 الى 120</value>
+  </data>
+  <data name="Questions" xml:space="preserve">
+    <value>الأسئلة</value>
+  </data>
   <data name="QuestionText" xml:space="preserve">
     <value>نص السؤال</value>
+  </data>
+  <data name="QuestionTextLengthError" xml:space="preserve">
+    <value>نص السؤال يجب ان لا يحتوي على اكثر من 350 رمز</value>
+  </data>
+  <data name="QuestionTextRequiredError" xml:space="preserve">
+    <value>الرجاء ادخال قيمة حقل نص السؤال</value>
   </data>
   <data name="QuestionType" xml:space="preserve">
     <value>نوع السؤال</value>
   </data>
+  <data name="QuestionTypeError" xml:space="preserve">
+    <value>الرجاء ادخال قيمة حقل نوع السؤال</value>
+  </data>
+  <data name="RequestProcessingError" xml:space="preserve">
+    <value>حدث خطأ اثناء معالجة طلبك</value>
+  </data>
   <data name="RequiredFields" xml:space="preserve">
     <value>حقول مطلوبة</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>حفظ</value>
+  </data>
+  <data name="SliderEndCaptionRequiredError" xml:space="preserve">
+    <value>الرجاء ادخال قيمة حقل نص القيمة العظمى</value>
+  </data>
+  <data name="SliderEndValueNumberError" xml:space="preserve">
+    <value>القيمة العظمى يجب ان تكون بين 0 الى 100</value>
+  </data>
+  <data name="SliderEndValueRequiredError" xml:space="preserve">
+    <value>الرجاء ادخال قيمة حقل القيمة العظمى</value>
+  </data>
   <data name="SliderInvalidInput" xml:space="preserve">
     <value>لا يمكن للقيمة العظمى ان تكون اصغر من القيمة الصغرى</value>
+  </data>
+  <data name="SliderStartCaptionRequiredError" xml:space="preserve">
+    <value>الرجاء ادخال قيمة حقل نص القيمة الصغرى</value>
+  </data>
+  <data name="SliderStartValueNumberError" xml:space="preserve">
+    <value>القيمة الصغرى يجب ان تكون بين 0 الى 100</value>
+  </data>
+  <data name="SliderStartValueRequiredError" xml:space="preserve">
+    <value>الرجاء ادخال قيمة حقل القيمة الصغرى</value>
+  </data>
+  <data name="SmileyNumberError" xml:space="preserve">
+    <value>عدد الوجوه المبتسمة يجب ان يكون بين 2 الى 5</value>
+  </data>
+  <data name="SmileyRequiredError" xml:space="preserve">
+    <value>الرجاء ادخال قيمة حقل عدد الوجوه المبتسمة</value>
   </data>
   <data name="SqlError" xml:space="preserve">
     <value>خطأ متعلق بقاعدة البيانات, اطلب المساعدة من مشرف النظام</value>
   </data>
   <data name="SqlErrorTitle" xml:space="preserve">
     <value>خطأ في قاعدة البيانات</value>
+  </data>
+  <data name="StarsNumberError" xml:space="preserve">
+    <value>عدد النجوم يجب ان يكون بين 1 الى 10</value>
+  </data>
+  <data name="StarsRequiredError" xml:space="preserve">
+    <value>الرجاء ادخال قيمة حقل عدد النجوم</value>
+  </data>
+  <data name="StartValue" xml:space="preserve">
+    <value>القيمة الصغرى</value>
+  </data>
+  <data name="StartValueCaption" xml:space="preserve">
+    <value>نص القيمة الصغرى</value>
+  </data>
+  <data name="Text" xml:space="preserve">
+    <value>النص</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>النوع</value>
   </data>
   <data name="UnAuthorizedAccessError" xml:space="preserve">
     <value>خطأ في الصلاحيات</value>

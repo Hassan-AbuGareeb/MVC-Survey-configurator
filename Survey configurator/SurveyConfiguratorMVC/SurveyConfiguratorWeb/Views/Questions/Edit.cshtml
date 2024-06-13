@@ -1,25 +1,24 @@
 ﻿@model SharedResources.Models.Question
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = SharedResources.GlobalStrings.EditQuestion;
     const string cQuestionTypeDropDownId = "QuestionTypeDropDown";
     const string cQuestionTypeOptionsId = "QuestionTypeOptions";
 }
 
-<h2>Edit</h2>
+<h2>@SharedResources.GlobalStrings.EditQuestion</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-    <h4>Question</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.Id)
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label(SharedResources.GlobalStrings.Text, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
@@ -27,7 +26,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Order, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label(SharedResources.GlobalStrings.Order, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Order, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Order, "", new { @class = "text-danger" })
@@ -35,7 +34,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label(SharedResources.GlobalStrings.Type, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EnumDropDownListFor(model => model.Type, new { id = @cQuestionTypeDropDownId, htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
@@ -49,14 +48,14 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
+            <input type="submit" value="@SharedResources.GlobalStrings.Save" class="btn btn-default" />
         </div>
     </div>
 </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink(SharedResources.GlobalStrings.BackToList, "Index")
 </div>
 
 @section Scripts {

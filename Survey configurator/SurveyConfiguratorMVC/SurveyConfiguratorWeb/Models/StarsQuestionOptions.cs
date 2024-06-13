@@ -1,12 +1,13 @@
-﻿using System.ComponentModel;
+﻿using SharedResources;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace SurveyConfiguratorWeb.Models
 {
     public class StarsQuestionOptions
     {
-        [Required(ErrorMessage ="The number of stars is required")]
-        [Range(3,10,ErrorMessage ="The number of stars must be between 3 and 10")]
+        [Required(ErrorMessageResourceType =typeof(GlobalStrings) ,ErrorMessageResourceName="StarsRequiredError")]
+        [Range(1,10, ErrorMessageResourceType = typeof(GlobalStrings), ErrorMessageResourceName = "StarsNumberError")]
         [DisplayName("Number of stars")]
         public int NumberOfStars { get; set; }
 
