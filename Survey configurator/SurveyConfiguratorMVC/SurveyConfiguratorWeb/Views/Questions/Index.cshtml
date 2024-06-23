@@ -14,10 +14,10 @@
 <table class="table">
     <tr>
         <th>
-            @SharedResources.GlobalStrings.Text
+            @SharedResources.GlobalStrings.Order
         </th>
         <th>
-            @SharedResources.GlobalStrings.Order
+            @SharedResources.GlobalStrings.Text
         </th>
         <th>
             @SharedResources.GlobalStrings.Type
@@ -29,10 +29,10 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Text)
+                @Html.DisplayFor(modelItem => item.Order)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Order)
+                @Html.DisplayFor(modelItem => item.Text)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Type)

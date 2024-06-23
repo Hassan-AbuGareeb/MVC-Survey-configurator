@@ -8,6 +8,7 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Globalization;
+using System.Web.Configuration;
 namespace SurveyConfiguratorWeb.Controllers
 {
     [GlobalExceptionFilter]
@@ -39,7 +40,13 @@ namespace SurveyConfiguratorWeb.Controllers
         {
             try
             {
+                //get conn string
                 QuestionOperations.GetConnectionString();
+
+                //test connection
+
+                //conn good? get data, start checking db for changes, assign event handlers, set sorting if it should be done here
+
 
             }
             catch(Exception ex)
