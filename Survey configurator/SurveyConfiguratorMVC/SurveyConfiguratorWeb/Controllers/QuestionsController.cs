@@ -35,23 +35,22 @@ namespace SurveyConfiguratorWeb.Controllers
         private const string cStartValueCaption = "StartValueCaption";
         private const string cEndValueCaption = "EndValueCaption";
 
-
         public QuestionsController()
         {
             try
             {
-                //get conn string
-                QuestionOperations.GetConnectionString();
-
                 //test connection
-
-                //conn good? get data, start checking db for changes, assign event handlers, set sorting if it should be done here
-
+                OperationResult tCanConnectToDb = QuestionOperations.TestDBConnection();
+                if (!tCanConnectToDb.IsSuccess)
+                {
+                    //redirect to appropriate error page
+                }
 
             }
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
+                //the redirect here doesn't work
                 RedirectToErrorPage(cDefaultErrorMessage);
             }
         }
