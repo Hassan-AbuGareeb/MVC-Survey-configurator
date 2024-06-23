@@ -14,7 +14,7 @@ namespace SurveyConfiguratorWeb
 
             routes.MapRoute(
                 name: "Default",
-                url: "Questions/{action}/{id}",
+                url: "{Controller}/{action}/{id}",
                 defaults: new { controller = "Questions", action = "Index", id = UrlParameter.Optional }
             );
 
@@ -23,12 +23,6 @@ namespace SurveyConfiguratorWeb
                 url: "Error/{action}/{ErrorMessage}",
                 defaults: new { controller = "Error", action = "ErrorPage", ErrorMessage = "Page not found", id = UrlParameter.Optional }
             );
-
-            routes.MapRoute(
-                name: "PageNotFound",
-                url: "{*catchall}",
-                defaults: new { controller = "Error", action = "ErrorPage", ErrorMessage = "Page not found", id = UrlParameter.Optional }
-                );
         }
     }
 }
