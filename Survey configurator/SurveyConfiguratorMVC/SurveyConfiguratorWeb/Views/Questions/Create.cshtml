@@ -59,6 +59,7 @@
     @Html.ActionLink(SharedResources.GlobalStrings.BackToList, "Index")
 </div>
 
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jquery")
@@ -72,28 +73,34 @@
             data: { pType: tSelectedType },
             success: function (partial) {
                 $('#'+'@cQuestionTypeOptionsId').empty();
-                $('#'+'@cQuestionTypeOptionsId').html(partial);
+                $('#' + '@cQuestionTypeOptionsId').html(partial);
             },
             error: function (xhr, status, error) {
                 console.log(xhr.responseText);
             }
         })
         //change the fields when the selected type changes
-            $("#"+'@cQuestionTypeDropDownId').change(function () {
-                let tChangedType = $(this).val();
-                $.ajax({
-                    url: '@Url.Action("GetQuestionTypeOptions", "Questions")',
-                    type: "GET",
-                    data: { pType: tChangedType },
-                    success: function (partial) {
-                        $('#'+'@cQuestionTypeOptionsId').empty();
-                        $('#'+'@cQuestionTypeOptionsId').html(partial);
-                    },
-                    error: function (xhr, status, error) {
-                        console.log(xhr.responseText);
-                    }
-                })
+        $("#" + '@cQuestionTypeDropDownId').change(function () {
+            let tChangedType = $(this).val();
+            $.ajax({
+                url: '@Url.Action("GetQuestionTypeOptions", "Questions")',
+                type: "GET",
+                data: { pType: tChangedType },
+                success: function (partial) {
+                    $('#'+'@cQuestionTypeOptionsId').empty();
+                    $('#' + '@cQuestionTypeOptionsId').html(partial);
+                    //change the validation rules for the new question type
+                    $("form").removeData("validator").removeData("unobtrusiveValidation");
+                    //Parse the form again
+                    $.validator.unobtrusive.parse($("form"));
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
             })
-        });
+        })
+
+        
+    });
 </script>
 }

@@ -450,11 +450,65 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to the end value caption field is requried.
+        /// </summary>
+        public static string SliderEndCaptionRequiredError {
+            get {
+                return ResourceManager.GetString("SliderEndCaptionRequiredError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of the end value field must be between 0 and 100.
+        /// </summary>
+        public static string SliderEndValueNumberError {
+            get {
+                return ResourceManager.GetString("SliderEndValueNumberError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The end value field is required.
+        /// </summary>
+        public static string SliderEndValueRequiredError {
+            get {
+                return ResourceManager.GetString("SliderEndValueRequiredError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start value cannot be greater than end value.
         /// </summary>
         public static string SliderInvalidInput {
             get {
                 return ResourceManager.GetString("SliderInvalidInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to the start value caption field is requried.
+        /// </summary>
+        public static string SliderStartCaptionRequiredError {
+            get {
+                return ResourceManager.GetString("SliderStartCaptionRequiredError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of the start value field must be between 0 and 100.
+        /// </summary>
+        public static string SliderStartValueNumberError {
+            get {
+                return ResourceManager.GetString("SliderStartValueNumberError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The start value field is required.
+        /// </summary>
+        public static string SliderStartValueRequiredError {
+            get {
+                return ResourceManager.GetString("SliderStartValueRequiredError", resourceCulture);
             }
         }
         
