@@ -88,7 +88,10 @@
                 data: { pType: tChangedType },
                 success: function (partial) {
                     $('#'+'@cQuestionTypeOptionsId').empty();
-                    $('#'+'@cQuestionTypeOptionsId').html(partial);
+                    $('#' + '@cQuestionTypeOptionsId').html(partial);
+                    $("form").removeData("validator").removeData("unobtrusiveValidation");
+                    //Parse the form again
+                    $.validator.unobtrusive.parse($("form"));
                 },
                 error: function (xhr, status, error) {
                     console.log(xhr.responseText);
