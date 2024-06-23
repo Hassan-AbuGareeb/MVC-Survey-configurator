@@ -13,7 +13,7 @@ namespace SurveyConfiguratorWeb.Models
         [DisplayName("Start value")]
         public int StartValue { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(GlobalStrings), ErrorMessageResourceName = "SliderEndValueNumberError")]
+        [Required(ErrorMessageResourceType = typeof(GlobalStrings), ErrorMessageResourceName = "SliderEndValueRequiredError")]
         [Range(0, 100, ErrorMessageResourceType = typeof(GlobalStrings), ErrorMessageResourceName = "SliderEndValueNumberError")]
         [DisplayName("End value")]
         public int EndValue { get; set; }

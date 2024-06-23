@@ -248,8 +248,26 @@ if you keep getting this error restart the app</value>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="SliderEndCaptionRequiredError" xml:space="preserve">
+    <value>the end value caption field is requried</value>
+  </data>
+  <data name="SliderEndValueNumberError" xml:space="preserve">
+    <value>The value of the end value field must be between 0 and 100</value>
+  </data>
+  <data name="SliderEndValueRequiredError" xml:space="preserve">
+    <value>The end value field is required</value>
+  </data>
   <data name="SliderInvalidInput" xml:space="preserve">
     <value>Start value cannot be greater than end value</value>
+  </data>
+  <data name="SliderStartCaptionRequiredError" xml:space="preserve">
+    <value>the start value caption field is requried</value>
+  </data>
+  <data name="SliderStartValueNumberError" xml:space="preserve">
+    <value>The value of the start value field must be between 0 and 100</value>
+  </data>
+  <data name="SliderStartValueRequiredError" xml:space="preserve">
+    <value>The start value field is required</value>
   </data>
   <data name="SmileyNumberError" xml:space="preserve">
     <value>The number of smiley faces must be between 2 and 5</value>
