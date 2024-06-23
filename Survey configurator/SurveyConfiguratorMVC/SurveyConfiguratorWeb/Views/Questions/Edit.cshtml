@@ -89,6 +89,8 @@
                 success: function (partial) {
                     $('#'+'@cQuestionTypeOptionsId').empty();
                     $('#' + '@cQuestionTypeOptionsId').html(partial);
+
+                    //change the validation rules for the new question type
                     $("form").removeData("validator").removeData("unobtrusiveValidation");
                     //Parse the form again
                     $.validator.unobtrusive.parse($("form"));

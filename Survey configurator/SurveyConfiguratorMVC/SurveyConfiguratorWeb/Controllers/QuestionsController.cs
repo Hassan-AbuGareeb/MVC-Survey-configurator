@@ -8,6 +8,7 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Globalization;
+using System.Web.Configuration;
 namespace SurveyConfiguratorWeb.Controllers
 {
     [GlobalExceptionFilter]
@@ -34,17 +35,22 @@ namespace SurveyConfiguratorWeb.Controllers
         private const string cStartValueCaption = "StartValueCaption";
         private const string cEndValueCaption = "EndValueCaption";
 
-
         public QuestionsController()
         {
             try
             {
-                QuestionOperations.GetConnectionString();
+                //test connection
+                OperationResult tCanConnectToDb = QuestionOperations.TestDBConnection();
+                if (!tCanConnectToDb.IsSuccess)
+                {
+                    //redirect to appropriate error page
+                }
 
             }
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
+                //the redirect here doesn't work
                 RedirectToErrorPage(cDefaultErrorMessage);
             }
         }

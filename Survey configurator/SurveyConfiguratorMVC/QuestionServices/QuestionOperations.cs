@@ -346,7 +346,7 @@ namespace QuestionServices
                 //keep the function running while main thread is running
                 while (pMainThread.IsAlive)
                 {
-                    Thread.Sleep(10000);
+                    Thread.Sleep(50000);
                     if (!mOperationOngoing)
                     {
                         //get checksum again to detect change
