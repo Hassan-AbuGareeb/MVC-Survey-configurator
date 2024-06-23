@@ -2,10 +2,12 @@
 
 @{
     ViewBag.Title = SharedResources.GlobalStrings.Questions;
+    const string cAlertDivId = "alert";
 }
+<!-- place holder for any alerts or pop up messages-->
+<div id="@cAlertDivId"></div>
 
 <h2>@SharedResources.GlobalStrings.Questions</h2>
-
 <p>
     @Html.ActionLink(SharedResources.GlobalStrings.AddQuestion, "Create", "Questions")
 </p>
@@ -44,3 +46,16 @@
     }
 
 </table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")
+    <script>
+        $(document).ready(function () {
+            if ('@TempData["Message"]') {
+                $("#"+"@cAlertDivId").html("<div class='alert alert-danger'>"+"@TempData["Message"]"+"</div>")
+                setTimeout(function () { $("#"+"@cAlertDivId").empty() }, 3500);
+            }
+        })
+    </script>
+    }

@@ -279,7 +279,7 @@ namespace SharedResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Operation Error.
+        ///   Looks up a localized string similar to Operation Failed, please try again.
         /// </summary>
         public static string OperationError {
             get {
@@ -288,7 +288,7 @@ namespace SharedResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Operation Failed, please try again.
+        ///   Looks up a localized string similar to Operation Error.
         /// </summary>
         public static string OperationErrorTitle {
             get {
@@ -329,6 +329,15 @@ namespace SharedResources {
         public static string PageLoadingError {
             get {
                 return ResourceManager.GetString("PageLoadingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occured while getting the questions data.
+        /// </summary>
+        public static string QuestionDataFetchingError {
+            get {
+                return ResourceManager.GetString("QuestionDataFetchingError", resourceCulture);
             }
         }
         
