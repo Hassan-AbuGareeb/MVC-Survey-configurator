@@ -1,4 +1,4 @@
-﻿@model SharedResources.Models.Question
+﻿@model SurveyConfiguratorWeb.Models.QuestionViewModel
 
 @{
     ViewBag.Title = SharedResources.GlobalStrings.Details;
@@ -50,7 +50,6 @@
     $(document).ready(function ()
     {
         let tQuestionId = @Model.Id;
-        console.log(tQuestionId);
          $.ajax({
              url: '@Url.Action("GetQuestionTypeDetails", "Questions")',
              type: "GET",

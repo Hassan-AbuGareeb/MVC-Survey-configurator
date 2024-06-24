@@ -4,11 +4,9 @@ using SharedResources.Models;
 using SurveyConfiguratorWeb.Filters;
 using SurveyConfiguratorWeb.Models;
 using System;
-using System.Threading;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using System.Globalization;
-using System.Web.Configuration;
+
 namespace SurveyConfiguratorWeb.Controllers
 {
     [GlobalExceptionFilter]
@@ -59,11 +57,24 @@ namespace SurveyConfiguratorWeb.Controllers
         {
             try 
             { 
+                //get all questions data
                 var canGetQuesitons = QuestionOperations.GetQuestions();
                 if (canGetQuesitons.IsSuccess && canGetQuesitons!=null)
                 {
-                    var model = QuestionOperations.mQuestionsList;
-                    return View(model);
+                    //encapsulate the data in questions view model list
+                    List<Question> tQuestionsList = QuestionOperations.mQuestionsList;
+
+                    List<QuestionViewModel> tModelQuestionsList = new List<QuestionViewModel>();
+                    foreach(Question tQuestion in tQuestionsList)
+                    {
+                        tModelQuestionsList.Add(new QuestionViewModel(
+                            tQuestion.Id,
+                            tQuestion.Text,
+                            tQuestion.Order,
+                            tQuestion.Type
+                            ));
+                    }
+                    return View(tModelQuestionsList);
                 }
                 //handle case of failure to obtain questions
                 return RedirectToAction(GlobalStrings.DataFetchingError);
@@ -91,16 +102,16 @@ namespace SurveyConfiguratorWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Question pQuestionData, FormCollection pFormData)
+        public ActionResult Create(QuestionViewModel pQuestionModelData, FormCollection pFormData)
         {
             try
             {
-                //check model state for errors here too
-             
+                //check model state for errors here too?
+                
                 
                 //based on the type of question create a new object and
                 //fill its respective fields
-                Question tQuestionToAdd = CreateQuestionObject(pQuestionData, pFormData);
+                Question tQuestionToAdd = CreateQuestionObject(pQuestionModelData, pFormData);
                 if (tQuestionToAdd != null)
                 {
                     OperationResult tIsQuestionAdded = QuestionOperations.AddQuestion(tQuestionToAdd);
@@ -132,7 +143,13 @@ namespace SurveyConfiguratorWeb.Controllers
                 Question tQuestionData = QuestionOperations.GetQuestionData(id);
                 if (tQuestionData != null)
                 {
-                    return View(tQuestionData);
+                    QuestionViewModel tQuestionModelData = new QuestionViewModel(
+                        tQuestionData.Id,
+                        tQuestionData.Text,
+                        tQuestionData.Order,
+                        tQuestionData.Type
+                        );
+                    return View(tQuestionModelData);
                 }
                 TempData[cMessageKey] = GlobalStrings.QuestionDataFetchingError;
                 return RedirectToAction(cQuestionsView);
@@ -146,12 +163,12 @@ namespace SurveyConfiguratorWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Question pQuestionData, FormCollection pFormData)
+        public ActionResult Edit(QuestionViewModel pQuestionModelUpdatedData, FormCollection pFormData)
         {
             try
             {
 
-                Question tQuestionToAdd = CreateQuestionObject(pQuestionData, pFormData);
+                Question tQuestionToAdd = CreateQuestionObject(pQuestionModelUpdatedData, pFormData);
 
                 OperationResult tIsQuestionAdded = QuestionOperations.UpdateQuestion(tQuestionToAdd);
                 if (tIsQuestionAdded.IsSuccess)
@@ -178,7 +195,13 @@ namespace SurveyConfiguratorWeb.Controllers
                 Question tQuestionData = QuestionOperations.GetQuestionData(id);
                 if (tQuestionData != null)
                 {
-                    return View(tQuestionData);
+                    QuestionViewModel tQuestionModelData = new QuestionViewModel(
+                        tQuestionData.Id,
+                        tQuestionData.Text,
+                        tQuestionData.Order,
+                        tQuestionData.Type
+                        );
+                    return View(tQuestionModelData);
                 }
                 TempData["Message"] = GlobalStrings.QuestionDataFetchingError;
                 return RedirectToAction(cQuestionsView);
@@ -192,7 +215,7 @@ namespace SurveyConfiguratorWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Question pQuestionData)
+        public ActionResult Delete(QuestionViewModel pQuestionData)
         {
             try
             {
@@ -206,7 +229,7 @@ namespace SurveyConfiguratorWeb.Controllers
                 }
                 else
                 {
-                    TempData["Message"] = GlobalStrings.OperationError;
+                    TempData[cMessageKey] = GlobalStrings.OperationError;
                     return RedirectToAction(cQuestionsView);
                 }
             }
@@ -225,7 +248,13 @@ namespace SurveyConfiguratorWeb.Controllers
                 Question tQuestionData = QuestionOperations.GetQuestionData(id);
                 if (tQuestionData != null)
                 {
-                    return View(tQuestionData);
+                    QuestionViewModel tQuestionModelData = new QuestionViewModel(
+                        tQuestionData.Id,
+                        tQuestionData.Text,
+                        tQuestionData.Order,
+                        tQuestionData.Type
+                        );
+                    return View(tQuestionModelData);
                 }
                 TempData[cMessageKey] = GlobalStrings.OperationError;
                 return RedirectToAction(cQuestionsView);
@@ -375,23 +404,32 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
-        private Question CreateQuestionObject(Question pQuestionData, FormCollection pFormData)
+        private Question CreateQuestionObject(QuestionViewModel pQuestionModelData, FormCollection pFormData)
         {
+            //encapsulate the questionViewModel in a Question object
+
+            Question tQuestionData= new Question(
+                pQuestionModelData.Id,
+                pQuestionModelData.Text,
+                pQuestionModelData.Order,
+                pQuestionModelData.Type
+                );
+
             try 
             { 
                 Question tCreatedQuestion = null;
-                switch (pQuestionData.Type)
+                switch (tQuestionData.Type)
                 {
                     case eQuestionType.Stars:
-                        tCreatedQuestion = new StarsQuestion(pQuestionData, Convert.ToInt32(pFormData[cNumberOfStars]));
+                        tCreatedQuestion = new StarsQuestion(tQuestionData, Convert.ToInt32(pFormData[cNumberOfStars]));
                         break;
                     case eQuestionType.Smiley:
-                        tCreatedQuestion = new SmileyQuestion(pQuestionData, Convert.ToInt32(pFormData[cNumberOfFaces]));
+                        tCreatedQuestion = new SmileyQuestion(tQuestionData, Convert.ToInt32(pFormData[cNumberOfFaces]));
                         break;
                     case eQuestionType.Slider:
                         tCreatedQuestion = new SliderQuestion
                             (
-                            pQuestionData,
+                            tQuestionData,
                             Convert.ToInt32(pFormData[cStartValue]),
                             Convert.ToInt32(pFormData[cEndValue]),
                             pFormData[cStartValueCaption],

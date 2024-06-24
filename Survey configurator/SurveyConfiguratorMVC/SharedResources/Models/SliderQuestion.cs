@@ -8,8 +8,6 @@ namespace SharedResources.Models
 {
     public class SliderQuestion : Question
     {
-        public string Text { get; set; }
-        public int Order { get; set; }
         public int StartValue { get; set; }
         public int EndValue { get; set; }
         public string StartValueCaption { get; set; }

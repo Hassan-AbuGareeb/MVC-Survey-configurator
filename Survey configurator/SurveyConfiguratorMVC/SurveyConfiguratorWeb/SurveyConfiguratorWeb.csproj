@@ -232,6 +232,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ConnectionStringViewModel.cs" />
+    <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\SliderQuestionOptions.cs" />
     <Compile Include="Models\SmileyQuestionOptions.cs" />
     <Compile Include="Models\StarsQuestionOptions.cs" />

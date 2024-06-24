@@ -80,11 +80,15 @@ namespace SurveyConfiguratorWeb.Controllers
             OperationResult tCanConnectToDatabase = QuestionOperations.TestDBConnection();
             if (tCanConnectToDatabase.IsSuccess)
             {
+                //more enhancements and better redirection required
+
                 TempData[cConnectionResultMessageKey] = "Database connected successfully";
                 return View();
             }
             else 
             {
+                //more enhancements and better redirection required
+
                 TempData[cConnectionResultMessageKey] = "Database refused to connect";
                 return View();
             }
