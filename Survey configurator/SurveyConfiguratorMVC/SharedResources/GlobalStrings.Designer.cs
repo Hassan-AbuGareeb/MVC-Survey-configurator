@@ -106,6 +106,15 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connection settings.
+        /// </summary>
+        public static string ConnectionSettings {
+            get {
+                return ResourceManager.GetString("ConnectionSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occured while connecting to database, the application may not work properly.
         ///would like to continue?.
         /// </summary>
@@ -252,6 +261,15 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string Language {
+            get {
+                return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The following fields must have proper values:.
         /// </summary>
         public static string MissingFields {
@@ -311,6 +329,15 @@ namespace SharedResources {
         public static string OperationSuccessfulTitle {
             get {
                 return ResourceManager.GetString("OperationSuccessfulTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        public static string Options {
+            get {
+                return ResourceManager.GetString("Options", resourceCulture);
             }
         }
         

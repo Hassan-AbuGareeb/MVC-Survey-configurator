@@ -225,6 +225,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\OptionsController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Filters\GlobalExceptionFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -295,6 +296,8 @@
     <Content Include="Views\Questions\PartialViews\_SmileyQuestionOptions.cshtml" />
     <Content Include="Views\Questions\PartialViews\_StarsQuestionDetails.cshtml" />
     <Content Include="Views\Error\ErrorPage.cshtml" />
+    <Content Include="Views\Options\Index.cshtml" />
+    <Content Include="Views\Options\Language.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

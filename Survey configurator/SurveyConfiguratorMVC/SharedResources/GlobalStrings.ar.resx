@@ -132,6 +132,9 @@
   <data name="CancelOperationTitle" xml:space="preserve">
     <value>إلغاء العملية</value>
   </data>
+  <data name="ConnectionSettings" xml:space="preserve">
+    <value>إعدادات الاتصال</value>
+  </data>
   <data name="DataBaseConnectionError" xml:space="preserve">
     <value>حدث خطأ أثناء الاتصال بقاعدة البيانات, قد لا يعمل البرنامج بشكل صحيح
  هل ترغب بالاستمرار؟</value>
@@ -181,6 +184,9 @@
   <data name="InvalidInputTitle" xml:space="preserve">
     <value>بينانات خاطئة</value>
   </data>
+  <data name="Language" xml:space="preserve">
+    <value>اللغة</value>
+  </data>
   <data name="MissingFields" xml:space="preserve">
     <value>الحقول التالية مطلوبة:</value>
   </data>
@@ -201,6 +207,9 @@
   </data>
   <data name="OperationSuccessfulTitle" xml:space="preserve">
     <value>نجحت العملية</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>إعدادات</value>
   </data>
   <data name="Order" xml:space="preserve">
     <value>الرقم</value>
