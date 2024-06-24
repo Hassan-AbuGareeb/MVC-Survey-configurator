@@ -36,7 +36,7 @@
         <div class="form-group">
             @Html.Label(SharedResources.GlobalStrings.Type, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.Type, new {id= cQuestionTypeDropDownId, htmlAttributes = new { @class = "form-control"} })
+                @Html.EnumDropDownListFor(model => model.Type, new { id = cQuestionTypeDropDownId, htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -61,47 +61,58 @@
 
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
 <script>
     $(document).ready(function () {
-        //show the fields of the already selected question type
-        let tSelectedType = $("#" + "@cQuestionTypeDropDownId").val();
-        $.ajax({
-            url: '@Url.Action("GetQuestionTypeOptions","Questions")',
-            type: "GET",
-            data: { pType: tSelectedType },
-            success: function (partial) {
-                $('#'+'@cQuestionTypeOptionsId').empty();
-                $('#' + '@cQuestionTypeOptionsId').html(partial);
-            },
-            error: function (xhr, status, error) {
-                console.log(xhr.responseText);
-            }
-        })
-        //change the fields when the selected type changes
-        $("#" + '@cQuestionTypeDropDownId').change(function () {
-            let tChangedType = $(this).val();
+        //load partial view (question type options) based on selected question type
+        function LoadQuestionTypeOptions(selectedType) {
             $.ajax({
                 url: '@Url.Action("GetQuestionTypeOptions", "Questions")',
                 type: "GET",
-                data: { pType: tChangedType },
+                data: { pType: selectedType },
                 success: function (partial) {
-                    $('#'+'@cQuestionTypeOptionsId').empty();
+                    $('#' + '@cQuestionTypeOptionsId').empty();
                     $('#' + '@cQuestionTypeOptionsId').html(partial);
 
-                    //change the validation rules for the new question type
-                    $("form").removeData("validator").removeData("unobtrusiveValidation");
-                    //Parse the form again
-                    $.validator.unobtrusive.parse($("form"));
+                    // Reinitialize jQuery validation for the form
+                    InitializeValidation();
                 },
                 error: function (xhr, status, error) {
                     console.log(xhr.responseText);
                 }
-            })
-        })
+            });
+        }
 
-        
+        function InitializeValidation() {
+            // Remove previous validator data and re-parse the form
+            $("form").removeData("validator").removeData("unobtrusiveValidation");
+            $.validator.unobtrusive.parse($("form"));
+
+            // Add custom validation method for comparing StartValue and EndValue
+            $.validator.addMethod("GreaterThanStartValue", function (value, element, params) {
+                let startValue = parseFloat(value);
+                let endValue = parseFloat($(params).val());
+                return startValue > endValue;
+            }, "End Value must be greater than Start Value.");
+
+            // Apply the custom validation method to StartValue field
+            $("#EndValue").rules("add", {
+                GreaterThanStartValue: "#StartValue"
+            });
+        }
+
+        // Load question type options when the form is visited based on selected type
+        LoadQuestionTypeOptions($("#@cQuestionTypeDropDownId").val());
+
+        InitializeValidation();
+
+        // change question type options when selected type is changed
+        $("#" + '@cQuestionTypeDropDownId').change(function () {
+            let selectedType = $(this).val();
+            LoadQuestionTypeOptions(selectedType);
+        });
+
     });
 </script>
 }

@@ -125,6 +125,14 @@ namespace QuestionServices
         {
             try
             {
+                //validate the quesiton data
+                OperationResult tQuestionDataValidationResult = ValidateQuestoinData(pQuestionData);
+                if(!tQuestionDataValidationResult.IsSuccess) 
+                { 
+                    //object data isn't valid
+                    return tQuestionDataValidationResult;
+                }
+                
                 //add the question to the database to generate its id and obtain it
                 OperationResult tAddQuestionResult = Database.AddQuestionToDB(ref pQuestionData);
                 //on successful question addition to Database add it to the Questions List
@@ -156,6 +164,14 @@ namespace QuestionServices
         {
             try
             {
+                //validate the quesiton data
+                OperationResult tQuestionDataValidationResult = ValidateQuestoinData(pUpdatedQuestionData);
+                if (!tQuestionDataValidationResult.IsSuccess)
+                {
+                    //object data isn't valid
+                    return tQuestionDataValidationResult;
+                }
+
                 eQuestionType tOriginalQuestionType = GetQuestionData(pUpdatedQuestionData.Id).Type;
 
                 OperationResult tQuestionUpdatedResult = Database.UpdateQuestionOnDB(tOriginalQuestionType, pUpdatedQuestionData);
@@ -217,6 +233,155 @@ namespace QuestionServices
                 return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
             }
         }
+
+        #endregion
+
+        #region validation functions
+
+        /// <summary>
+        /// validates question data where question has different validation criteria 
+        /// if the validation fails aborts the creating or editing operation
+        /// </summary>
+        /// <param name="pQuestion"> question data to be validated </param>
+        /// <returns> OperationResult objcet to indicate whether the validation was successful or not</returns>
+        public static OperationResult ValidateQuestoinData(Question pQuestion)
+        {
+            try
+            {
+                OperationResult tValidationResult = new OperationResult();
+                switch (pQuestion.Type)
+                {
+                    case eQuestionType.Stars:
+                        tValidationResult = StarsQuestionValidator((StarsQuestion)pQuestion);
+                        break;
+                    case eQuestionType.Smiley:
+                        tValidationResult = SmileyQuestionValidator((SmileyQuestion)pQuestion);
+                        break;
+                    case eQuestionType.Slider:
+                        tValidationResult = SliderQuestionValidator((SliderQuestion)pQuestion);
+                        break;
+                }
+                return tValidationResult;
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
+            }
+        }
+
+        /// <summary>
+        /// validate the slider type data by checking for null
+        /// values of numerical properties and whether they're 
+        /// in range of acceptable range which is 0-100
+        /// and whether the start value is less than the end value
+        /// </summary>
+        /// <param name="pQuestion"></param>
+        /// <returns></returns>
+        public static OperationResult SliderQuestionValidator(SliderQuestion pQuestionData)
+        {
+            try
+            {
+                //check for null
+                if (pQuestionData != null)
+                {
+                    //check if start and end value are in range
+                    if (
+                        (pQuestionData.StartValue >= 1 && pQuestionData.StartValue <= 100)&&
+                        (pQuestionData.EndValue >= 1 && pQuestionData.EndValue <= 100)
+                        )
+                    {
+                        //check if start value is less than end value
+                        if (pQuestionData.StartValue < pQuestionData.EndValue)
+                        {
+                            //successfull validation
+                            return new OperationResult();
+                        }
+                        else
+                        {
+                            return new OperationResult("Validation", "Start value must be less than end value");
+
+                        }
+                    }
+                    else
+                    {
+                        return new OperationResult("Validation", "Start value or end value is greater than 100 or less than 0");
+                    }
+                }
+                //object is null
+                return new OperationResult("Validation Error","null object received");
+            }
+            catch (Exception e)
+            {
+                UtilityMethods.LogError(e);
+                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
+            }
+        }
+
+        /// <summary>
+        /// validate the slider type data by checking for null
+        /// and checking the number of stars if it's in the 
+        /// acceptable range 1-10
+        /// </summary>
+        /// <param name="pQuestionData"></param>
+        /// <returns></returns>
+        public static OperationResult StarsQuestionValidator(StarsQuestion pQuestionData)
+        {
+            try
+            {
+                if (pQuestionData!=null)
+                {
+                    if(pQuestionData.NumberOfStars >= 1 && pQuestionData.NumberOfStars <= 10)
+                    {
+                        return new OperationResult();
+                    }
+                    else
+                    {
+                        return new OperationResult("Validation", "number of stars should be between 1 and 10");
+                    }
+                }
+                //object is null
+                return new OperationResult("Validation Error", "null object received");
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
+            }
+        }
+
+        /// <summary>
+        /// validate the slider type data by checking for null
+        /// and checking the number of smiley faces if it's in the 
+        /// acceptable range 2-5
+        /// </summary>
+        /// <param name="pQuestionData"></param>
+        /// <returns></returns>
+        public static OperationResult SmileyQuestionValidator(SmileyQuestion pQuestionData)
+        {
+            try
+            {
+                if (pQuestionData != null)
+                {
+                    if (pQuestionData.NumberOfSmileyFaces >= 2 && pQuestionData.NumberOfSmileyFaces <= 5)
+                    {
+                        return new OperationResult();
+                    }
+                    else
+                    {
+                        return new OperationResult("Validation", "number of smiley faces should be between 2 and 5");
+                    }
+                }
+                //object is null
+                return new OperationResult("Validation Error", "null object received");
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
+            }
+        }
+
         #endregion
 
         #region class utilty functions

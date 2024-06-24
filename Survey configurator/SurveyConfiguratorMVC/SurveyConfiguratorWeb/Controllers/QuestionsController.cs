@@ -455,7 +455,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return View("Error)");
+                return View("Error");
             }
         }
         #endregion

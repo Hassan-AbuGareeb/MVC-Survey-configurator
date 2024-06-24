@@ -12,46 +12,46 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Id)
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
 
-    <div class="form-group">
-        @Html.Label(SharedResources.GlobalStrings.Text, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label(SharedResources.GlobalStrings.Text, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label(SharedResources.GlobalStrings.Order, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Order, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Order, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label(SharedResources.GlobalStrings.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.Type, new { id = @cQuestionTypeDropDownId, htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- render additional fields based on chosen question type -->
+        <div id="@cQuestionTypeOptionsId">
+            <!--render the partial view here-->
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="@SharedResources.GlobalStrings.Save" class="btn btn-default" />
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.Label(SharedResources.GlobalStrings.Order, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Order, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Order, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.Label(SharedResources.GlobalStrings.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EnumDropDownListFor(model => model.Type, new { id = @cQuestionTypeDropDownId, htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <!-- render additional fields based on chosen question type -->
-    <div id="@cQuestionTypeOptionsId">
-        <!--render the partial view here-->
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="@SharedResources.GlobalStrings.Save" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
 <div>
@@ -59,47 +59,76 @@
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
 <script>
     $(document).ready(function ()
     {
         //show the fields of the already selected question type
-        $.ajax({
-            url: '@Url.Action("GetQuestionTypeDetailsEdit", "Questions")',
-            type: "GET",
-            data: { id: @Model.Id },
-            success: function (partial) {
-                $('#'+'@cQuestionTypeOptionsId').empty();
-                $('#'+'@cQuestionTypeOptionsId').html(partial);
-            },
-            error: function (xhr, status, error) {
-                console.log(xhr.responseText);
-            }
-        })
+        function LoadQuestionTypeData() {
+             $.ajax({
+                 url: '@Url.Action("GetQuestionTypeDetailsEdit", "Questions")',
+                 type: "GET",
+                 data: { id: @Model.Id },
+                 success: function (partial) {
+                     $('#'+'@cQuestionTypeOptionsId').empty();
+                     $('#' + '@cQuestionTypeOptionsId').html(partial);
 
+                     InitializeValidation();
+                 },
+                 error: function (xhr, status, error) {
+                     console.log(xhr.responseText);
+                 }
+             })
+        }
 
-        //change the fields when the selected type changes
-        $("#"+'@cQuestionTypeDropDownId').change(function () {
-            let tChangedType = $(this).val();
+        function LoadQuestionTypeOptions(selectedType) {
             $.ajax({
                 url: '@Url.Action("GetQuestionTypeOptions", "Questions")',
                 type: "GET",
-                data: { pType: tChangedType },
+                data: { pType: selectedType },
                 success: function (partial) {
-                    $('#'+'@cQuestionTypeOptionsId').empty();
+                    $('#' + '@cQuestionTypeOptionsId').empty();
                     $('#' + '@cQuestionTypeOptionsId').html(partial);
 
-                    //change the validation rules for the new question type
-                    $("form").removeData("validator").removeData("unobtrusiveValidation");
-                    //Parse the form again
-                    $.validator.unobtrusive.parse($("form"));
+                    // Reinitialize jQuery validation for the form
+                    InitializeValidation();
                 },
                 error: function (xhr, status, error) {
                     console.log(xhr.responseText);
                 }
-            })
-        })
+            });
+        }
+
+        function InitializeValidation() {
+            // Remove previous validator data and re-parse the form
+            $("form").removeData("validator").removeData("unobtrusiveValidation");
+            $.validator.unobtrusive.parse($("form"));
+
+            // Add custom validation method for comparing StartValue and EndValue
+            $.validator.addMethod("GreaterThanStartValue", function (value, element, params) {
+                let startValue = parseFloat(value);
+                let endValue = parseFloat($(params).val());
+                return startValue > endValue;
+            }, "End Value must be greater than Start Value.");
+
+            // Apply the custom validation method to StartValue field
+            $("#EndValue").rules("add", {
+                GreaterThanStartValue: "#StartValue"
+            });
+        }
+
+        // Load question type options when the form is visited based on selected type
+        //and fill it with the existing data
+        LoadQuestionTypeData();
+
+        InitializeValidation();
+
+        // change question type options when selected type is changed
+        $("#" + '@cQuestionTypeDropDownId').change(function () {
+            let selectedType = $(this).val();
+            LoadQuestionTypeOptions(selectedType);
+        });
     });
 </script>
 }
