@@ -72,14 +72,15 @@
                  data: { id: @Model.Id },
                  success: function (partial) {
                      $('#'+'@cQuestionTypeOptionsId').empty();
-                     $('#'+'@cQuestionTypeOptionsId').html(partial);
+                     $('#' + '@cQuestionTypeOptionsId').html(partial);
+
+                     InitializeValidation();
                  },
                  error: function (xhr, status, error) {
                      console.log(xhr.responseText);
                  }
              })
         }
-
 
         function LoadQuestionTypeOptions(selectedType) {
             $.ajax({
