@@ -132,6 +132,9 @@
   <data name="CancelOperationTitle" xml:space="preserve">
     <value>Cancel Operation</value>
   </data>
+  <data name="ConnectionSettings" xml:space="preserve">
+    <value>Connection settings</value>
+  </data>
   <data name="DataBaseConnectionError" xml:space="preserve">
     <value>An error occured while connecting to database, the application may not work properly.
 would like to continue?</value>
@@ -182,6 +185,9 @@ if you keep getting this error restart the app</value>
   <data name="InvalidInputTitle" xml:space="preserve">
     <value>Invalid input</value>
   </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
   <data name="MissingFields" xml:space="preserve">
     <value>The following fields must have proper values:</value>
   </data>
@@ -202,6 +208,9 @@ if you keep getting this error restart the app</value>
   </data>
   <data name="OperationSuccessfulTitle" xml:space="preserve">
     <value>Operation successful</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Options</value>
   </data>
   <data name="Order" xml:space="preserve">
     <value>Order</value>

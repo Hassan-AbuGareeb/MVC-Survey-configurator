@@ -1,0 +1,117 @@
+﻿@model SurveyConfiguratorWeb.Models.ConnectionStringViewModel
+
+@{
+    ViewBag.Title = SharedResources.GlobalStrings.ConnectionSettings;
+    //const string cUserCredentialsId = "UserCredintials";
+    const string cAuthenticationOptionId = "AuthenticationOption";
+}
+
+<h2>@SharedResources.GlobalStrings.ConnectionSettings</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.mServer, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.mServer, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.mServer, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.mDatabase, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.mDatabase, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.mDatabase, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.mIntegratedSecurity, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="checkbox">
+                @Html.DropDownListFor(model => model.mIntegratedSecurity,
+               new List<SelectListItem>
+               {
+                   new SelectListItem{Selected=false, Text="Windows Authentication", Value = "true"},
+                   new SelectListItem{Selected=true, Text="SQL Server Authentication", Value = "false"}
+               }, htmlAttributes: new { id = cAuthenticationOptionId }
+               )
+                @Html.ValidationMessageFor(model => model.mIntegratedSecurity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.mUser, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.mUser, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.mUser, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.mPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.mPassword, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.mPassword, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Connect" class="btn btn-default" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="reset" value="Clear" class="btn btn-default" />
+        </div>
+    </div>
+    @if (TempData["ConnectionResult"] != null)
+    {
+        <div>@TempData["ConnectionResult"]</div>
+    }
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")
+<script>
+        $(document).ready(function () {
+            //to set the fields value when the page opens before any changes are made
+            let tOriginalAuthentication = $("#" + '@cAuthenticationOptionId').val();
+            if (tOriginalAuthentication== 'false') {
+                //show user credintials fields
+                //fill them with data from model or fetch it manually
+            }
+
+            //show user credintials fields on change
+            $("#" + "@cAuthenticationOptionId").change(function () {
+                let tSelectedAuthentication = $("#" + '@cAuthenticationOptionId').val();
+              //if the newely selected value is false then
+                //show the user credintials fields
+                if (tSelectedAuthentication === 'true') {
+                    $("#mUser").attr("type", "hidden");
+                    $("#mPassword").attr("type", "hidden");    
+                } else {
+                    $("#mUser").attr("type", "text");
+                    $("#mPassword").attr("type", "text");
+                }
+            })
+        })
+</script>
+}

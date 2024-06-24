@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = SharedResources.GlobalStrings.Options;
+}
+
+<h2>@SharedResources.GlobalStrings.Language</h2>
+
+<h4>Choose language:</h4>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.DropDownList("SelectedLanguage", new List<SelectListItem> { new SelectListItem { Selected =true, Text = "Arabic", Value="ar"},
+        new SelectListItem { Selected=false, Text="English", Value="en"} })
+    </div>
+    
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="@SharedResources.GlobalStrings.Save" class="btn btn-default" />
+        </div>
+    </div>
+
+ }
