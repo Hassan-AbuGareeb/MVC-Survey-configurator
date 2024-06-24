@@ -1,7 +1,10 @@
-﻿using SurveyConfiguratorWeb.Models;
+﻿using QuestionServices;
+using SharedResources;
+using SurveyConfiguratorWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -13,6 +16,9 @@ namespace SurveyConfiguratorWeb.Controllers
     public class OptionsController : Controller
     {
         public static string[] cSupportedLanguages = { "en", "ar" };
+
+        //constants
+        static string cConnectionResultMessageKey = "ConnectionResult";
 
         [HttpGet]
         public ActionResult Index()
@@ -51,13 +57,37 @@ namespace SurveyConfiguratorWeb.Controllers
         [HttpGet]
         public ActionResult ConnectionSettings()
         {
+            //try to get existing connection string if it's existing
             return View();
         }
 
         [HttpPost]
-        public ActionResult ConnectionSettings(ConnectionStringViewModel pConnectionSettings, FormCollection pFormData)
+        public ActionResult ConnectionSettings(ConnectionStringViewModel pConnectionSettings)
         {
-            return View("Index");
+            //create connectionString object
+            ConnectionString tConnectionData = new ConnectionString(
+                pConnectionSettings.mServer,
+                pConnectionSettings.mDatabase,
+                pConnectionSettings.mIntegratedSecurity,
+                pConnectionSettings.mUser,
+                pConnectionSettings.mPassword
+                );
+
+            //set it as the default connection string 
+            QuestionOperations.SetConnectionString(tConnectionData);
+
+            //test connection, return notificiation result based on whether connection succeeded or not
+            OperationResult tCanConnectToDatabase = QuestionOperations.TestDBConnection();
+            if (tCanConnectToDatabase.IsSuccess)
+            {
+                TempData[cConnectionResultMessageKey] = "Database connected successfully";
+                return View();
+            }
+            else 
+            {
+                TempData[cConnectionResultMessageKey] = "Database refused to connect";
+                return View();
+            }
         }
     }
 }

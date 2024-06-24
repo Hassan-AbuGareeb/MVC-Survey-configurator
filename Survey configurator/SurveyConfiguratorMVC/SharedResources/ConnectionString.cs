@@ -37,7 +37,7 @@ namespace SharedResources
             }
         }
 
-        public ConnectionString(string pServer, string pDatabase, bool pIntegratedSecurity, string pUserName, string pPassword)
+        public ConnectionString(string pServer, string pDatabase, bool pIntegratedSecurity, string pUser= "", string pPassword = "")
         {
             try
             {
@@ -46,7 +46,7 @@ namespace SharedResources
                 mIntegratedSecurity = pIntegratedSecurity;
                 mEncrypt = false;
                 mTimeout = cMaxTimeOutDuration;
-                mUser = pUserName;
+                mUser = pUser;
                 mPassword = pPassword;
             }
             catch (Exception ex)

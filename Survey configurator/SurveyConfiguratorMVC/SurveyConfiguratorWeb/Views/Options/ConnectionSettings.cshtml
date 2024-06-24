@@ -74,7 +74,10 @@
             <input type="reset" value="Clear" class="btn btn-default" />
         </div>
     </div>
-
+    @if (TempData["ConnectionResult"] != null)
+    {
+        <div>@TempData["ConnectionResult"]</div>
+    }
 </div>
 }
 
