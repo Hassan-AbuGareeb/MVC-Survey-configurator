@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SurveyConfiguratorWeb.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
@@ -51,6 +52,12 @@ namespace SurveyConfiguratorWeb.Controllers
         public ActionResult ConnectionSettings()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult ConnectionSettings(ConnectionStringViewModel pConnectionSettings, FormCollection pFormData)
+        {
+            return View("Index");
         }
     }
 }

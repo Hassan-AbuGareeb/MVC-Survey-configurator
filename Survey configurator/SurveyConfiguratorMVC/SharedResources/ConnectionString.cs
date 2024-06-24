@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Net.PeerToPeer;
 
 namespace SharedResources
 {
     public class ConnectionString
     {
+        private const int cMaxTimeOutDuration = 5;
+
         /// <summary>
         /// a class to facilitate the process of obtaining the connection string
         /// and changing/saving it in the connectionString.json file
@@ -22,11 +25,29 @@ namespace SharedResources
             {
                 mServer = string.Empty;
                 mDatabase = string.Empty;
+                mIntegratedSecurity = true;
+                mEncrypt = false;
+                mTimeout = cMaxTimeOutDuration;
                 mUser = string.Empty;
                 mPassword = string.Empty;
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+            }
+        }
+
+        public ConnectionString(string pServer, string pDatabase, bool pIntegratedSecurity, string pUserName, string pPassword)
+        {
+            try
+            {
+                mServer = pServer;
+                mDatabase = pDatabase;
+                mIntegratedSecurity = pIntegratedSecurity;
                 mEncrypt = false;
-                mTimeout = 5;
-                mIntegratedSecurity = true;
+                mTimeout = cMaxTimeOutDuration;
+                mUser = pUserName;
+                mPassword = pPassword;
             }
             catch (Exception ex)
             {

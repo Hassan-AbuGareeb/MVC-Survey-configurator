@@ -231,6 +231,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ConnectionStringViewModel.cs" />
     <Compile Include="Models\SliderQuestionOptions.cs" />
     <Compile Include="Models\SmileyQuestionOptions.cs" />
     <Compile Include="Models\StarsQuestionOptions.cs" />
@@ -298,6 +299,7 @@
     <Content Include="Views\Error\ErrorPage.cshtml" />
     <Content Include="Views\Options\Index.cshtml" />
     <Content Include="Views\Options\Language.cshtml" />
+    <Content Include="Views\Options\ConnectionSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
