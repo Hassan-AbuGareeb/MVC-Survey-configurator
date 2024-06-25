@@ -49,18 +49,21 @@
 <script>
     $(document).ready(function ()
     {
-        let tQuestionId = @Model.Id;
-         $.ajax({
-             url: '@Url.Action("GetQuestionTypeDetails", "Questions")',
-             type: "GET",
-             data: { id: tQuestionId },
-             success: function (partial) {
-                 $('#'+'@cQuestionTypeInfoId').empty();
-                 $('#'+'@cQuestionTypeInfoId').html(partial);
-             },
-             error: function (xhr, status, error) {
-                 console.log(xhr.responseText);
-             }
-         })
+        const tQuestionId = @Model.Id;
+
+        //get the partial view containing the appropriate
+        //question-type options
+        $.ajax({
+            url: '@Url.Action("GetQuestionTypeDetails", "Questions")',
+            type: "GET",
+            data: { id: tQuestionId },
+            success: function (partial) {
+                $('#'+'@cQuestionTypeInfoId').empty();
+                $('#'+'@cQuestionTypeInfoId').html(partial);
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr.responseText);
+            }
+        })
  });
 </script>

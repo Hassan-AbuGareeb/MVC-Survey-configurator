@@ -19,12 +19,16 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jquery")
+    @* scripts for the datatable component *@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 
     <script>
         $(document).ready(async function () {
-            //get the check sum value from the controller
+
+            /// <summary>
+            //get the database checksum value from the controller
+            /// </summary>
             async function GetChecksum() {
                 const tCheckSum = await $.ajax({
                     url: '@Url.Action("GetChecksumValue", "Questions")',
@@ -33,21 +37,27 @@
                 return tCheckSum;
             }
 
+            /// <summary>
+            /// this functions checks whether the database has changed
+            /// by comparing the checksum of the database against the
+            /// checksum obtained first when visiting this view
+            /// if the database is changed re-render the partial view
+            /// containing the questions table
+            /// </summary>
             async function CheckDatabaseForChanges() {
-                console.log("HI1");
                 //get new checksum value
                 const tNewChecksumValue = await GetChecksum();
+
                 if (tNewChecksumValue !== tOriginalChecksumValue) {
                     //update the value of the orignal checksum
                     tOriginalChecksumValue = tNewChecksumValue;
 
-                    //re-render the questions list partial view with new Data
+                    //get the updated partial view
                     $.ajax({
                         url: '@Url.Action("GetQuestionsListPartialView", "Questions")',
                         type: "GET",
                         success: function (pPartial) {
                             //re-render partial view with new data
-                            console.log("HI2");
                             $("span").empty();
                             $("span").html(pPartial);
                         },
@@ -67,7 +77,7 @@
             //get original checksum of db
             let tOriginalChecksumValue = await GetChecksum();
 
-            //call the data base checker function periodically
+            //call the data base checker function periodically (every 10 secnods)
             let tDatabaseCheckerInterval = setInterval(CheckDatabaseForChanges,10000)
         })
     </script>

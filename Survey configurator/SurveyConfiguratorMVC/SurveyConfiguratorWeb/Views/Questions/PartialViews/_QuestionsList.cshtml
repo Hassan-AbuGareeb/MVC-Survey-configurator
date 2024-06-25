@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<SurveyConfiguratorWeb.Models.QuestionViewModel>
 
 <table class="table">
+
     <thead>
         <tr>
             <th>
@@ -12,9 +13,13 @@
             <th>
                 @SharedResources.GlobalStrings.Type
             </th>
+            @* invisible to hide the sorting buttons provided by
+                the data table component as they're not necessary 
+                for this column*@
             <th class="invisible"></th>
         </tr>
     </thead>
+
     <tbody>
         @foreach (var item in Model)
         {
@@ -36,15 +41,18 @@
             </tr>
         }
     </tbody>
+
 </table>
 
 @section Scripts{
     @Scripts.Render("~/bundles/jquery")
+    @* scripts for the datatable component *@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 
     <script>
         $(document).ready(function () {
+            //initialize the datatable
             $("table").DataTable({});
         })
     </script>

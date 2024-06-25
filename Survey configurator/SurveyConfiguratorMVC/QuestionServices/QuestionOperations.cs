@@ -20,6 +20,7 @@ namespace QuestionServices
         /// </summary>
 
         //event handlers
+
         //event handler for any change that happens to the database from any source
         public static event EventHandler DataBaseChangedEvent;
         //event handler for when the database stops responding

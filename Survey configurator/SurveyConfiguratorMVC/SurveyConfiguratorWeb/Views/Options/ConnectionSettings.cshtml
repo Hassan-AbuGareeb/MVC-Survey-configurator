@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = SharedResources.GlobalStrings.ConnectionSettings;
-    //const string cUserCredentialsId = "UserCredintials";
     const string cAuthenticationOptionId = "AuthenticationOption";
 }
 
@@ -15,6 +14,8 @@
 <div class="form-horizontal">
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @* Server name field *@
     <div class="form-group">
         @Html.LabelFor(model => model.mServer, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -23,6 +24,7 @@
         </div>
     </div>
 
+    @* Database name field *@
     <div class="form-group">
         @Html.LabelFor(model => model.mDatabase, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -31,6 +33,7 @@
         </div>
     </div>
 
+    @* Integrated security Drop down list *@
     <div class="form-group">
         @Html.LabelFor(model => model.mIntegratedSecurity, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -47,6 +50,7 @@
         </div>
     </div>
 
+    @* user name field *@
     <div class="form-group">
         @Html.LabelFor(model => model.mUser, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -55,6 +59,7 @@
         </div>
     </div>
 
+    @* password field *@
     <div class="form-group">
         @Html.LabelFor(model => model.mPassword, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -63,17 +68,23 @@
         </div>
     </div>
 
+    @* submit button *@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Connect" class="btn btn-default" />
         </div>
     </div>
 
+    @* Clear button *@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="reset" value="Clear" class="btn btn-default" />
         </div>
     </div>
+
+    @* show text on screen to indiciate whether
+        the connection to the database succeeded
+        needs enhancements*@
     @if (TempData["ConnectionResult"] != null)
     {
         <div>@TempData["ConnectionResult"]</div>
@@ -91,12 +102,12 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jquery")
 <script>
-        $(document).ready(function () {
+    $(document).ready(function () {
+
             //to set the fields value when the page opens before any changes are made
             let tOriginalAuthentication = $("#" + '@cAuthenticationOptionId').val();
             if (tOriginalAuthentication== 'false') {
                 //show user credintials fields
-                //fill them with data from model or fetch it manually
             }
 
             //show user credintials fields on change
@@ -105,9 +116,11 @@
               //if the newely selected value is false then
                 //show the user credintials fields
                 if (tSelectedAuthentication === 'true') {
+                    //hide fields
                     $("#mUser").attr("type", "hidden");
                     $("#mPassword").attr("type", "hidden");    
                 } else {
+                    //show fields
                     $("#mUser").attr("type", "text");
                     $("#mPassword").attr("type", "text");
                 }

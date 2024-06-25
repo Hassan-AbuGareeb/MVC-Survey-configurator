@@ -17,6 +17,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
+        @* Question text field *@
         <div class="form-group">
             @Html.Label(SharedResources.GlobalStrings.Text, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -25,6 +26,7 @@
             </div>
         </div>
 
+        @* Question Order field *@
         <div class="form-group">
             @Html.Label(SharedResources.GlobalStrings.Order, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -33,6 +35,7 @@
             </div>
         </div>
 
+        @* Question Type Drop down *@
         <div class="form-group">
             @Html.Label(SharedResources.GlobalStrings.Type, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -41,19 +44,21 @@
             </div>
         </div>
 
-        <!-- render additional fields based on chosen question type -->
+        <!-- question-type options partial view -->
         <div id="@cQuestionTypeOptionsId">
-            <!--render the partial view here-->
         </div>
 
+        @* submit button *@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="@SharedResources.GlobalStrings.Save" class="btn btn-default" />
             </div>
         </div>
+
     </div>
 }
 
+@* back to list button *@
 <div>
     @Html.ActionLink(SharedResources.GlobalStrings.BackToList, "Index")
 </div>
@@ -61,10 +66,13 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
-<script>
+    <script>
     $(document).ready(function ()
     {
-        //show the fields of the already selected question type
+        /// </summary>
+        /// Load question-type options partial view based on the selected type
+        /// and fills it with data from the provided question model
+        /// </summary>
         function LoadQuestionTypeData() {
              $.ajax({
                  url: '@Url.Action("GetQuestionTypeDetailsEdit", "Questions")',
@@ -74,6 +82,8 @@
                      $('#'+'@cQuestionTypeOptionsId').empty();
                      $('#' + '@cQuestionTypeOptionsId').html(partial);
 
+                     // Reinitialize jQuery validator object to inculde
+                     // the new validation rules for the question-type options
                      InitializeValidation();
                  },
                  error: function (xhr, status, error) {
@@ -82,6 +92,9 @@
              })
         }
 
+        /// </summary>
+        /// Load question-type options partial view based on the selected type
+        /// </summary>
         function LoadQuestionTypeOptions(selectedType) {
             $.ajax({
                 url: '@Url.Action("GetQuestionTypeOptions", "Questions")',
@@ -122,6 +135,7 @@
         //and fill it with the existing data
         LoadQuestionTypeData();
 
+        //initalize the JQuery validator
         InitializeValidation();
 
         // change question type options when selected type is changed
@@ -130,5 +144,5 @@
             LoadQuestionTypeOptions(selectedType);
         });
     });
-</script>
+    </script>
 }
