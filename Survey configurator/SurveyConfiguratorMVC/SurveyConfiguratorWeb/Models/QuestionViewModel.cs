@@ -5,6 +5,16 @@ namespace SurveyConfiguratorWeb.Models
 {
     public class QuestionViewModel
     {
+        /// <summary>
+        /// view model for the question object partial view
+        /// which contains only the general question info
+        /// with the appropriate data annotations to help 
+        /// with the validation.
+        /// the errors messages are fetched from the resource file to 
+        /// enable the localization 
+        /// </summary>
+
+
         public int Id { get; set; }
 
         [Required(ErrorMessage = "The question text can't be empty")]
