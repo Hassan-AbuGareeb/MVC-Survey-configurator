@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Text.Json;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
@@ -29,6 +30,7 @@ namespace SurveyConfiguratorWeb.Controllers
         [HttpGet]
         public ActionResult Language()
         {
+            ViewBag.SupportedLanguages = JsonSerializer.Serialize(cSupportedLanguages);
             return View();
         }
 
@@ -38,7 +40,7 @@ namespace SurveyConfiguratorWeb.Controllers
             //check if the received value is existing in the supportedLanguages
 
             //set the selected language as default for all threads
-            string tSelectedLanguage = pFormData["SelectedLanguage"];
+            string tSelectedLanguage = pFormData["LanguageDropDown"];
             CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(tSelectedLanguage);
             CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo(tSelectedLanguage);
 
@@ -93,5 +95,10 @@ namespace SurveyConfiguratorWeb.Controllers
                 return View();
             }
         }
+
+        //public string[] GetSupportedLanguages()
+        //{
+        //    return cSupportedLanguages;
+        //}
     }
 }

@@ -1,6 +1,8 @@
 ﻿@{
     ViewBag.Title = SharedResources.GlobalStrings.Options;
 }
+    
+@using System.Web.Configuration;
 
 <h2>@SharedResources.GlobalStrings.Language</h2>
 
@@ -9,14 +11,34 @@
 {
     @Html.AntiForgeryToken()
     <div class="form-group">
-        @Html.DropDownList("SelectedLanguage", new List<SelectListItem> { new SelectListItem { Selected =true, Text = "Arabic", Value="ar"},
-        new SelectListItem { Selected=false, Text="English", Value="en"} })
+        <select id="LanguageDropDown" name="LanguageDropDown">
+
+        </select>
     </div>
-    
+
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="@SharedResources.GlobalStrings.Save" class="btn btn-default" />
         </div>
     </div>
 
- }
+}
+@section Scripts{
+    @Scripts.Render("~/bundles/jquery")
+<script>
+    $(document).ready(function () {
+        //get the selected language from config file
+        const tSelectedLanguage = '@WebConfigurationManager.AppSettings["Language"]';
+
+        //get the supported languages array
+        let tSupportedLanguagesArray = @Html.Raw(ViewBag.SupportedLanguages);
+
+        //populate the drop down list with the languages
+        //and set the selected language to the language stored in the config file
+        let tLangaugesDropDownList = $("#LanguageDropDown")
+        $.each(tSupportedLanguagesArray, function (index, value) {
+            tLangaugesDropDownList.append(`<option value=${value} ${value === tSelectedLanguage ? "selected":""}>${value}</option>`)
+        })
+    })
+</script>
+}
