@@ -12,6 +12,13 @@ namespace SurveyConfiguratorWeb.Controllers
     [GlobalExceptionFilter]
     public class QuestionsController : Controller
     {
+        /// <summary>
+        /// responsible for the most functionality of the app.
+        /// showing questions objects in list, creating, editing and deleting
+        /// quesitions
+        /// </summary>
+
+
         //constants
         private const string cQuestionsView = "Index";
         private const string cPartialViewsFolder = "PartialViews";
@@ -33,6 +40,10 @@ namespace SurveyConfiguratorWeb.Controllers
         private const string cStartValueCaption = "StartValueCaption";
         private const string cEndValueCaption = "EndValueCaption";
 
+        /// <summary>
+        /// constructor for the controller, checks for the database connectivity before 
+        /// doing any operation
+        /// </summary>
         public QuestionsController()
         {
             try
@@ -52,14 +63,19 @@ namespace SurveyConfiguratorWeb.Controllers
                 RedirectToErrorPage(cDefaultErrorMessage);
             }
         }
-        // GET: Questions
+
+        /// <summary>
+        /// shows the Questions list view and redirectes to error page in case of failure
+        /// </summary>
+        /// <returns>view containing questions list</returns>
+        [HttpGet]
         public ActionResult Index()
         {
             try 
             { 
                 //get all questions data
-                var canGetQuesitons = QuestionOperations.GetQuestions();
-                if (canGetQuesitons.IsSuccess && canGetQuesitons!=null)
+                OperationResult tCanGetQuesitons = QuestionOperations.GetQuestions();
+                if (tCanGetQuesitons.IsSuccess && tCanGetQuesitons != null)
                 {
                     return View(GetQuestionsData());
                 }
@@ -71,6 +87,11 @@ namespace SurveyConfiguratorWeb.Controllers
                 return RedirectToErrorPage(cDefaultErrorMessage);
             }
         }
+
+        /// <summary>
+        /// shows the create question view
+        /// </summary>
+        /// <returns>create question view</returns>
 
         [HttpGet]
         public ActionResult Create()
@@ -87,15 +108,19 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
+        /// <summary>
+        /// create a question object from the question view model
+        /// and add it to the database
+        /// </summary>
+        /// <param name="pQuestionModelData">question general data</param>
+        /// <param name="pFormData">contains the question-type data</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(QuestionViewModel pQuestionModelData, FormCollection pFormData)
         {
             try
             {
-                //check model state for errors here too?
-                
-                
                 //based on the type of question create a new object and
                 //fill its respective fields
                 Question tQuestionToAdd = CreateQuestionObject(pQuestionModelData, pFormData);
@@ -104,14 +129,11 @@ namespace SurveyConfiguratorWeb.Controllers
                     OperationResult tIsQuestionAdded = QuestionOperations.AddQuestion(tQuestionToAdd);
                     if (tIsQuestionAdded.IsSuccess)
                     {
-                        //show pop up message
-                        //on a successful question creation
-                        TempData[cMessageKey] = GlobalStrings.OperationSuccessful;
                         return RedirectToAction(cQuestionsView);
                     }
                 }
                 TempData[cMessageKey] = GlobalStrings.OperationError;
-                //show error pop up
+                //show error pop up, failed in adding the question
                 return RedirectToAction(cQuestionsView);
             }
             catch (Exception ex)
@@ -121,6 +143,12 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
+        /// <summary>
+        /// shows the edit question view with the question
+        /// fields filled with the questions data
+        /// </summary>
+        /// <param name="id">question Id</param>
+        /// <returns>edit question view</returns>
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -148,19 +176,24 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
+        /// <summary>
+        /// edits the question data received from the 
+        /// edit question view
+        /// </summary>
+        /// <param name="pQuestionModelUpdatedData">updated data</param>
+        /// <param name="pFormData">contains question-type data</param>
+        /// <returns>a view to get redirected to</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(QuestionViewModel pQuestionModelUpdatedData, FormCollection pFormData)
         {
             try
             {
-
                 Question tQuestionToAdd = CreateQuestionObject(pQuestionModelUpdatedData, pFormData);
-
+                //update question data
                 OperationResult tIsQuestionAdded = QuestionOperations.UpdateQuestion(tQuestionToAdd);
                 if (tIsQuestionAdded.IsSuccess)
                 {
-                    TempData[cMessageKey] = GlobalStrings.OperationSuccessful;
                     return RedirectToAction(cQuestionsView);
                 }
                 TempData[cMessageKey] = GlobalStrings.OperationError;
@@ -174,12 +207,20 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
+        /// <summary>
+        /// shows a view with the question general data
+        /// to delete that question
+        /// </summary>
+        /// <param name="id">question id</param>
+        /// <returns>delete question view</returns>
         [HttpGet]
         public ActionResult Delete(int id)
         {
             try
             {
+                //get question data
                 Question tQuestionData = QuestionOperations.GetQuestionData(id);
+
                 if (tQuestionData != null)
                 {
                     QuestionViewModel tQuestionModelData = new QuestionViewModel(
@@ -200,6 +241,13 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
+        /// <summary>
+        /// deletes question using its id, the id is added 
+        /// to a list, this implementation supports deleting
+        /// multiple questions at once
+        /// </summary>
+        /// <param name="pQuestionData">question data</param>
+        /// <returns> a view to be redirected to</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(QuestionViewModel pQuestionData)
@@ -208,17 +256,15 @@ namespace SurveyConfiguratorWeb.Controllers
             {
                 List<int> tQuestionsIds = new List<int>();
                 tQuestionsIds.Add(pQuestionData.Id);
+                //delete questions
                 OperationResult tAreQuestionsDeleted = QuestionOperations.DeleteQuestion(tQuestionsIds);
                 if (tAreQuestionsDeleted.IsSuccess)
                 {
-                    TempData[cMessageKey] = GlobalStrings.OperationSuccessful;
                     return RedirectToAction(cQuestionsView);
                 }
-                else
-                {
-                    TempData[cMessageKey] = GlobalStrings.OperationError;
-                    return RedirectToAction(cQuestionsView);
-                }
+                //show error pop up
+                TempData[cMessageKey] = GlobalStrings.OperationError;
+                return RedirectToAction(cQuestionsView);
             }
             catch (Exception ex)
             {
@@ -227,11 +273,19 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
+        /// <summary>
+        /// show the data of the question
+        /// including the general data and the
+        /// question-type data
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Details(int id)
         {
             try
             {
+                //get question data
                 Question tQuestionData = QuestionOperations.GetQuestionData(id);
                 if (tQuestionData != null)
                 {
@@ -411,6 +465,11 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
+        /// <summary>
+        /// creates a list of QuestionViewModel objects to use as model in the 
+        /// Index action of this controller
+        /// </summary>
+        /// <returns>an IEnumerable collection containing QuestionViewModel objects</returns>
         public IEnumerable<QuestionViewModel> GetQuestionsData()
         {
             List<Question> tQuestionsList = QuestionOperations.mQuestionsList;
@@ -428,6 +487,10 @@ namespace SurveyConfiguratorWeb.Controllers
             return tModelQuestionsList;
         }
 
+        /// <summary>
+        /// returns the database checksum value
+        /// </summary>
+        /// <returns>long value representing the checksum value</returns>
         public long GetChecksumValue()
         {
             try
@@ -443,20 +506,26 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
+        /// <summary>
+        /// creates a question object from the QuestionViewModel object and theh form data
+        /// </summary>
+        /// <param name="pQuestionModelData">question general data</param>
+        /// <param name="pFormData">contains question-type data</param>
+        /// <returns>Question object</returns>
         private Question CreateQuestionObject(QuestionViewModel pQuestionModelData, FormCollection pFormData)
         {
-            //encapsulate the questionViewModel in a Question object
-
-            Question tQuestionData= new Question(
+            try
+            {
+                //encapsulate the questionViewModel in a Question object
+                Question tQuestionData= new Question(
                 pQuestionModelData.Id,
                 pQuestionModelData.Text,
                 pQuestionModelData.Order,
                 pQuestionModelData.Type
                 );
 
-            try 
-            { 
                 Question tCreatedQuestion = null;
+                //add the question-type data to the question object;
                 switch (tQuestionData.Type)
                 {
                     case eQuestionType.Stars:
@@ -485,6 +554,11 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
+        /// <summary>
+        /// redirects to the error view
+        /// </summary>
+        /// <param name="pErrorMessage"> message to show on the error page </param>
+        /// <returns></returns>
         private ActionResult RedirectToErrorPage(string pErrorMessage)
         {
             try 
