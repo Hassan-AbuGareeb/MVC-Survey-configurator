@@ -361,6 +361,26 @@ namespace SurveyConfiguratorWeb.Controllers
         }
 
         [HttpGet]
+        public ActionResult GetQuestionsListPartialView()
+        {
+            try
+            {
+                var canGetQuesitons = QuestionOperations.GetQuestions();
+                if (canGetQuesitons != null && canGetQuesitons.IsSuccess) { 
+                    IEnumerable<QuestionViewModel> tQuestionsListViewModel = GetQuestionsData();
+                    return PartialView("PartialViews/_QuestionsList", tQuestionsListViewModel);
+                }
+                //handle faliure case 
+                return RedirectToErrorPage(GlobalStrings.DataBaseConnectionError);
+            }
+            catch( Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return RedirectToErrorPage(cDefaultErrorMessage);
+            }
+        }
+
+        [HttpGet]
         private ActionResult GetQuestionTypeDetailsPartialView(Question pQuestionData)
         {
             try 
@@ -408,6 +428,21 @@ namespace SurveyConfiguratorWeb.Controllers
             return tModelQuestionsList;
         }
 
+        public long GetChecksumValue()
+        {
+            try
+            {
+                long tChecksumValue = 0;
+                OperationResult tCheckSumResult = QuestionOperations.GetDataBaseChecksum(ref tChecksumValue);
+                return tChecksumValue;
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return 0;
+            }
+        }
+
         private Question CreateQuestionObject(QuestionViewModel pQuestionModelData, FormCollection pFormData)
         {
             //encapsulate the questionViewModel in a Question object
@@ -449,7 +484,6 @@ namespace SurveyConfiguratorWeb.Controllers
                 return null;
             }
         }
-
 
         private ActionResult RedirectToErrorPage(string pErrorMessage)
         {

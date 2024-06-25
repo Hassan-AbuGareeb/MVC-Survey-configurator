@@ -23,11 +23,52 @@
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(async function () {
+            //get the check sum value from the controller
+            async function GetChecksum() {
+                const tCheckSum = await $.ajax({
+                    url: '@Url.Action("GetChecksumValue", "Questions")',
+                    type: "GET",
+                })
+                return tCheckSum;
+            }
+
+            async function CheckDatabaseForChanges() {
+                console.log("HI1");
+                //get new checksum value
+                const tNewChecksumValue = await GetChecksum();
+                if (tNewChecksumValue !== tOriginalChecksumValue) {
+                    //update the value of the orignal checksum
+                    tOriginalChecksumValue = tNewChecksumValue;
+
+                    //re-render the questions list partial view with new Data
+                    $.ajax({
+                        url: '@Url.Action("GetQuestionsListPartialView", "Questions")',
+                        type: "GET",
+                        success: function (pPartial) {
+                            //re-render partial view with new data
+                            console.log("HI2");
+                            $("span").empty();
+                            $("span").html(pPartial);
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(xhr.responseText);
+                        }
+                    })
+                }
+            }
+
+            //show alert popup if there's any
             if ('@TempData["Message"]') {
                 $("#"+"@cAlertDivId").html("<div class='alert alert-danger'>"+"@TempData["Message"]"+"</div>")
                 setTimeout(function () { $("#"+"@cAlertDivId").empty() }, 3500);
             }
+
+            //get original checksum of db
+            let tOriginalChecksumValue = await GetChecksum();
+
+            //call the data base checker function periodically
+            let tDatabaseCheckerInterval = setInterval(CheckDatabaseForChanges,10000)
         })
     </script>
 }

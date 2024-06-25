@@ -555,6 +555,19 @@ namespace QuestionServices
             }
         }
 
+        public static OperationResult GetDataBaseChecksum(ref long pChecksumValue)
+        {
+            try
+            {
+                OperationResult tChecksumResult = Database.GetChecksum(ref pChecksumValue);
+                return tChecksumResult;
+            }catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
+            }
+        }
+
         #endregion
     }
 }
