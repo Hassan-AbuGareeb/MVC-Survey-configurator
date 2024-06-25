@@ -1,4 +1,7 @@
-﻿using QuestionServices;
+﻿using Microsoft.IdentityModel.Tokens;
+using QuestionServices;
+using SharedResources;
+using System;
 using System.Globalization;
 using System.Web.Configuration;
 using System.Web.Mvc;
@@ -9,27 +12,42 @@ namespace SurveyConfiguratorWeb
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        /// <summary>
+        /// this class is the enterance to the app and the first code that
+        /// is reached when accessing the website, added some options here that
+        /// are applicable to all parts of the app
+        /// </summary>
+
         //constants
         private const string cLanguageKey = "Language";
 
+        /// <summary>
+        /// the first function that is called when accessing the website
+        /// sets the configurations for the app
+        /// </summary>
         protected void Application_Start()
         {
-            //add try catch here
-            AreaRegistration.RegisterAllAreas();
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            try { 
+                AreaRegistration.RegisterAllAreas();
+                FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+                RouteConfig.RegisterRoutes(RouteTable.Routes);
+                BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            //get app language from app config and set it as default for any thread created
-            string tAppLanguage = WebConfigurationManager.AppSettings[cLanguageKey];
-            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(tAppLanguage);
-            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo(tAppLanguage);
+                //get app language from app config and set it as default for any thread created
+                string tAppLanguage = WebConfigurationManager.AppSettings[cLanguageKey];
+                CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(tAppLanguage);
+                CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo(tAppLanguage);
 
-            //get the connection string only once
-            bool tCanGetConnectionString = QuestionOperations.GetConnectionString();
-            if (!tCanGetConnectionString)
+                //get the connection string and set it in the database layer
+                bool tCanGetConnectionString = QuestionOperations.GetConnectionString();
+                if (!tCanGetConnectionString)
+                {
+                    //redirect to some error page or the options page
+                }
+            }
+            catch(Exception ex)
             {
-                //redirect to some error page
+                UtilityMethods.LogError(ex);
             }
         } 
     }

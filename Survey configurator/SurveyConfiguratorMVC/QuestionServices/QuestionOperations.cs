@@ -555,6 +555,11 @@ namespace QuestionServices
             }
         }
 
+        /// <summary>
+        /// get the current database checksum and store it in the ref parameter
+        /// </summary>
+        /// <param name="pChecksumValue">contain the value of the checksum</param>
+        /// <returns></returns>
         public static OperationResult GetDataBaseChecksum(ref long pChecksumValue)
         {
             try
