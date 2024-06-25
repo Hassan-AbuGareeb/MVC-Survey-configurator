@@ -22,6 +22,7 @@ namespace SurveyConfiguratorWeb.Models
         public string mUser { get; set; }
 
         [Required(ErrorMessage ="Password is requried")]
+        [DataType(DataType.Password)]
         [DisplayName("Password")]
         public string mPassword { get; set; }
 

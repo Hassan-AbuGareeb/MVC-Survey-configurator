@@ -11,58 +11,64 @@
 <p>
     @Html.ActionLink(SharedResources.GlobalStrings.AddQuestion, "Create", "Questions")
 </p>
-<table id="myTable" class="table">
-    <thead>
-        <tr>
-            <th>
-                @SharedResources.GlobalStrings.Order
-            </th>
-            <th>
-                @SharedResources.GlobalStrings.Text
-            </th>
-            <th>
-                @SharedResources.GlobalStrings.Type
-            </th>
-            <th class="invisible"></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Order)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Text)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Type)
-                </td>
-                <td>
-                    @Html.ActionLink(SharedResources.GlobalStrings.EditOperation, "Edit", new { id = item.Id }) |
-                    @Html.ActionLink(SharedResources.GlobalStrings.Details, "Details", new { id = item.Id }) |
-                    @Html.ActionLink(SharedResources.GlobalStrings.Delete, "Delete", new { id = item.Id })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<span>
+    @Html.Partial("PartialViews/_QuestionsList", Model)
+</span>
+
+
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jquery")
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
-
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+
     <script>
-        $(document).ready(function () {
+        $(document).ready(async function () {
+            //get the check sum value from the controller
+            async function GetChecksum() {
+                const tCheckSum = await $.ajax({
+                    url: '@Url.Action("GetChecksumValue", "Questions")',
+                    type: "GET",
+                })
+                return tCheckSum;
+            }
+
+            async function CheckDatabaseForChanges() {
+                console.log("HI1");
+                //get new checksum value
+                const tNewChecksumValue = await GetChecksum();
+                if (tNewChecksumValue !== tOriginalChecksumValue) {
+                    //update the value of the orignal checksum
+                    tOriginalChecksumValue = tNewChecksumValue;
+
+                    //re-render the questions list partial view with new Data
+                    $.ajax({
+                        url: '@Url.Action("GetQuestionsListPartialView", "Questions")',
+                        type: "GET",
+                        success: function (pPartial) {
+                            //re-render partial view with new data
+                            console.log("HI2");
+                            $("span").empty();
+                            $("span").html(pPartial);
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(xhr.responseText);
+                        }
+                    })
+                }
+            }
+
+            //show alert popup if there's any
             if ('@TempData["Message"]') {
                 $("#"+"@cAlertDivId").html("<div class='alert alert-danger'>"+"@TempData["Message"]"+"</div>")
                 setTimeout(function () { $("#"+"@cAlertDivId").empty() }, 3500);
             }
 
-            $("#myTable").DataTable({});
+            //get original checksum of db
+            let tOriginalChecksumValue = await GetChecksum();
+
+            //call the data base checker function periodically
+            let tDatabaseCheckerInterval = setInterval(CheckDatabaseForChanges,10000)
         })
     </script>
 }

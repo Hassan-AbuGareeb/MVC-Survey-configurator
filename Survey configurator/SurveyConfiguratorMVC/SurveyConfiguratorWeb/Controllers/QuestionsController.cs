@@ -61,20 +61,7 @@ namespace SurveyConfiguratorWeb.Controllers
                 var canGetQuesitons = QuestionOperations.GetQuestions();
                 if (canGetQuesitons.IsSuccess && canGetQuesitons!=null)
                 {
-                    //encapsulate the data in questions view model list
-                    List<Question> tQuestionsList = QuestionOperations.mQuestionsList;
-
-                    List<QuestionViewModel> tModelQuestionsList = new List<QuestionViewModel>();
-                    foreach(Question tQuestion in tQuestionsList)
-                    {
-                        tModelQuestionsList.Add(new QuestionViewModel(
-                            tQuestion.Id,
-                            tQuestion.Text,
-                            tQuestion.Order,
-                            tQuestion.Type
-                            ));
-                    }
-                    return View(tModelQuestionsList);
+                    return View(GetQuestionsData());
                 }
                 //handle case of failure to obtain questions
                 return RedirectToAction(GlobalStrings.DataFetchingError);
@@ -374,6 +361,26 @@ namespace SurveyConfiguratorWeb.Controllers
         }
 
         [HttpGet]
+        public ActionResult GetQuestionsListPartialView()
+        {
+            try
+            {
+                var canGetQuesitons = QuestionOperations.GetQuestions();
+                if (canGetQuesitons != null && canGetQuesitons.IsSuccess) { 
+                    IEnumerable<QuestionViewModel> tQuestionsListViewModel = GetQuestionsData();
+                    return PartialView("PartialViews/_QuestionsList", tQuestionsListViewModel);
+                }
+                //handle faliure case 
+                return RedirectToErrorPage(GlobalStrings.DataBaseConnectionError);
+            }
+            catch( Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return RedirectToErrorPage(cDefaultErrorMessage);
+            }
+        }
+
+        [HttpGet]
         private ActionResult GetQuestionTypeDetailsPartialView(Question pQuestionData)
         {
             try 
@@ -401,6 +408,38 @@ namespace SurveyConfiguratorWeb.Controllers
             {
                 UtilityMethods.LogError(ex);
                 return RedirectToErrorPage(cDefaultErrorMessage);
+            }
+        }
+
+        public IEnumerable<QuestionViewModel> GetQuestionsData()
+        {
+            List<Question> tQuestionsList = QuestionOperations.mQuestionsList;
+
+            List<QuestionViewModel> tModelQuestionsList = new List<QuestionViewModel>();
+            foreach (Question tQuestion in tQuestionsList)
+            {
+                tModelQuestionsList.Add(new QuestionViewModel(
+                    tQuestion.Id,
+                    tQuestion.Text,
+                    tQuestion.Order,
+                    tQuestion.Type
+                    ));
+            }
+            return tModelQuestionsList;
+        }
+
+        public long GetChecksumValue()
+        {
+            try
+            {
+                long tChecksumValue = 0;
+                OperationResult tCheckSumResult = QuestionOperations.GetDataBaseChecksum(ref tChecksumValue);
+                return tChecksumValue;
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return 0;
             }
         }
 
