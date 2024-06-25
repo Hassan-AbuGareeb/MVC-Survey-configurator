@@ -61,20 +61,7 @@ namespace SurveyConfiguratorWeb.Controllers
                 var canGetQuesitons = QuestionOperations.GetQuestions();
                 if (canGetQuesitons.IsSuccess && canGetQuesitons!=null)
                 {
-                    //encapsulate the data in questions view model list
-                    List<Question> tQuestionsList = QuestionOperations.mQuestionsList;
-
-                    List<QuestionViewModel> tModelQuestionsList = new List<QuestionViewModel>();
-                    foreach(Question tQuestion in tQuestionsList)
-                    {
-                        tModelQuestionsList.Add(new QuestionViewModel(
-                            tQuestion.Id,
-                            tQuestion.Text,
-                            tQuestion.Order,
-                            tQuestion.Type
-                            ));
-                    }
-                    return View(tModelQuestionsList);
+                    return View(GetQuestionsData());
                 }
                 //handle case of failure to obtain questions
                 return RedirectToAction(GlobalStrings.DataFetchingError);
@@ -404,6 +391,23 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
+        public IEnumerable<QuestionViewModel> GetQuestionsData()
+        {
+            List<Question> tQuestionsList = QuestionOperations.mQuestionsList;
+
+            List<QuestionViewModel> tModelQuestionsList = new List<QuestionViewModel>();
+            foreach (Question tQuestion in tQuestionsList)
+            {
+                tModelQuestionsList.Add(new QuestionViewModel(
+                    tQuestion.Id,
+                    tQuestion.Text,
+                    tQuestion.Order,
+                    tQuestion.Type
+                    ));
+            }
+            return tModelQuestionsList;
+        }
+
         private Question CreateQuestionObject(QuestionViewModel pQuestionModelData, FormCollection pFormData)
         {
             //encapsulate the questionViewModel in a Question object
@@ -445,6 +449,7 @@ namespace SurveyConfiguratorWeb.Controllers
                 return null;
             }
         }
+
 
         private ActionResult RedirectToErrorPage(string pErrorMessage)
         {
