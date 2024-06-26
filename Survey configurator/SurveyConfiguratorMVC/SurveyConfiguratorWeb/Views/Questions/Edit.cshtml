@@ -69,80 +69,102 @@
     <script>
     $(document).ready(function ()
     {
+        try {
         /// </summary>
         /// Load question-type options partial view based on the selected type
         /// and fills it with data from the provided question model
         /// </summary>
         function LoadQuestionTypeData() {
-             $.ajax({
-                 url: '@Url.Action("GetQuestionTypeDetailsEdit", "Questions")',
-                 type: "GET",
-                 data: { id: @Model.Id },
-                 success: function (partial) {
-                     $('#'+'@cQuestionTypeOptionsId').empty();
-                     $('#' + '@cQuestionTypeOptionsId').html(partial);
+            try {
+                $.ajax({
+                    url: '@Url.Action("GetQuestionTypeDetailsEdit", "Questions")',
+                    type: "GET",
+                    data: { id: @Model.Id },
+                    success: function (partial) {
+                        $('#' + '@cQuestionTypeOptionsId').empty();
+                        $('#' + '@cQuestionTypeOptionsId').html(partial);
 
-                     // Reinitialize jQuery validator object to inculde
-                     // the new validation rules for the question-type options
-                     InitializeValidation();
-                 },
-                 error: function (xhr, status, error) {
-                     console.log(xhr.responseText);
-                 }
-             })
+                        // Reinitialize jQuery validator object to inculde
+                        // the new validation rules for the question-type options
+                        InitializeValidation();
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                })
+            }
+            catch (ex) {
+                //log err
+            }
         }
 
         /// </summary>
         /// Load question-type options partial view based on the selected type
         /// </summary>
         function LoadQuestionTypeOptions(selectedType) {
-            $.ajax({
-                url: '@Url.Action("GetQuestionTypeOptions", "Questions")',
-                type: "GET",
-                data: { pType: selectedType },
-                success: function (partial) {
-                    $('#' + '@cQuestionTypeOptionsId').empty();
-                    $('#' + '@cQuestionTypeOptionsId').html(partial);
+            try {
+                $.ajax({
+                    url: '@Url.Action("GetQuestionTypeOptions", "Questions")',
+                    type: "GET",
+                    data: { pType: selectedType },
+                    success: function (partial) {
+                        $('#' + '@cQuestionTypeOptionsId').empty();
+                        $('#' + '@cQuestionTypeOptionsId').html(partial);
 
-                    // Reinitialize jQuery validation for the form
-                    InitializeValidation();
-                },
-                error: function (xhr, status, error) {
-                    console.log(xhr.responseText);
-                }
-            });
+                        // Reinitialize jQuery validation for the form
+                        InitializeValidation();
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+            catch (ex) {
+                //log err
+            }
         }
 
         function InitializeValidation() {
-            // Remove previous validator data and re-parse the form
-            $("form").removeData("validator").removeData("unobtrusiveValidation");
-            $.validator.unobtrusive.parse($("form"));
+            try
+            {
+                // Remove previous validator data and re-parse the form
+                $("form").removeData("validator").removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse($("form"));
 
-            // Add custom validation method for comparing StartValue and EndValue
-            $.validator.addMethod("GreaterThanStartValue", function (value, element, params) {
-                let startValue = parseFloat(value);
-                let endValue = parseFloat($(params).val());
-                return startValue > endValue;
-            }, "End Value must be greater than Start Value.");
+                // Add custom validation method for comparing StartValue and EndValue
+                $.validator.addMethod("GreaterThanStartValue", function (value, element, params) {
+                    let startValue = parseFloat(value);
+                    let endValue = parseFloat($(params).val());
+                    return startValue > endValue;
+                }, "End Value must be greater than Start Value.");
 
-            // Apply the custom validation method to StartValue field
-            $("#EndValue").rules("add", {
-                GreaterThanStartValue: "#StartValue"
-            });
+                // Apply the custom validation method to StartValue field
+                $("#EndValue").rules("add", {
+                    GreaterThanStartValue: "#StartValue"
+                });
+            }
+            catch (ex) {
+                //log err
+            }
         }
 
-        // Load question type options when the form is visited based on selected type
-        //and fill it with the existing data
-        LoadQuestionTypeData();
 
-        //initalize the JQuery validator
-        InitializeValidation();
+            // Load question type options when the form is visited based on selected type
+            //and fill it with the existing data
+            LoadQuestionTypeData();
 
-        // change question type options when selected type is changed
-        $("#" + '@cQuestionTypeDropDownId').change(function () {
-            let selectedType = $(this).val();
-            LoadQuestionTypeOptions(selectedType);
-        });
+            //initalize the JQuery validator
+            InitializeValidation();
+
+            // change question type options when selected type is changed
+            $("#" + '@cQuestionTypeDropDownId').change(function () {
+                let selectedType = $(this).val();
+                LoadQuestionTypeOptions(selectedType);
+            });
+        }
+        catch (ex) {
+            //log err
+        }
     });
     </script>
 }

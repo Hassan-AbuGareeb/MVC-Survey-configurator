@@ -25,16 +25,21 @@
 
     <script>
         $(document).ready(async function () {
-
+            try {
             /// <summary>
             //get the database checksum value from the controller
             /// </summary>
             async function GetChecksum() {
-                const tCheckSum = await $.ajax({
-                    url: '@Url.Action("GetChecksumValue", "Questions")',
-                    type: "GET",
-                })
-                return tCheckSum;
+                try {
+                    const tCheckSum = await $.ajax({
+                        url: '@Url.Action("GetChecksumValue", "Questions")',
+                        type: "GET",
+                    })
+                    return tCheckSum;
+                }
+                catch (ex) {
+                    //log err
+                }
             }
 
             /// <summary>
@@ -45,40 +50,53 @@
             /// containing the questions table
             /// </summary>
             async function CheckDatabaseForChanges() {
-                //get new checksum value
-                const tNewChecksumValue = await GetChecksum();
+                try
+                {
+                    console.log("hi")
+                    //get new checksum value
+                    const tNewChecksumValue = await GetChecksum();
 
-                if (tNewChecksumValue !== tOriginalChecksumValue) {
-                    //update the value of the orignal checksum
-                    tOriginalChecksumValue = tNewChecksumValue;
+                    if (tNewChecksumValue !== tOriginalChecksumValue) {
+                        //update the value of the orignal checksum
+                        tOriginalChecksumValue = tNewChecksumValue;
 
-                    //get the updated partial view
-                    $.ajax({
-                        url: '@Url.Action("GetQuestionsListPartialView", "Questions")',
-                        type: "GET",
-                        success: function (pPartial) {
-                            //re-render partial view with new data
-                            $("span").empty();
-                            $("span").html(pPartial);
-                        },
-                        error: function (xhr, status, error) {
-                            console.log(xhr.responseText);
-                        }
-                    })
+                        //get the updated partial view
+                        $.ajax({
+                            url: '@Url.Action("GetQuestionsListPartialView", "Questions")',
+                            type: "GET",
+                            success: function (pPartial) {
+                                console.log("h2i")
+                                //re-render partial view with new data
+                                $("span").empty();
+                                $("span").html(pPartial);
+                            },
+                            error: function (xhr, status, error) {
+                                console.log(xhr.responseText);
+                            }
+                        })
+                    }
+                }
+                catch (ex) {
+                    //log err
                 }
             }
 
-            //show alert popup if there's any
-            if ('@TempData["Message"]') {
-                $("#"+"@cAlertDivId").html("<div class='alert alert-danger'>"+"@TempData["Message"]"+"</div>")
-                setTimeout(function () { $("#"+"@cAlertDivId").empty() }, 3500);
+           
+                //show alert popup if there's any
+                if ('@TempData["Message"]') {
+                    $("#"+"@cAlertDivId").html("<div class='alert alert-danger'>"+"@TempData["Message"]"+"</div>")
+                    setTimeout(function () { $("#"+"@cAlertDivId").empty() }, 3500);
+                }
+
+                //get original checksum of db
+                let tOriginalChecksumValue = await GetChecksum();
+
+                //call the data base checker function periodically (every 10 secnods)
+                let tDatabaseCheckerInterval = setInterval(CheckDatabaseForChanges, 10000)
             }
-
-            //get original checksum of db
-            let tOriginalChecksumValue = await GetChecksum();
-
-            //call the data base checker function periodically (every 10 secnods)
-            let tDatabaseCheckerInterval = setInterval(CheckDatabaseForChanges,10000)
+            catch (ex) {
+                //log the error somehow
+            }
         })
     </script>
 }

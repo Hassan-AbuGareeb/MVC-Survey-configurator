@@ -19,14 +19,14 @@ namespace SurveyConfiguratorWeb.Controllers
         /// <summary>
         /// returns an error view desciribing the occured error
         /// </summary>
-        /// <param name="ErrorMessage">Error message to show on the page</param>
+        /// <param name="pErrorMessage">Error message to show on the page</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult ErrorPage(string ErrorMessage)
+        public ActionResult ErrorPage(string pErrorMessage)
         {
             try 
             { 
-                ViewBag.ErrorMessage = ErrorMessage;
+                ViewBag.ErrorMessage = pErrorMessage;
                 return View();
             }
             catch (Exception ex)

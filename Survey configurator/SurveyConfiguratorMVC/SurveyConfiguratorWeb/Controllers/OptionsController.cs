@@ -1,8 +1,10 @@
 ﻿using QuestionServices;
 using SharedResources;
 using SurveyConfiguratorWeb.Models;
+using System;
 using System.Configuration;
 using System.Globalization;
+using System.Linq;
 using System.Text.Json;
 using System.Web.Configuration;
 using System.Web.Mvc;
@@ -30,7 +32,15 @@ namespace SurveyConfiguratorWeb.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            try 
+            { 
+                return View();
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return View("Error");
+            }
         }
 
         /// <summary>
@@ -43,9 +53,17 @@ namespace SurveyConfiguratorWeb.Controllers
         [HttpGet]
         public ActionResult Language()
         {
-            //serialize the supported language array to be able to use it in the view
-            ViewBag.SupportedLanguages = JsonSerializer.Serialize(cSupportedLanguages);
-            return View();
+            try
+            {
+                //serialize the supported language array to be able to use it in the view
+                ViewBag.SupportedLanguages = JsonSerializer.Serialize(cSupportedLanguages);
+                return View();
+            }
+            catch(Exception ex) 
+            {
+                UtilityMethods.LogError(ex);
+                return View("Error");
+            }
         }
 
         /// <summary>
@@ -58,22 +76,36 @@ namespace SurveyConfiguratorWeb.Controllers
         [HttpPost]
         public ActionResult Language(FormCollection pFormData)
         {
-            //check if the received value is existing in the supportedLanguages
+            try {
+                //extract the selected language value from the form data
+                string tSelectedLanguage = pFormData["LanguageDropDown"];
 
-            //set the selected language as default for all threads
-            string tSelectedLanguage = pFormData["LanguageDropDown"];
-            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(tSelectedLanguage);
-            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo(tSelectedLanguage);
 
-            //save to app config, so when visiting the website the next time language options will be saved.
-            Configuration tConfigObject = WebConfigurationManager.OpenWebConfiguration("~");
-            AppSettingsSection tAppSettingsObj = (AppSettingsSection)tConfigObject.GetSection("appSettings");
-            if(tAppSettingsObj != null)
-            {
-                tAppSettingsObj.Settings["Language"].Value = tSelectedLanguage;
-                tConfigObject.Save();
+                //check if the received value exists in the supported Languages
+                if (!cSupportedLanguages.Contains(tSelectedLanguage))
+                {
+                    //return to index view or same view with pop up message 
+                }
+
+                //set the selected language as default for all threads
+                CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(tSelectedLanguage);
+                CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo(tSelectedLanguage);
+
+                //save to app config, so when visiting the website the next time language options will be saved.
+                Configuration tConfigObject = WebConfigurationManager.OpenWebConfiguration("~");
+                AppSettingsSection tAppSettingsObj = (AppSettingsSection)tConfigObject.GetSection("appSettings");
+                if(tAppSettingsObj != null)
+                {
+                    tAppSettingsObj.Settings["Language"].Value = tSelectedLanguage;
+                    tConfigObject.Save();
+                }
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return View("Error");
+            }
         }
 
         /// <summary>
@@ -85,8 +117,15 @@ namespace SurveyConfiguratorWeb.Controllers
         [HttpGet]
         public ActionResult ConnectionSettings()
         {
-            //try to get existing connection string if it's existing
-            return View();
+            try { 
+                //try to get existing connection string if it's existing
+                return View();
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return View("Error");
+            }
         }
 
         /// <summary>
@@ -101,35 +140,41 @@ namespace SurveyConfiguratorWeb.Controllers
         [HttpPost]
         public ActionResult ConnectionSettings(ConnectionStringViewModel pConnectionSettings)
         {
-            //create connectionString object
-            ConnectionString tConnectionData = new ConnectionString(
-                pConnectionSettings.mServer,
-                pConnectionSettings.mDatabase,
-                pConnectionSettings.mIntegratedSecurity,
-                pConnectionSettings.mUser,
-                pConnectionSettings.mPassword
-                );
+            try { 
+                //create connectionString object
+                ConnectionString tConnectionData = new ConnectionString(
+                    pConnectionSettings.mServer,
+                    pConnectionSettings.mDatabase,
+                    pConnectionSettings.mIntegratedSecurity,
+                    pConnectionSettings.mUser,
+                    pConnectionSettings.mPassword
+                    );
 
-            //set it as the default connection string 
-            QuestionOperations.SetConnectionString(tConnectionData);
+                //set it as the default connection string 
+                QuestionOperations.SetConnectionString(tConnectionData);
 
-            //test connection, return notificiation result based on whether connection succeeded or not
-            OperationResult tCanConnectToDatabase = QuestionOperations.TestDBConnection();
-            if (tCanConnectToDatabase.IsSuccess)
-            {
-                //more enhancements and better redirection required
+                //test connection, return notificiation result based on whether connection succeeded or not
+                OperationResult tCanConnectToDatabase = QuestionOperations.TestDBConnection();
+                if (tCanConnectToDatabase.IsSuccess)
+                {
+                    //more enhancements and better redirection required
 
-                TempData[cConnectionResultMessageKey] = "Database connected successfully";
-                return View();
+                    TempData[cConnectionResultMessageKey] = "Database connected successfully";
+                    return View();
+                }
+                else 
+                {
+                    //more enhancements and better redirection required
+
+                    TempData[cConnectionResultMessageKey] = "Database refused to connect";
+                    return View();
+                }
             }
-            else 
+            catch (Exception ex)
             {
-                //more enhancements and better redirection required
-
-                TempData[cConnectionResultMessageKey] = "Database refused to connect";
-                return View();
+                UtilityMethods.LogError(ex);
+                return View("Error");
             }
         }
-
     }
 }
