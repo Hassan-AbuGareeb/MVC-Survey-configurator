@@ -15,7 +15,8 @@ namespace SurveyConfiguratorWeb.Models
         /// </summary>
 
         [Required(ErrorMessageResourceType = typeof(GlobalStrings), ErrorMessageResourceName = "SmileyRequiredError")]
-        [Range(2, 5, ErrorMessageResourceType =typeof(GlobalStrings), ErrorMessageResourceName = "SmileyNumberError")]
+        [Range(SharedData.cMinNumberOfSmileyFaces, SharedData.cMaxNumberOfSmileyFaces,
+            ErrorMessageResourceType =typeof(GlobalStrings), ErrorMessageResourceName = "SmileyNumberError")]
         [DisplayName("Number of smiley faces")]
         public int NumberOfSmileyFaces { get; set; }
 

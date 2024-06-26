@@ -16,12 +16,12 @@ namespace SurveyConfiguratorWeb.Models
 
 
         [Required(ErrorMessageResourceType =typeof(GlobalStrings), ErrorMessageResourceName= "SliderStartValueRequiredError")]
-        [Range(0, 100, ErrorMessageResourceType = typeof(GlobalStrings), ErrorMessageResourceName = "SliderStartValueNumberError")]
+        [Range(SharedData.cMinStartValue, SharedData.cMaxStartValue, ErrorMessageResourceType = typeof(GlobalStrings), ErrorMessageResourceName = "SliderStartValueNumberError")]
         [DisplayName("Start value")]
         public int StartValue { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(GlobalStrings), ErrorMessageResourceName = "SliderEndValueRequiredError")]
-        [Range(0, 100, ErrorMessageResourceType = typeof(GlobalStrings), ErrorMessageResourceName = "SliderEndValueNumberError")]
+        [Range(SharedData.cMinEndValue, SharedData.cMaxEndValue, ErrorMessageResourceType = typeof(GlobalStrings), ErrorMessageResourceName = "SliderEndValueNumberError")]
         [DisplayName("End value")]
         public int EndValue { get; set; }
 

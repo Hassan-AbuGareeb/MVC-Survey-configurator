@@ -288,8 +288,8 @@ namespace QuestionServices
                 {
                     //check if start and end value are in range
                     if (
-                        (pQuestionData.StartValue >= 1 && pQuestionData.StartValue <= 100)&&
-                        (pQuestionData.EndValue >= 1 && pQuestionData.EndValue <= 100)
+                        (pQuestionData.StartValue >= SharedData.cMinStartValue && pQuestionData.StartValue <= SharedData.cMaxStartValue)&&
+                        (pQuestionData.EndValue >= SharedData.cMinEndValue && pQuestionData.EndValue <= SharedData.cMaxEndValue)
                         )
                     {
                         //check if start value is less than end value
@@ -332,7 +332,7 @@ namespace QuestionServices
             {
                 if (pQuestionData!=null)
                 {
-                    if(pQuestionData.NumberOfStars >= 1 && pQuestionData.NumberOfStars <= 10)
+                    if(pQuestionData.NumberOfStars >= SharedData.cMinNumberOfStars && pQuestionData.NumberOfStars <= SharedData.cMaxNumberOfStars)
                     {
                         return new OperationResult();
                     }
@@ -364,7 +364,7 @@ namespace QuestionServices
             {
                 if (pQuestionData != null)
                 {
-                    if (pQuestionData.NumberOfSmileyFaces >= 2 && pQuestionData.NumberOfSmileyFaces <= 5)
+                    if (pQuestionData.NumberOfSmileyFaces >= SharedData.cMinNumberOfSmileyFaces && pQuestionData.NumberOfSmileyFaces <= SharedData.cMaxNumberOfSmileyFaces)
                     {
                         return new OperationResult();
                     }
