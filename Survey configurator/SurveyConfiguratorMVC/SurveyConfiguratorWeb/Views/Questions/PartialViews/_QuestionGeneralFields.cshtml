@@ -1,0 +1,31 @@
+﻿@model SurveyConfiguratorWeb.Models.QuestionViewModel
+@{ 
+    const string cQuestionTypeDropDownId = "QuestionTypeDropDown";
+}
+
+@* Question text field *@
+<div class="form-group">
+    @Html.Label(SharedResources.GlobalStrings.Text, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@* Question Order field *@
+<div class="form-group">
+    @Html.Label(SharedResources.GlobalStrings.Order, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Order, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Order, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@* Question Type Drop down *@
+<div class="form-group">
+    @Html.Label(SharedResources.GlobalStrings.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EnumDropDownListFor(model => model.Type, new { id = cQuestionTypeDropDownId, htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+    </div>
+</div>

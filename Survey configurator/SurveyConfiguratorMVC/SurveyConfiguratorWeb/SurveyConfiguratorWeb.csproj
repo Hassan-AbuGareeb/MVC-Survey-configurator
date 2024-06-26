@@ -302,6 +302,7 @@
     <Content Include="Views\Options\Language.cshtml" />
     <Content Include="Views\Options\ConnectionSettings.cshtml" />
     <Content Include="Views\Questions\PartialViews\_QuestionsList.cshtml" />
+    <Content Include="Views\Questions\PartialViews\_QuestionGeneralFields.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

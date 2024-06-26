@@ -27,18 +27,23 @@
     @Scripts.Render("~/bundles/jquery")
 <script>
     $(document).ready(function () {
-        //get the selected language from config file
-        const tSelectedLanguage = '@WebConfigurationManager.AppSettings["Language"]';
+        try {
+            //get the selected language from config file
+            const tSelectedLanguage = '@WebConfigurationManager.AppSettings["Language"]';
 
-        //get the supported languages array
-        let tSupportedLanguagesArray = @Html.Raw(ViewBag.SupportedLanguages);
+            //get the supported languages array
+            let tSupportedLanguagesArray = @Html.Raw(ViewBag.SupportedLanguages);
 
-        //populate the drop down list with the languages
-        //and set the selected language to the language stored in the config file
-        let tLangaugesDropDownList = $("#LanguageDropDown")
-        $.each(tSupportedLanguagesArray, function (index, value) {
-            tLangaugesDropDownList.append(`<option value=${value} ${value === tSelectedLanguage ? "selected":""}>${value}</option>`)
-        })
+            //populate the drop down list with the languages
+            //and set the selected language to the language stored in the config file
+            let tLangaugesDropDownList = $("#LanguageDropDown")
+            $.each(tSupportedLanguagesArray, function (pIndex, pValue) {
+                tLangaugesDropDownList.append(`<option value=${value} ${value === tSelectedLanguage ? "selected" : ""}>${value}</option>`)
+            })
+        }
+        catch (ex) {
+            //log err
+        }
     })
 </script>
 }

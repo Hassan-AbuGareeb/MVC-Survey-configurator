@@ -14,38 +14,13 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Question</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        @* Question text field *@
-        <div class="form-group">
-            @Html.Label(SharedResources.GlobalStrings.Text, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @* Questions general data *@
+        @Html.Partial("PartialViews/_QuestionGeneralFields")
 
-        @* Question Order field *@
-        <div class="form-group">
-            @Html.Label(SharedResources.GlobalStrings.Order, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Order, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Order, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @* Question Type Drop down *@
-        <div class="form-group">
-            @Html.Label(SharedResources.GlobalStrings.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.Type, new { id = cQuestionTypeDropDownId, htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <!-- question-type options partial view -->
+        @*question-type options partial view*@ 
         <div id="@cQuestionTypeOptionsId">
         </div>
 
@@ -100,10 +75,10 @@
         }
 
         /// </summary>
-    /// empties the JQuery validator object from previous
-    /// validation rules, and re-initialize it, also adds
-    // any custom validations
-    /// </summary>
+        /// empties the JQuery validator object from previous
+        /// validation rules, and re-initialize it, also adds
+        // any custom validations
+        /// </summary>
         function InitializeValidation() {
             try {
                 // Remove previous validator data and re-parse the form
@@ -126,24 +101,23 @@
                 //log err
             }
         }
-
    
-    // Load question type options when the form is visited based on selected type
-    LoadQuestionTypeOptions($("#@cQuestionTypeDropDownId").val());
+        // Load question type options when the form is visited based on selected type
+        LoadQuestionTypeOptions($("#@cQuestionTypeDropDownId").val());
 
-    //initalize the JQuery validator
-    InitializeValidation();
+        //initalize the JQuery validator
+        InitializeValidation();
 
-    // change question type options when selected type is changed
-    $("#" + '@cQuestionTypeDropDownId').change(function () {
-        let selectedType = $(this).val();
-        LoadQuestionTypeOptions(selectedType);
-    });
-    }
-    catch (ex)
-    {
-        //log err
-    }
+        // change question type options when selected type is changed
+        $("#" + '@cQuestionTypeDropDownId').change(function () {
+            let selectedType = $(this).val();
+            LoadQuestionTypeOptions(selectedType);
+        });
+        }
+        catch (ex)
+        {
+            //log err
+        }
 });
     </script>
 }
