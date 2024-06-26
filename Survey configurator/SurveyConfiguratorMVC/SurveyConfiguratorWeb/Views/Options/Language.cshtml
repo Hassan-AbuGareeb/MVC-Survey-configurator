@@ -1,17 +1,19 @@
-﻿@{
+﻿@using SharedResources
+@{
     ViewBag.Title = SharedResources.GlobalStrings.Options;
 }
     
 @using System.Web.Configuration;
+@using SurveyConfiguratorWeb.ConstantsAndMethods
 
 <h2>@SharedResources.GlobalStrings.Language</h2>
 
-<h4>Choose language:</h4>
+<h4>@GlobalStrings.ChooseLanguage</h4>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     <div class="form-group">
-        <select id="LanguageDropDown" name="LanguageDropDown">
+        <select id="@SharedConstants.cLanguageDropDownId" name="@SharedConstants.cLanguageDropDownId">
 
         </select>
     </div>
@@ -29,16 +31,16 @@
     $(document).ready(function () {
         try {
             //get the selected language from config file
-            const tSelectedLanguage = '@WebConfigurationManager.AppSettings["Language"]';
+            const tSelectedLanguage = '@WebConfigurationManager.AppSettings[SharedConstants.cLagnaugeAppSettingKey]';
 
             //get the supported languages array
             let tSupportedLanguagesArray = @Html.Raw(ViewBag.SupportedLanguages);
 
             //populate the drop down list with the languages
             //and set the selected language to the language stored in the config file
-            let tLangaugesDropDownList = $("#LanguageDropDown")
+            let tLangaugesDropDownList = $("#" + '@SharedConstants.cLanguageDropDownId')
             $.each(tSupportedLanguagesArray, function (pIndex, pValue) {
-                tLangaugesDropDownList.append(`<option value=${value} ${value === tSelectedLanguage ? "selected" : ""}>${value}</option>`)
+                tLangaugesDropDownList.append(`<option value=${pValue} ${pValue === tSelectedLanguage ? "selected" : ""}>${pValue}</option>`)
             })
         }
         catch (ex) {

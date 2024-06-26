@@ -1,18 +1,20 @@
 ﻿@model IEnumerable<SurveyConfiguratorWeb.Models.QuestionViewModel>
-
+@using SurveyConfiguratorWeb.ConstantsAndMethods
 @{
     ViewBag.Title = SharedResources.GlobalStrings.Questions;
-    const string cAlertDivId = "alert";
+    const string cAlertDivId = "Alert";
+    const string cQuestionsListSpanId = "QuestionsList";
 }
 <!-- place holder for any alerts or pop up messages-->
 <div id="@cAlertDivId"></div>
 
 <h2>@SharedResources.GlobalStrings.Questions</h2>
 <p>
-    @Html.ActionLink(SharedResources.GlobalStrings.AddQuestion, "Create", "Questions")
+    @Html.ActionLink(SharedResources.GlobalStrings.AddQuestion, SharedConstants.cQuestionCreateAction, SharedConstants.cQuestionsController)
 </p>
-<span>
-    @Html.Partial("PartialViews/_QuestionsList", Model)
+
+<span id="@cQuestionsListSpanId">
+    @Html.Partial(SharedConstants.cQuestionsListView, Model)
 </span>
 
 
@@ -26,65 +28,62 @@
     <script>
         $(document).ready(async function () {
             try {
-            /// <summary>
-            //get the database checksum value from the controller
-            /// </summary>
-            async function GetChecksum() {
-                try {
-                    const tCheckSum = await $.ajax({
-                        url: '@Url.Action("GetChecksumValue", "Questions")',
-                        type: "GET",
-                    })
-                    return tCheckSum;
-                }
-                catch (ex) {
-                    //log err
-                }
-            }
-
-            /// <summary>
-            /// this functions checks whether the database has changed
-            /// by comparing the checksum of the database against the
-            /// checksum obtained first when visiting this view
-            /// if the database is changed re-render the partial view
-            /// containing the questions table
-            /// </summary>
-            async function CheckDatabaseForChanges() {
-                try
-                {
-                    console.log("hi")
-                    //get new checksum value
-                    const tNewChecksumValue = await GetChecksum();
-
-                    if (tNewChecksumValue !== tOriginalChecksumValue) {
-                        //update the value of the orignal checksum
-                        tOriginalChecksumValue = tNewChecksumValue;
-
-                        //get the updated partial view
-                        $.ajax({
-                            url: '@Url.Action("GetQuestionsListPartialView", "Questions")',
+                /// <summary>
+                //get the database checksum value from the controller
+                /// </summary>
+                async function GetChecksum() {
+                    try {
+                        const tCheckSum = await $.ajax({
+                            url: '@Url.Action(SharedConstants.cGetChecksumValueFunction, SharedConstants.cQuestionsController)',
                             type: "GET",
-                            success: function (pPartial) {
-                                console.log("h2i")
-                                //re-render partial view with new data
-                                $("span").empty();
-                                $("span").html(pPartial);
-                            },
-                            error: function (xhr, status, error) {
-                                console.log(xhr.responseText);
-                            }
                         })
+                        return tCheckSum;
+                    }
+                    catch (ex) {
+                        //log err
                     }
                 }
-                catch (ex) {
-                    //log err
-                }
-            }
 
-           
+                /// <summary>
+                /// this functions checks whether the database has changed
+                /// by comparing the checksum of the database against the
+                /// checksum obtained first when visiting this view
+                /// if the database is changed re-render the partial view
+                /// containing the questions table
+                /// </summary>
+                async function CheckDatabaseForChanges() {
+                    try
+                    {
+                        //get new checksum value
+                        const tNewChecksumValue = await GetChecksum();
+
+                        if (tNewChecksumValue !== tOriginalChecksumValue) {
+                            //update the value of the orignal checksum
+                            tOriginalChecksumValue = tNewChecksumValue;
+
+                            //get the updated partial view
+                            $.ajax({
+                                url: '@Url.Action(SharedConstants.cGetQuestionsListPartialViewFunction, SharedConstants.cQuestionsController)',
+                                type: "GET",
+                                success: function (pPartial) {
+                                    //re-render partial view with new data
+                                    $("#"+"@cQuestionsListSpanId").empty();
+                                    $("#"+"@cQuestionsListSpanId").html(pPartial);
+                                },
+                                error: function (xhr, status, error) {
+                                    console.log(xhr.responseText);
+                                }
+                            })
+                        }
+                    }
+                    catch (ex) {
+                        //log err
+                    }
+                }
+
                 //show alert popup if there's any
-                if ('@TempData["Message"]') {
-                    $("#"+"@cAlertDivId").html("<div class='alert alert-danger'>"+"@TempData["Message"]"+"</div>")
+                if ('@TempData[SharedConstants.cMessageKey]') {
+                    $("#"+"@cAlertDivId").html("<div class='alert alert-danger'>"+"@TempData[SharedConstants.cMessageKey]"+"</div>")
                     setTimeout(function () { $("#"+"@cAlertDivId").empty() }, 3500);
                 }
 

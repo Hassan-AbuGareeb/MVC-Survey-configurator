@@ -132,6 +132,9 @@
   <data name="CancelOperationTitle" xml:space="preserve">
     <value>إلغاء العملية</value>
   </data>
+  <data name="ChooseLanguage" xml:space="preserve">
+    <value>:اختار اللغة</value>
+  </data>
   <data name="ConnectionSettings" xml:space="preserve">
     <value>إعدادات الاتصال</value>
   </data>
@@ -266,7 +269,7 @@
     <value>الرجاء ادخال قيمة حقل القيمة العظمى</value>
   </data>
   <data name="SliderInvalidInput" xml:space="preserve">
-    <value>لا يمكن للقيمة العظمى ان تكون اصغر من القيمة الصغرى</value>
+    <value>لا يمكن للقيمة العظمى ان تكون اقل من القيمة الصغرى</value>
   </data>
   <data name="SliderStartCaptionRequiredError" xml:space="preserve">
     <value>الرجاء ادخال قيمة حقل نص القيمة الصغرى</value>

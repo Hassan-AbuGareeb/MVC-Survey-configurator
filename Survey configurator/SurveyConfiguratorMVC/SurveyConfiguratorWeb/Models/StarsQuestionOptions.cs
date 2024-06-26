@@ -16,7 +16,6 @@ namespace SurveyConfiguratorWeb.Models
 
         [Required(ErrorMessageResourceType =typeof(GlobalStrings) ,ErrorMessageResourceName="StarsRequiredError")]
         [Range(SharedData.cMinNumberOfStars, SharedData.cMaxNumberOfStars, ErrorMessageResourceType = typeof(GlobalStrings), ErrorMessageResourceName = "StarsNumberError")]
-        [DisplayName("Number of stars")]
         public int NumberOfStars { get; set; }
 
         public StarsQuestionOptions() { }

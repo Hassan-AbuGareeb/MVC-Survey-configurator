@@ -1,4 +1,5 @@
 ﻿@model SurveyConfiguratorWeb.Models.QuestionViewModel
+@using SurveyConfiguratorWeb.ConstantsAndMethods
 
 @{
     ViewBag.Title = SharedResources.GlobalStrings.Details;
@@ -40,8 +41,8 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink(SharedResources.GlobalStrings.EditOperation, "Edit", new { id = Model.Id }) |
-    @Html.ActionLink(SharedResources.GlobalStrings.BackToList, "Index")
+    @Html.ActionLink(SharedResources.GlobalStrings.EditOperation, SharedConstants.cQuestionEditAction, new { id = Model.Id }) |
+    @Html.ActionLink(SharedResources.GlobalStrings.BackToList,SharedConstants.cQuestionsIndexAction)
 </p>
 
 
@@ -54,7 +55,7 @@
         //get the partial view containing the appropriate
         //question-type options
         $.ajax({
-            url: '@Url.Action("GetQuestionTypeDetails", "Questions")',
+            url: '@Url.Action(SharedConstants.cGetQuestionTypeDetailsFunction, SharedConstants.cQuestionsController)',
             type: "GET",
             data: { id: tQuestionId },
             success: function (partial) {

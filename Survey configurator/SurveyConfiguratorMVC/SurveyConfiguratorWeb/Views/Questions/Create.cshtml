@@ -1,15 +1,14 @@
 ﻿@model SurveyConfiguratorWeb.Models.QuestionViewModel
-
+@using SharedResources
+@using SurveyConfiguratorWeb.ConstantsAndMethods 
 @{
     ViewBag.Title = SharedResources.GlobalStrings.AddQuestion;
-    const string cQuestionTypeDropDownId = "QuestionTypeDropDown";
-    const string cQuestionTypeOptionsId = "QuestionTypeOptions";
 }
 
 <h3>@SharedResources.GlobalStrings.AddQuestion</h3>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = SharedConstants.cQuestionOperationFormId }))
 {
     @Html.AntiForgeryToken()
 
@@ -18,10 +17,10 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         @* Questions general data *@
-        @Html.Partial("PartialViews/_QuestionGeneralFields")
+        @Html.Partial(SharedConstants.cQuestionGeneralFieldsView)
 
         @*question-type options partial view*@ 
-        <div id="@cQuestionTypeOptionsId">
+        <div id="@SharedConstants.cQuestionTypeOptionsId">
         </div>
 
         @* submit button *@
@@ -36,16 +35,16 @@
 
 @* back to list button *@
 <div>
-    @Html.ActionLink(SharedResources.GlobalStrings.BackToList, "Index")
+    @Html.ActionLink(SharedResources.GlobalStrings.BackToList, SharedConstants.cQuestionsIndexAction)
 </div>
 
 
 @section Scripts {
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
-    <script>
+<script>
         $(document).ready(function () {
-            try {
+            @*try {
         /// </summary>
         /// Load question-type options partial view based on the selected type
         /// </summary>
@@ -53,12 +52,12 @@
         {
             try {
                 $.ajax({
-                    url: '@Url.Action("GetQuestionTypeOptions", "Questions")',
+                    url: '@Url.Action(SharedConstants.cGetQuestionTypeOptionsFunction, SharedConstants.cQuestionsController)',
                     type: "GET",
                     data: { pType: selectedType },
                     success: function (partial) {
-                        $('#' + '@cQuestionTypeOptionsId').empty();
-                        $('#' + '@cQuestionTypeOptionsId').html(partial);
+                        $('#' + '@SharedConstants.cQuestionTypeOptionsId').empty();
+                        $('#' + '@SharedConstants.cQuestionTypeOptionsId').html(partial);
 
                         // Reinitialize jQuery validator object to inculde
                         // the new validation rules for the question-type options
@@ -82,15 +81,15 @@
         function InitializeValidation() {
             try {
                 // Remove previous validator data and re-parse the form
-                $("form").removeData("validator").removeData("unobtrusiveValidation");
-                $.validator.unobtrusive.parse($("form"));
+                $("#" + "@SharedConstants.cQuestionOperationFormId").removeData("validator").removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse($("#" + "@SharedConstants.cQuestionOperationFormId"));
 
                 // Add custom validation method for comparing StartValue and EndValue
                 $.validator.addMethod("GreaterThanStartValue", function (value, element, params) {
                     let startValue = parseFloat(value);
                     let endValue = parseFloat($(params).val());
                     return startValue > endValue;
-                }, "End Value must be greater than Start Value.");
+                }, "@GlobalStrings.SliderInvalidInput");
 
                 // Apply the custom validation method to Endvalue field
                 $("#EndValue").rules("add", {
@@ -101,15 +100,15 @@
                 //log err
             }
         }
-   
+
         // Load question type options when the form is visited based on selected type
-        LoadQuestionTypeOptions($("#@cQuestionTypeDropDownId").val());
+        LoadQuestionTypeOptions($("#"+"@SharedConstants.cQuestionTypeDropDownId").val());
 
         //initalize the JQuery validator
         InitializeValidation();
 
         // change question type options when selected type is changed
-        $("#" + '@cQuestionTypeDropDownId').change(function () {
+        $("#"+"@SharedConstants.cQuestionTypeDropDownId").change(function () {
             let selectedType = $(this).val();
             LoadQuestionTypeOptions(selectedType);
         });
@@ -117,7 +116,7 @@
         catch (ex)
         {
             //log err
-        }
+        }*@
 });
-    </script>
+</script>
 }

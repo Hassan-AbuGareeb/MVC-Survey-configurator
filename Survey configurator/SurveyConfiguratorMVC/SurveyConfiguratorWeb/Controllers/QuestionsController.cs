@@ -1,6 +1,7 @@
 ﻿using QuestionServices;
 using SharedResources;
 using SharedResources.Models;
+using SurveyConfiguratorWeb.ConstantsAndMethods;
 using SurveyConfiguratorWeb.Filters;
 using SurveyConfiguratorWeb.Models;
 using System;
@@ -18,20 +19,16 @@ namespace SurveyConfiguratorWeb.Controllers
         /// quesitions
         /// </summary>
 
-
         //constants
-        private const string cQuestionsView = "Index";
-        private const string cPartialViewsFolder = "PartialViews";
-        private const string cStarsOptionsView = cPartialViewsFolder + "/_StarsQuestionOptions";
-        private const string cSmileyOptionsView = cPartialViewsFolder + "/_SmileyQuestionOptions";
-        private const string cSliderOptionsView = cPartialViewsFolder + "/_SliderQuestionOptions";
-        private const string cStarsOptionsDetailsView = cPartialViewsFolder + "/_StarsQuestionDetails";
-        private const string cSmileyOptionsDetailsView = cPartialViewsFolder + "/_SmileyQuestionDetails";
-        private const string cSliderOptionsDetailsView = cPartialViewsFolder + "/_SliderQuestionDetails";
-        private string cDefaultErrorMessage = GlobalStrings.PageLoadingError;
-        private const string cMessageKey = "Message";
+        private const string cStarsOptionsView = SharedConstants.cPartialViewsFolder + "/_StarsQuestionOptions";
+        private const string cSmileyOptionsView = SharedConstants.cPartialViewsFolder + "/_SmileyQuestionOptions";
+        private const string cSliderOptionsView = SharedConstants.cPartialViewsFolder + "/_SliderQuestionOptions";
+        private const string cStarsOptionsDetailsView = SharedConstants.cPartialViewsFolder + "/_StarsQuestionDetails";
+        private const string cSmileyOptionsDetailsView = SharedConstants.cPartialViewsFolder + "/_SmileyQuestionDetails";
+        private const string cSliderOptionsDetailsView = SharedConstants.cPartialViewsFolder + "/_SliderQuestionDetails";
+
         //stars question properties
-        const string cNumberOfStars = "NumberOfStars";
+        private const string cNumberOfStars = "NumberOfStars";
         //Smiley table
         private const string cNumberOfFaces = "NumberOfSmileyFaces";
         //Slider table
@@ -60,7 +57,7 @@ namespace SurveyConfiguratorWeb.Controllers
             {
                 UtilityMethods.LogError(ex);
                 //the redirect here doesn't work
-                RedirectToErrorPage(cDefaultErrorMessage);
+                RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
             }
         }
 
@@ -84,7 +81,7 @@ namespace SurveyConfiguratorWeb.Controllers
             }
             catch(Exception ex){
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage(cDefaultErrorMessage);
+                return RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
             }
         }
 
@@ -104,7 +101,7 @@ namespace SurveyConfiguratorWeb.Controllers
             {
                 //log error
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage(cDefaultErrorMessage);
+                return RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
             }
         }
 
@@ -129,17 +126,17 @@ namespace SurveyConfiguratorWeb.Controllers
                     OperationResult tIsQuestionAdded = QuestionOperations.AddQuestion(tQuestionToAdd);
                     if (tIsQuestionAdded.IsSuccess)
                     {
-                        return RedirectToAction(cQuestionsView);
+                        return RedirectToAction(SharedConstants.cQuestionsIndexAction);
                     }
                 }
-                TempData[cMessageKey] = GlobalStrings.OperationError;
+                TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationError;
                 //show error pop up, failed in adding the question
-                return RedirectToAction(cQuestionsView);
+                return RedirectToAction(SharedConstants.cQuestionsIndexAction);
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage(cDefaultErrorMessage);
+                return RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
             }
         }
 
@@ -166,13 +163,13 @@ namespace SurveyConfiguratorWeb.Controllers
                         );
                     return View(tQuestionModelData);
                 }
-                TempData[cMessageKey] = GlobalStrings.QuestionDataFetchingError;
-                return RedirectToAction(cQuestionsView);
+                TempData[SharedConstants.cMessageKey] = GlobalStrings.QuestionDataFetchingError;
+                return RedirectToAction(SharedConstants.cQuestionsIndexAction);
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage(cDefaultErrorMessage);
+                return RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
             }
         }
 
@@ -194,16 +191,16 @@ namespace SurveyConfiguratorWeb.Controllers
                 OperationResult tIsQuestionAdded = QuestionOperations.UpdateQuestion(tQuestionToAdd);
                 if (tIsQuestionAdded.IsSuccess)
                 {
-                    return RedirectToAction(cQuestionsView);
+                    return RedirectToAction(SharedConstants.cQuestionsIndexAction);
                 }
-                TempData[cMessageKey] = GlobalStrings.OperationError;
+                TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationError;
                 //show error pop up
-                return RedirectToAction(cQuestionsView);
+                return RedirectToAction(SharedConstants.cQuestionsIndexAction);
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage(cDefaultErrorMessage);
+                return RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
             }
         }
 
@@ -231,13 +228,13 @@ namespace SurveyConfiguratorWeb.Controllers
                         );
                     return View(tQuestionModelData);
                 }
-                TempData[cMessageKey] = GlobalStrings.QuestionDataFetchingError;
-                return RedirectToAction(cQuestionsView);
+                TempData[SharedConstants.cMessageKey] = GlobalStrings.QuestionDataFetchingError;
+                return RedirectToAction(SharedConstants.cDefaultErrorMessage);
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage(cDefaultErrorMessage);
+                return RedirectToErrorPage(SharedConstants.cQuestionsIndexAction);
             }
         }
 
@@ -262,16 +259,16 @@ namespace SurveyConfiguratorWeb.Controllers
                 OperationResult tAreQuestionsDeleted = QuestionOperations.DeleteQuestion(tQuestionsIds);
                 if (tAreQuestionsDeleted.IsSuccess)
                 {
-                    return RedirectToAction(cQuestionsView);
+                    return RedirectToAction(SharedConstants.cQuestionsIndexAction);
                 }
                 //show error pop up
-                TempData[cMessageKey] = GlobalStrings.OperationError;
-                return RedirectToAction(cQuestionsView);
+                TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationError;
+                return RedirectToAction(SharedConstants.cQuestionsIndexAction);
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage(cDefaultErrorMessage);
+                return RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
             }
         }
 
@@ -299,13 +296,13 @@ namespace SurveyConfiguratorWeb.Controllers
                         );
                     return View(tQuestionModelData);
                 }
-                TempData[cMessageKey] = GlobalStrings.OperationError;
-                return RedirectToAction(cQuestionsView);
+                TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationError;
+                return RedirectToAction(SharedConstants.cQuestionsIndexAction);
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage(cDefaultErrorMessage);
+                return RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
             }
         }
 
@@ -335,7 +332,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage(cDefaultErrorMessage);
+                return RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
             }
         }
 
@@ -353,12 +350,12 @@ namespace SurveyConfiguratorWeb.Controllers
                 }
                 //handle failure case
                 //show pop up
-                return RedirectToAction(cQuestionsView);
+                return RedirectToAction(SharedConstants.cQuestionsIndexAction);
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage(cDefaultErrorMessage);
+                return RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
             }
         }
 
@@ -389,7 +386,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage(cDefaultErrorMessage);
+                return RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
             }
         }
 
@@ -408,12 +405,12 @@ namespace SurveyConfiguratorWeb.Controllers
                 }
                 //handle failure case
                 //show pop up
-                return RedirectToAction(cQuestionsView);
+                return RedirectToAction(SharedConstants.cQuestionsIndexAction);
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage(cDefaultErrorMessage);
+                return RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
             }
         }
 
@@ -427,7 +424,7 @@ namespace SurveyConfiguratorWeb.Controllers
                 if (tCanGetQuesitons != null && tCanGetQuesitons.IsSuccess) { 
                     //put the questions data in a list of question view model objects
                     IEnumerable<QuestionViewModel> tQuestionsListViewModel = GetQuestionsData();
-                    return PartialView("PartialViews/_QuestionsList", tQuestionsListViewModel);
+                    return PartialView(SharedConstants.cQuestionsListView, tQuestionsListViewModel);
                 }
                 //handle faliure case 
                 return RedirectToErrorPage(GlobalStrings.DataBaseConnectionError);
@@ -435,7 +432,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch( Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage(cDefaultErrorMessage);
+                return RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
             }
         }
 
@@ -517,7 +514,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage(cDefaultErrorMessage);
+                return RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
             }
         }
 
@@ -578,12 +575,12 @@ namespace SurveyConfiguratorWeb.Controllers
         {
             try 
             { 
-                return RedirectToAction("ErrorPage", "Error", new { ErrorMessage = pErrorMessage });
+                return RedirectToAction(SharedConstants.cErrorPageAction, SharedConstants.cErrorController, new { ErrorMessage = pErrorMessage });
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return View("Error");
+                return View(SharedConstants.cErrorPageAction);
             }
         }
         #endregion

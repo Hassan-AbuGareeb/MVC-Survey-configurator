@@ -1,5 +1,6 @@
 ﻿using QuestionServices;
 using SharedResources;
+using SurveyConfiguratorWeb.ConstantsAndMethods;
 using SurveyConfiguratorWeb.Models;
 using System;
 using System.Configuration;
@@ -22,8 +23,6 @@ namespace SurveyConfiguratorWeb.Controllers
 
         public static string[] cSupportedLanguages = { "en", "ar" };
 
-        //constants
-        static string cConnectionResultMessageKey = "ConnectionResult";
 
         /// <summary>
         /// shows the options page
@@ -39,7 +38,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return View("Error");
+                return View(SharedConstants.cErrorController);
             }
         }
 
@@ -62,7 +61,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch(Exception ex) 
             {
                 UtilityMethods.LogError(ex);
-                return View("Error");
+                return View(SharedConstants.cErrorController);
             }
         }
 
@@ -78,7 +77,7 @@ namespace SurveyConfiguratorWeb.Controllers
         {
             try {
                 //extract the selected language value from the form data
-                string tSelectedLanguage = pFormData["LanguageDropDown"];
+                string tSelectedLanguage = pFormData[SharedConstants.cLanguageDropDownId];
 
 
                 //check if the received value exists in the supported Languages
@@ -96,15 +95,15 @@ namespace SurveyConfiguratorWeb.Controllers
                 AppSettingsSection tAppSettingsObj = (AppSettingsSection)tConfigObject.GetSection("appSettings");
                 if(tAppSettingsObj != null)
                 {
-                    tAppSettingsObj.Settings["Language"].Value = tSelectedLanguage;
+                    tAppSettingsObj.Settings[SharedConstants.cLagnaugeAppSettingKey].Value = tSelectedLanguage;
                     tConfigObject.Save();
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction(SharedConstants.cOptionsIndexAction);
             }
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return View("Error");
+                return View(SharedConstants.cErrorController);
             }
         }
 
@@ -124,7 +123,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return View("Error");
+                return View(SharedConstants.cErrorController);
             }
         }
 
@@ -159,21 +158,21 @@ namespace SurveyConfiguratorWeb.Controllers
                 {
                     //more enhancements and better redirection required
 
-                    TempData[cConnectionResultMessageKey] = "Database connected successfully";
+                    TempData[SharedConstants.cConnectionResultMessageKey] = SharedConstants.cConnectionSuccessfulMessage;
                     return View();
                 }
                 else 
                 {
                     //more enhancements and better redirection required
 
-                    TempData[cConnectionResultMessageKey] = "Database refused to connect";
+                    TempData[SharedConstants.cConnectionResultMessageKey] = SharedConstants.cConnectionFailedMessage;
                     return View();
                 }
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return View("Error");
+                return View(SharedConstants.cErrorController);
             }
         }
     }

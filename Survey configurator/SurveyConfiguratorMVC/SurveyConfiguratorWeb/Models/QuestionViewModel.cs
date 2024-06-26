@@ -1,5 +1,6 @@
 ﻿using SharedResources;
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace SurveyConfiguratorWeb.Models
@@ -18,15 +19,21 @@ namespace SurveyConfiguratorWeb.Models
 
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "The question text can't be empty")]
-        [MaxLength(SharedData.cQuestionTextLength, ErrorMessage = "The question text can't be more than 350 characters")]
+        [Required(ErrorMessageResourceType = typeof(GlobalStrings),
+            ErrorMessageResourceName = "QuestionTextRequiredError")]
+        [MaxLength(SharedData.cQuestionTextLength,
+            ErrorMessageResourceType =typeof(GlobalStrings), ErrorMessageResourceName = "QuestionTextLengthError")]
         public string Text { get; set; }
 
-        [Required(ErrorMessage = "The question order is required")]
-        [Range(1, Int32.MaxValue, ErrorMessage = "The question order must be greater than 1")]
+        [Required( ErrorMessageResourceType = typeof(GlobalStrings),
+            ErrorMessageResourceName = "QuestionOrderRequiredError")]
+        [Range(1, Int32.MaxValue, 
+            ErrorMessageResourceType =typeof(GlobalStrings),
+            ErrorMessageResourceName = "QuestionOrderValueError")]
         public int Order { get; set; }
 
-        [Required(ErrorMessage = "The question type is required")]
+        [Required(ErrorMessageResourceType = typeof(GlobalStrings), 
+            ErrorMessageResourceName = "QuestionTypeError")]
         public eQuestionType Type { get; set; }
 
         public QuestionViewModel()

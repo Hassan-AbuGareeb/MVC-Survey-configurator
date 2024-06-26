@@ -1,6 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using QuestionServices;
 using SharedResources;
+using SurveyConfiguratorWeb.ConstantsAndMethods;
 using System;
 using System.Globalization;
 using System.Web.Configuration;
@@ -18,8 +19,6 @@ namespace SurveyConfiguratorWeb
         /// are applicable to all parts of the app
         /// </summary>
 
-        //constants
-        private const string cLanguageKey = "Language";
 
         /// <summary>
         /// the first function that is called when accessing the website
@@ -34,7 +33,7 @@ namespace SurveyConfiguratorWeb
                 BundleConfig.RegisterBundles(BundleTable.Bundles);
 
                 //get app language from app config and set it as default for any thread created
-                string tAppLanguage = WebConfigurationManager.AppSettings[cLanguageKey];
+                string tAppLanguage = WebConfigurationManager.AppSettings[SharedConstants.cLagnaugeAppSettingKey];
                 CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(tAppLanguage);
                 CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo(tAppLanguage);
 

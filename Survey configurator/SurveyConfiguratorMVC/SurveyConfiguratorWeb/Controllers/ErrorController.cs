@@ -1,4 +1,5 @@
 ﻿using SharedResources;
+using SurveyConfiguratorWeb.ConstantsAndMethods;
 using SurveyConfiguratorWeb.Filters;
 using System;
 using System.Web.Mvc;
@@ -12,8 +13,6 @@ namespace SurveyConfiguratorWeb.Controllers
         /// Error controller to return an error view
         /// related to the occuring error
         /// </summary>
-
-
 
 
         /// <summary>
@@ -32,7 +31,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToAction("ErrorPage", "Error", new { ErrorMessage = GlobalStrings.PageLoadingError });
+                return RedirectToAction(SharedConstants.cErrorController, SharedConstants.cErrorPageAction, new { ErrorMessage = GlobalStrings.PageLoadingError });
             }
         }
     }

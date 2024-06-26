@@ -1,5 +1,5 @@
 ﻿@model SurveyConfiguratorWeb.Models.ConnectionStringViewModel
-
+@using SurveyConfiguratorWeb.ConstantsAndMethods
 @{
     ViewBag.Title = SharedResources.GlobalStrings.ConnectionSettings;
     const string cAuthenticationOptionId = "AuthenticationOption";
@@ -64,7 +64,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.mPassword, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.mPassword, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.PasswordFor(model => model.mPassword, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.mPassword, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -80,15 +80,15 @@
     @* show text on screen to indiciate whether
         the connection to the database succeeded
         needs enhancements*@
-    @if (TempData["ConnectionResult"] != null)
+    @if (TempData[SharedConstants.cConnectionResultMessageKey] != null)
     {
-        <div>@TempData["ConnectionResult"]</div>
+        <div>@TempData[SharedConstants.cConnectionResultMessageKey]</div>
     }
 </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink(SharedResources.GlobalStrings.BackToList, SharedConstants.cQuestionsIndexAction)
 </div>
 
 

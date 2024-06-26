@@ -1,6 +1,10 @@
 ﻿@model IEnumerable<SurveyConfiguratorWeb.Models.QuestionViewModel>
+@using SurveyConfiguratorWeb.ConstantsAndMethods
+@{ 
+    const string cQuestionsTableId = "QuestionsTable";
+}
 
-<table class="table">
+<table class="table" id="@cQuestionsTableId">
 
     <thead>
         <tr>
@@ -13,7 +17,7 @@
             <th>
                 @SharedResources.GlobalStrings.Type
             </th>
-            @* invisible to hide the sorting buttons provided by
+            @*invisible to hide the sorting buttons provided by
                 the data table component as they're not necessary 
                 for this column*@
             <th class="invisible"></th>
@@ -34,9 +38,9 @@
                     @Html.DisplayFor(modelItem => item.Type)
                 </td>
                 <td>
-                    @Html.ActionLink(SharedResources.GlobalStrings.EditOperation, "Edit", new { id = item.Id }) |
-                    @Html.ActionLink(SharedResources.GlobalStrings.Details, "Details", new { id = item.Id }) |
-                    @Html.ActionLink(SharedResources.GlobalStrings.Delete, "Delete", new { id = item.Id })
+                    @Html.ActionLink(SharedResources.GlobalStrings.EditOperation, SharedConstants.cQuestionEditAction, new { id = item.Id }) |
+                    @Html.ActionLink(SharedResources.GlobalStrings.Details, SharedConstants.cQuestionDetailsAction, new { id = item.Id }) |
+                    @Html.ActionLink(SharedResources.GlobalStrings.Delete, SharedConstants.cQuestionDeleteAction, new { id = item.Id })
                 </td>
             </tr>
         }
@@ -53,7 +57,7 @@
     <script>
         $(document).ready(function () {
             //initialize the datatable
-            $("table").DataTable({});
+            $("#" + '@cQuestionsTableId').DataTable({});
         })
     </script>
 }
