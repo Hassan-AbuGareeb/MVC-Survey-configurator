@@ -9,6 +9,14 @@ namespace SurveyConfiguratorWeb.Models
 {
     public class ConnectionStringViewModel
     {
+        /// <summary>
+        /// view model for the Connection string object
+        /// with the appropriate data annotations to help 
+        /// with the validation
+        /// the errors messages are fetched from the resource file to 
+        /// enable the localization 
+        /// </summary>
+
         [Required(ErrorMessage ="Server name is requried")]
         [DisplayName("Server")]
         public string mServer { get; set; }
@@ -22,7 +30,6 @@ namespace SurveyConfiguratorWeb.Models
         public string mUser { get; set; }
 
         [Required(ErrorMessage ="Password is requried")]
-        [DataType(DataType.Password)]
         [DisplayName("Password")]
         public string mPassword { get; set; }
 

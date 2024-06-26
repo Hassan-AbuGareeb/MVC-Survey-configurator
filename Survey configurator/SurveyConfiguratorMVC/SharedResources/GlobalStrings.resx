@@ -132,6 +132,9 @@
   <data name="CancelOperationTitle" xml:space="preserve">
     <value>Cancel Operation</value>
   </data>
+  <data name="ChooseLanguage" xml:space="preserve">
+    <value>Choose language:</value>
+  </data>
   <data name="ConnectionSettings" xml:space="preserve">
     <value>Connection settings</value>
   </data>

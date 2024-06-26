@@ -224,6 +224,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="ConstantsAndMethods\SharedConstants.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\OptionsController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
@@ -302,6 +303,7 @@
     <Content Include="Views\Options\Language.cshtml" />
     <Content Include="Views\Options\ConnectionSettings.cshtml" />
     <Content Include="Views\Questions\PartialViews\_QuestionsList.cshtml" />
+    <Content Include="Views\Questions\PartialViews\_QuestionGeneralFields.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

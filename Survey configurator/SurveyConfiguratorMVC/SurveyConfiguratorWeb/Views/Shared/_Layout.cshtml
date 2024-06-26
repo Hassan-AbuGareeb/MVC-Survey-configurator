@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using SurveyConfiguratorWeb.ConstantsAndMethods
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -10,15 +12,15 @@
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
-            @Html.ActionLink("Survey Configurator", "Index", "Questions", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Survey Configurator", SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController, new { area = "" }, new { @class = "navbar-brand" })
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink(SharedResources.GlobalStrings.Questions, "Index", "Questions", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Options", "Index", "Options", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink(SharedResources.GlobalStrings.Questions, SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController, new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink(SharedResources.GlobalStrings.Options, SharedConstants.cOptionsIndexAction, SharedConstants.cOptionsController, new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
             </div>
         </div>

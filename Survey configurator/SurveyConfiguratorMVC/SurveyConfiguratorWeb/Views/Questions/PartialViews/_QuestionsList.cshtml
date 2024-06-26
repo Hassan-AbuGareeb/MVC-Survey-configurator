@@ -1,6 +1,11 @@
 ﻿@model IEnumerable<SurveyConfiguratorWeb.Models.QuestionViewModel>
+@using SurveyConfiguratorWeb.ConstantsAndMethods
+@{ 
+    const string cQuestionsTableId = "QuestionsTable";
+}
 
-<table class="table">
+<table class="table" id="@cQuestionsTableId">
+
     <thead>
         <tr>
             <th>
@@ -12,9 +17,13 @@
             <th>
                 @SharedResources.GlobalStrings.Type
             </th>
+            @*invisible to hide the sorting buttons provided by
+                the data table component as they're not necessary 
+                for this column*@
             <th class="invisible"></th>
         </tr>
     </thead>
+
     <tbody>
         @foreach (var item in Model)
         {
@@ -29,23 +38,26 @@
                     @Html.DisplayFor(modelItem => item.Type)
                 </td>
                 <td>
-                    @Html.ActionLink(SharedResources.GlobalStrings.EditOperation, "Edit", new { id = item.Id }) |
-                    @Html.ActionLink(SharedResources.GlobalStrings.Details, "Details", new { id = item.Id }) |
-                    @Html.ActionLink(SharedResources.GlobalStrings.Delete, "Delete", new { id = item.Id })
+                    @Html.ActionLink(SharedResources.GlobalStrings.EditOperation, SharedConstants.cQuestionEditAction, new { id = item.Id }) |
+                    @Html.ActionLink(SharedResources.GlobalStrings.Details, SharedConstants.cQuestionDetailsAction, new { id = item.Id }) |
+                    @Html.ActionLink(SharedResources.GlobalStrings.Delete, SharedConstants.cQuestionDeleteAction, new { id = item.Id })
                 </td>
             </tr>
         }
     </tbody>
+
 </table>
 
 @section Scripts{
     @Scripts.Render("~/bundles/jquery")
+    @* scripts for the datatable component *@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 
     <script>
         $(document).ready(function () {
-            $("table").DataTable({});
+            //initialize the datatable
+            $("#" + '@cQuestionsTableId').DataTable({});
         })
     </script>
 }

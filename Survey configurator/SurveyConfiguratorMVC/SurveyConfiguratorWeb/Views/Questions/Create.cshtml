@@ -1,62 +1,41 @@
 ﻿@model SurveyConfiguratorWeb.Models.QuestionViewModel
-
+@using SharedResources
+@using SurveyConfiguratorWeb.ConstantsAndMethods 
 @{
     ViewBag.Title = SharedResources.GlobalStrings.AddQuestion;
-    const string cQuestionTypeDropDownId = "QuestionTypeDropDown";
-    const string cQuestionTypeOptionsId = "QuestionTypeOptions";
 }
 
 <h3>@SharedResources.GlobalStrings.AddQuestion</h3>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = SharedConstants.cQuestionOperationFormId }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Question</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.Label(SharedResources.GlobalStrings.Text, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
-            </div>
+
+        @* Questions general data *@
+        @Html.Partial(SharedConstants.cQuestionGeneralFieldsView)
+
+        @*question-type options partial view*@ 
+        <div id="@SharedConstants.cQuestionTypeOptionsId">
         </div>
 
-        <div class="form-group">
-            @Html.Label(SharedResources.GlobalStrings.Order, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Order, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Order, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label(SharedResources.GlobalStrings.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.Type, new { id = cQuestionTypeDropDownId, htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <!-- render additional fields based on chosen question type -->
-        <div id="@cQuestionTypeOptionsId">
-            <!--render the partial view here-->
-        </div>
-
-
+        @* submit button *@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="@SharedResources.GlobalStrings.AddOperation" class="btn btn-default" />
             </div>
         </div>
+
     </div>
 }
 
+@* back to list button *@
 <div>
-    @Html.ActionLink(SharedResources.GlobalStrings.BackToList, "Index")
+    @Html.ActionLink(SharedResources.GlobalStrings.BackToList, SharedConstants.cQuestionsIndexAction)
 </div>
 
 
@@ -64,55 +43,80 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
 <script>
-    $(document).ready(function () {
-        //load partial view (question type options) based on selected question type
-        function LoadQuestionTypeOptions(selectedType) {
-            $.ajax({
-                url: '@Url.Action("GetQuestionTypeOptions", "Questions")',
-                type: "GET",
-                data: { pType: selectedType },
-                success: function (partial) {
-                    $('#' + '@cQuestionTypeOptionsId').empty();
-                    $('#' + '@cQuestionTypeOptionsId').html(partial);
+        $(document).ready(function () {
+            @*try {
+        /// </summary>
+        /// Load question-type options partial view based on the selected type
+        /// </summary>
+        function LoadQuestionTypeOptions(selectedType)
+        {
+            try {
+                $.ajax({
+                    url: '@Url.Action(SharedConstants.cGetQuestionTypeOptionsFunction, SharedConstants.cQuestionsController)',
+                    type: "GET",
+                    data: { pType: selectedType },
+                    success: function (partial) {
+                        $('#' + '@SharedConstants.cQuestionTypeOptionsId').empty();
+                        $('#' + '@SharedConstants.cQuestionTypeOptionsId').html(partial);
 
-                    // Reinitialize jQuery validation for the form
-                    InitializeValidation();
-                },
-                error: function (xhr, status, error) {
-                    console.log(xhr.responseText);
-                }
-            });
+                        // Reinitialize jQuery validator object to inculde
+                        // the new validation rules for the question-type options
+                        InitializeValidation();
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+            catch (ex) {
+                //log err
+            }
         }
 
+        /// </summary>
+        /// empties the JQuery validator object from previous
+        /// validation rules, and re-initialize it, also adds
+        // any custom validations
+        /// </summary>
         function InitializeValidation() {
-            // Remove previous validator data and re-parse the form
-            $("form").removeData("validator").removeData("unobtrusiveValidation");
-            $.validator.unobtrusive.parse($("form"));
+            try {
+                // Remove previous validator data and re-parse the form
+                $("#" + "@SharedConstants.cQuestionOperationFormId").removeData("validator").removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse($("#" + "@SharedConstants.cQuestionOperationFormId"));
 
-            // Add custom validation method for comparing StartValue and EndValue
-            $.validator.addMethod("GreaterThanStartValue", function (value, element, params) {
-                let startValue = parseFloat(value);
-                let endValue = parseFloat($(params).val());
-                return startValue > endValue;
-            }, "End Value must be greater than Start Value.");
+                // Add custom validation method for comparing StartValue and EndValue
+                $.validator.addMethod("GreaterThanStartValue", function (value, element, params) {
+                    let startValue = parseFloat(value);
+                    let endValue = parseFloat($(params).val());
+                    return startValue > endValue;
+                }, "@GlobalStrings.SliderInvalidInput");
 
-            // Apply the custom validation method to StartValue field
-            $("#EndValue").rules("add", {
-                GreaterThanStartValue: "#StartValue"
-            });
+                // Apply the custom validation method to Endvalue field
+                $("#EndValue").rules("add", {
+                    GreaterThanStartValue: "#StartValue"
+                });
+            }
+            catch (ex) {
+                //log err
+            }
         }
 
         // Load question type options when the form is visited based on selected type
-        LoadQuestionTypeOptions($("#@cQuestionTypeDropDownId").val());
+        LoadQuestionTypeOptions($("#"+"@SharedConstants.cQuestionTypeDropDownId").val());
 
+        //initalize the JQuery validator
         InitializeValidation();
 
         // change question type options when selected type is changed
-        $("#" + '@cQuestionTypeDropDownId').change(function () {
+        $("#"+"@SharedConstants.cQuestionTypeDropDownId").change(function () {
             let selectedType = $(this).val();
             LoadQuestionTypeOptions(selectedType);
         });
-
-    });
+        }
+        catch (ex)
+        {
+            //log err
+        }*@
+});
 </script>
 }

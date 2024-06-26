@@ -1,5 +1,6 @@
 ﻿@model SurveyConfiguratorWeb.Models.SliderQuestionOptions
 
+@* start value field *@
 <div class="form-group">
     @Html.Label(SharedResources.GlobalStrings.StartValue, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
@@ -7,6 +8,8 @@
         @Html.ValidationMessageFor(model => model.StartValue, "", new { @class = "text-danger" })
     </div>
 </div>
+
+@* end value field *@
 
 <div class="form-group">
     @Html.Label(SharedResources.GlobalStrings.EndValue, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -16,6 +19,8 @@
     </div>
 </div>
 
+@* start value caption field *@
+
 <div class="form-group">
     @Html.Label(SharedResources.GlobalStrings.StartValueCaption, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
@@ -23,6 +28,8 @@
         @Html.ValidationMessageFor(model => model.StartValueCaption, "", new { @class = "text-danger" })
     </div>
 </div>
+
+@* end value caption field *@
 
 <div class="form-group">
     @Html.Label(SharedResources.GlobalStrings.EndValueCaption, htmlAttributes: new { @class = "control-label col-md-2" })
