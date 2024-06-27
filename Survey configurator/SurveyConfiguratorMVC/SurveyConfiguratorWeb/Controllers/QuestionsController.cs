@@ -43,22 +43,21 @@ namespace SurveyConfiguratorWeb.Controllers
         /// </summary>
         public QuestionsController()
         {
-            try
-            {
-                //test connection
-                OperationResult tCanConnectToDb = QuestionOperations.TestDBConnection();
-                if (!tCanConnectToDb.IsSuccess)
-                {
-                    //redirect to appropriate error page
-                }
-
-            }
-            catch(Exception ex)
-            {
-                UtilityMethods.LogError(ex);
-                //the redirect here doesn't work
-                RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
-            }
+            //try
+            //{
+            //    //test connection
+            //    OperationResult tCanConnectToDb = QuestionOperations.TestDBConnection();
+            //    if (!tCanConnectToDb.IsSuccess)
+            //    {
+            //        //redirect to appropriate error page
+            //    }
+            //}
+            //catch(Exception ex)
+            //{
+            //    UtilityMethods.LogError(ex);
+            //    //the redirect here doesn't work
+            //    RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
+            //}
         }
 
         /// <summary>

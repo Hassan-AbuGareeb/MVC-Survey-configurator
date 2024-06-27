@@ -82,9 +82,9 @@
     @* show text on screen to indiciate whether
         the connection to the database succeeded
         needs enhancements*@
-    @if (TempData[SharedConstants.cConnectionResultMessageKey] != null)
+    @if (ViewData[SharedConstants.cConnectionResultMessageKey] != null)
     {
-        <div>@TempData[SharedConstants.cConnectionResultMessageKey]</div>
+        <div>@ViewData[SharedConstants.cConnectionResultMessageKey]</div>
     }
 </div>
 }

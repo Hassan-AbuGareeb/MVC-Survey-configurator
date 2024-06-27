@@ -173,14 +173,14 @@ namespace SurveyConfiguratorWeb.Controllers
                 {
                     //more enhancements and better redirection required
 
-                    TempData[SharedConstants.cConnectionResultMessageKey] = SharedConstants.cConnectionSuccessfulMessage;
+                    ViewData[SharedConstants.cConnectionResultMessageKey] = SharedConstants.cConnectionSuccessfulMessage;
                     return View(pConnectionSettings);
                 }
                 else
                 {
                     //more enhancements and better redirection required
 
-                    TempData[SharedConstants.cConnectionResultMessageKey] = SharedConstants.cConnectionFailedMessage;
+                    ViewData[SharedConstants.cConnectionResultMessageKey] = SharedConstants.cConnectionFailedMessage;
                     return View(pConnectionSettings);
                 }
             }
