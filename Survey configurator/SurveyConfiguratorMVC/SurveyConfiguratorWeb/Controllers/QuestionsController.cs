@@ -391,6 +391,28 @@ namespace SurveyConfiguratorWeb.Controllers
         }
 
         [HttpGet]
+        public ActionResult GetQuestionsListPartialView()
+        {
+            try
+            {
+                //get all questions data
+                OperationResult tCanGetQuesitons = QuestionOperations.GetQuestions();
+                if (tCanGetQuesitons != null && tCanGetQuesitons.IsSuccess) { 
+                    //put the questions data in a list of question view model objects
+                    IEnumerable<QuestionViewModel> tQuestionsListViewModel = GetQuestionsData();
+                    return PartialView(SharedConstants.cQuestionsListView, tQuestionsListViewModel);
+                }
+                //handle faliure case 
+                return RedirectToErrorPage(GlobalStrings.DataBaseConnectionError);
+            }
+            catch( Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
+            }
+        }
+
+        [HttpGet]
         public ActionResult GetQuestionTypeDetails(int id)
         {
             try
@@ -414,22 +436,32 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
-        [HttpGet]
-        public ActionResult GetQuestionsListPartialView()
+        private ActionResult GetQuestionTypeDetailsPartialView(Question pQuestionData)
         {
             try
             {
-                //get all questions data
-                OperationResult tCanGetQuesitons = QuestionOperations.GetQuestions();
-                if (tCanGetQuesitons != null && tCanGetQuesitons.IsSuccess) { 
-                    //put the questions data in a list of question view model objects
-                    IEnumerable<QuestionViewModel> tQuestionsListViewModel = GetQuestionsData();
-                    return PartialView(SharedConstants.cQuestionsListView, tQuestionsListViewModel);
+                switch (pQuestionData.Type)
+                {
+                    case eQuestionType.Stars:
+                        StarsQuestion tStarsQuestionData = (StarsQuestion)pQuestionData;
+                        return PartialView(cStarsOptionsDetailsView, new StarsQuestionOptions(tStarsQuestionData.NumberOfStars));
+
+                    case eQuestionType.Smiley:
+                        SmileyQuestion tSmileyQuestionData = (SmileyQuestion)pQuestionData;
+                        return PartialView(cSmileyOptionsDetailsView, new SmileyQuestionOptions(tSmileyQuestionData.NumberOfSmileyFaces));
+
+                    case eQuestionType.Slider:
+                        SliderQuestion tSliderQuestionData = (SliderQuestion)pQuestionData;
+                        return PartialView(cSliderOptionsDetailsView, new SliderQuestionOptions(
+                            tSliderQuestionData.StartValue,
+                            tSliderQuestionData.EndValue,
+                            tSliderQuestionData.StartValueCaption,
+                            tSliderQuestionData.EndValueCaption
+                            ));
                 }
-                //handle faliure case 
-                return RedirectToErrorPage(GlobalStrings.DataBaseConnectionError);
+                return null;
             }
-            catch( Exception ex)
+            catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
                 return RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
@@ -483,38 +515,6 @@ namespace SurveyConfiguratorWeb.Controllers
             {
                 UtilityMethods.LogError(ex);
                 return 0;
-            }
-        }
-
-        private ActionResult GetQuestionTypeDetailsPartialView(Question pQuestionData)
-        {
-            try
-            {
-                switch (pQuestionData.Type)
-                {
-                    case eQuestionType.Stars:
-                        StarsQuestion tStarsQuestionData = (StarsQuestion)pQuestionData;
-                        return PartialView(cStarsOptionsDetailsView, new StarsQuestionOptions(tStarsQuestionData.NumberOfStars));
-
-                    case eQuestionType.Smiley:
-                        SmileyQuestion tSmileyQuestionData = (SmileyQuestion)pQuestionData;
-                        return PartialView(cSmileyOptionsDetailsView, new SmileyQuestionOptions(tSmileyQuestionData.NumberOfSmileyFaces));
-
-                    case eQuestionType.Slider:
-                        SliderQuestion tSliderQuestionData = (SliderQuestion)pQuestionData;
-                        return PartialView(cSliderOptionsDetailsView, new SliderQuestionOptions(
-                            tSliderQuestionData.StartValue,
-                            tSliderQuestionData.EndValue,
-                            tSliderQuestionData.StartValueCaption,
-                            tSliderQuestionData.EndValueCaption
-                            ));
-                }
-                return null;
-            }
-            catch (Exception ex)
-            {
-                UtilityMethods.LogError(ex);
-                return RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
             }
         }
 
@@ -580,7 +580,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return View(SharedConstants.cErrorPageAction);
+                return RedirectToAction(SharedConstants.cErrorPageAction, SharedConstants.cErrorController, new { ErrorMessage = pErrorMessage });
             }
         }
         #endregion

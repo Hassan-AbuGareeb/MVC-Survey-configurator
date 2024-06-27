@@ -433,6 +433,10 @@ namespace QuestionServices
                     string tReadConnectionString = tFileReader.ReadToEnd();
                     //de-serialize the obtained connection string and transform it to the correct format
                     ConnectionString tDesrializedConnString = JsonSerializer.Deserialize<ConnectionString>(tReadConnectionString);
+                    //assign the connectionString object to the shared data class member
+                    SharedResources.SharedData.mConnectionString = tDesrializedConnString;
+
+                    //assign the connection string to the Database layer class memeber
                     Database.mConnectionString = tDesrializedConnString.GetFormattedConnectionString();
                 }
                 return true;
@@ -457,6 +461,8 @@ namespace QuestionServices
         {
             try
             {
+                //update the shared data version on the connection string
+                SharedData.mConnectionString=pConnectionString;
                 using (StreamWriter tWriter = new StreamWriter(mFilePath))
                 {
                     string tSerializedConnectionString = JsonSerializer.Serialize<ConnectionString>(pConnectionString);

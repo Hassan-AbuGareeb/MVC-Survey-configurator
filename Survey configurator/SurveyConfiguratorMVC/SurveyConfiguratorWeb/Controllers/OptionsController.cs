@@ -31,11 +31,11 @@ namespace SurveyConfiguratorWeb.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            try 
-            { 
+            try
+            {
                 return View();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
                 return View(SharedConstants.cErrorController);
@@ -58,7 +58,7 @@ namespace SurveyConfiguratorWeb.Controllers
                 ViewBag.SupportedLanguages = JsonSerializer.Serialize(cSupportedLanguages);
                 return View();
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
                 return View(SharedConstants.cErrorController);
@@ -75,7 +75,8 @@ namespace SurveyConfiguratorWeb.Controllers
         [HttpPost]
         public ActionResult Language(FormCollection pFormData)
         {
-            try {
+            try
+            {
                 //extract the selected language value from the form data
                 string tSelectedLanguage = pFormData[SharedConstants.cLanguageDropDownId];
 
@@ -93,14 +94,14 @@ namespace SurveyConfiguratorWeb.Controllers
                 //save to app config, so when visiting the website the next time language options will be saved.
                 Configuration tConfigObject = WebConfigurationManager.OpenWebConfiguration("~");
                 AppSettingsSection tAppSettingsObj = (AppSettingsSection)tConfigObject.GetSection("appSettings");
-                if(tAppSettingsObj != null)
+                if (tAppSettingsObj != null)
                 {
                     tAppSettingsObj.Settings[SharedConstants.cLagnaugeAppSettingKey].Value = tSelectedLanguage;
                     tConfigObject.Save();
                 }
                 return RedirectToAction(SharedConstants.cOptionsIndexAction);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
                 return View(SharedConstants.cErrorController);
@@ -116,11 +117,24 @@ namespace SurveyConfiguratorWeb.Controllers
         [HttpGet]
         public ActionResult ConnectionSettings()
         {
-            try { 
+            try
+            {
                 //try to get existing connection string if it's existing
+                ConnectionString tConnectionSettings = SharedData.mConnectionString;
+                if(tConnectionSettings !=  null) { 
+                    //encapsulate the connection settings to a connection settings view model
+                    ConnectionStringViewModel tConnectionSettingsModel = new ConnectionStringViewModel(
+                        tConnectionSettings.mServer,
+                        tConnectionSettings.mDatabase,
+                        tConnectionSettings.mIntegratedSecurity,
+                        tConnectionSettings.mUser,
+                        tConnectionSettings.mPassword
+                        );
+                    return View(tConnectionSettingsModel);
+                }
                 return View();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
                 return View(SharedConstants.cErrorController);
@@ -139,7 +153,8 @@ namespace SurveyConfiguratorWeb.Controllers
         [HttpPost]
         public ActionResult ConnectionSettings(ConnectionStringViewModel pConnectionSettings)
         {
-            try { 
+            try
+            {
                 //create connectionString object
                 ConnectionString tConnectionData = new ConnectionString(
                     pConnectionSettings.mServer,
@@ -159,14 +174,14 @@ namespace SurveyConfiguratorWeb.Controllers
                     //more enhancements and better redirection required
 
                     TempData[SharedConstants.cConnectionResultMessageKey] = SharedConstants.cConnectionSuccessfulMessage;
-                    return View();
+                    return View(pConnectionSettings);
                 }
-                else 
+                else
                 {
                     //more enhancements and better redirection required
 
                     TempData[SharedConstants.cConnectionResultMessageKey] = SharedConstants.cConnectionFailedMessage;
-                    return View();
+                    return View(pConnectionSettings);
                 }
             }
             catch (Exception ex)
@@ -175,5 +190,6 @@ namespace SurveyConfiguratorWeb.Controllers
                 return View(SharedConstants.cErrorController);
             }
         }
+
     }
 }
