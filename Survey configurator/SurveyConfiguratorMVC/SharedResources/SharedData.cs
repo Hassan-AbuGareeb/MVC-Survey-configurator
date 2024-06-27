@@ -30,7 +30,9 @@
         public const int cMaxEndValue = 100;
         public const string cDefaultStartValueCaption = "Min";
         public const string cDefaultEndValueCaption = "Max";
-        
+
+        //class members
+        public static ConnectionString mConnectionString;
 
     }
 }
