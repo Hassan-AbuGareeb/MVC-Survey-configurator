@@ -43,7 +43,6 @@ namespace QuestionServices
         //class members
         private static Thread mDataBaseChecker;
 
-        public static bool mIsEventRegistered = false;
 
 
         private QuestionOperations()

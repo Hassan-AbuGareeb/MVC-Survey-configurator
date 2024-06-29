@@ -425,21 +425,6 @@ namespace SurveyConfiguratorWeb.Controllers
             return tModelQuestionsList;
         }
 
-        public long GetChecksumValue()
-        {
-            try
-            {
-                long tChecksumValue = 0;
-                OperationResult tCheckSumResult = QuestionOperations.GetDataBaseChecksum(ref tChecksumValue);
-                return tChecksumValue;
-            }
-            catch(Exception ex)
-            {
-                UtilityMethods.LogError(ex);
-                return 0;
-            }
-        }
-
         private Question CreateQuestionObject(QuestionViewModel pQuestionModelData, FormCollection pFormData)
         {
             //encapsulate the questionViewModel in a Question object

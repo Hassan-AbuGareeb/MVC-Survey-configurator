@@ -7,6 +7,8 @@ namespace SurveyConfiguratorWeb.SignalRHubs
 {
     public class Startup
     {
+        public static bool mIsEventRegistered = false;
+
         public void Configuration(IAppBuilder app)
         {
             app.MapSignalR();

@@ -10,15 +10,16 @@ namespace SurveyConfiguratorWeb.SignalRHubs
         //a function is needed here 
         public DataBaseCheckHub() {
 
-            if (!QuestionOperations.mIsEventRegistered) { 
+            if (!Startup.mIsEventRegistered) { 
                 QuestionOperations.DataBaseChangedEvent += QuestionOperations_DataBaseChangedEvent;
-                QuestionOperations.mIsEventRegistered = true;
+                Startup.mIsEventRegistered = true;
             }
         }
 
         private async void QuestionOperations_DataBaseChangedEvent(object sender, System.EventArgs e)
         {
-            await Clients.All.sayHello("All changed yo yo");
+            //tell all clients to re-render their index page
+            await Clients.All.UpdateQuestionsList();
         }
 
         [HubMethodName("StartCheck")]
@@ -27,9 +28,5 @@ namespace SurveyConfiguratorWeb.SignalRHubs
             QuestionOperations.StartCheckingDataBaseChange();
         }
 
-        public void Hello(string message)
-        {
-            Clients.All.sayHello(message);
-        }
     }
 }

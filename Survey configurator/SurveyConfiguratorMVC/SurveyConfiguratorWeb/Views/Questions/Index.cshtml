@@ -27,57 +27,29 @@
     <script src="~/signalr/hubs"></script>
     <script>
         $(document).ready(async function () {
-            //get the check sum value from the controller
-            @*async function GetChecksum() {
-                const tCheckSum = await $.ajax({
-                    url: '@Url.Action("GetChecksumValue", "Questions")',
-                    type: "GET",
-                })
-                return tCheckSum;
-            }*@
-
-            @*async function CheckDatabaseForChanges() {
-                console.log("HI1");
-                //get new checksum value
-                const tNewChecksumValue = await GetChecksum();
-                if (tNewChecksumValue !== tOriginalChecksumValue) {
-                    //update the value of the orignal checksum
-                    tOriginalChecksumValue = tNewChecksumValue;
-
-                    //re-render the questions list partial view with new Data
-                    $.ajax({
-                        url: '@Url.Action("GetQuestionsListPartialView", "Questions")',
-                        type: "GET",
-                        success: function (pPartial) {
-                            //re-render partial view with new data
-                            console.log("HI2");
-                            $("span").empty();
-                            $("span").html(pPartial);
-                        },
-                        error: function (xhr, status, error) {
-                            console.log(xhr.responseText);
-                        }
-                    })
-                }
-            }*@
-
             //show alert popup if there's any
             if ('@TempData["Message"]') {
                 $("#"+"@cAlertDivId").html("<div class='alert alert-danger'>"+"@TempData["Message"]"+"</div>")
                 setTimeout(function () { $("#"+"@cAlertDivId").empty() }, 3500);
             }
 
-            //get original checksum of db
-            //let tOriginalChecksumValue = await GetChecksum();
-
-            //call the data base checker function periodically
-            //let tDatabaseCheckerInterval = setInterval(CheckDatabaseForChanges, 10000)
-
             //data base check hub section
             let checker = $.connection.DataBaseCheckHub;
 
-            checker.client.sayHello = function (message) {
-                alert(message);
+            checker.client.UpdateQuestionsList =  function () {
+                $.ajax({
+                    url: '@Url.Action("GetQuestionsListPartialView", "Questions")',
+                    type: "GET",
+                    success: function (pPartial) {
+                        //show some notfication that the data has been updated
+                        //re-render partial view with new data
+                        $("span").empty();
+                        $("span").html(pPartial);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                })
             }
 
             $.connection.hub.start().done(function () {
