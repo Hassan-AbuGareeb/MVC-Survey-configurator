@@ -40,6 +40,12 @@ namespace QuestionServices
         //and acts as a data source for the UI to faciltate data transfer and fetching.
         public static List<Question> mQuestionsList = new List<Question>();
 
+        //class members
+        private static Thread mDataBaseChecker;
+
+        public static bool mIsEventRegistered = false;
+
+
         private QuestionOperations()
         {
         }
@@ -140,7 +146,7 @@ namespace QuestionServices
                 {
                     mQuestionsList.Add(pQuestionData);
                     //notify UI of change
-                    DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
+                    //DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
                 }
 
                 return tAddQuestionResult;
@@ -182,7 +188,7 @@ namespace QuestionServices
                     //add the new Question to the list
                     mQuestionsList.Add(pUpdatedQuestionData);
                     //notify UI of change
-                    DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
+                    //DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
                 }
                 return tQuestionUpdatedResult;
 
@@ -224,7 +230,7 @@ namespace QuestionServices
                     mQuestionsList.Remove(tQuestion);
                 }
                 //notify UI of change
-                DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
+                //DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
                 return new OperationResult();
             }
             catch (Exception ex)
@@ -479,9 +485,11 @@ namespace QuestionServices
             try
             {
                 //check if a thread is already running
-                Thread tCheckThread = new Thread(() => CheckDataBaseChange(Thread.CurrentThread));
-                tCheckThread.IsBackground = true;
-                tCheckThread.Start();
+                if (mDataBaseChecker == null) {
+                mDataBaseChecker = new Thread(() => CheckDataBaseChange(Thread.CurrentThread));
+                mDataBaseChecker.IsBackground = true;
+                mDataBaseChecker.Start();
+                }
             }
             catch (Exception ex)
             {
@@ -511,7 +519,7 @@ namespace QuestionServices
                 //keep the function running while main thread is running
                 while (pMainThread.IsAlive)
                 {
-                    Thread.Sleep(50000);
+                    Thread.Sleep(10000);
                     if (!mOperationOngoing)
                     {
                         //get checksum again to detect change

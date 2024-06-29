@@ -93,9 +93,6 @@ namespace SurveyConfiguratorWeb.Controllers
         {
             try
             {
-                //check model state for errors here too?
-                
-                
                 //based on the type of question create a new object and
                 //fill its respective fields
                 Question tQuestionToAdd = CreateQuestionObject(pQuestionModelData, pFormData);
