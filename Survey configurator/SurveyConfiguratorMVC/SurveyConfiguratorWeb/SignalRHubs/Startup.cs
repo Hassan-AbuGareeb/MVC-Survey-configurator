@@ -7,7 +7,7 @@ namespace SurveyConfiguratorWeb.SignalRHubs
 {
     public class Startup
     {
-        public static bool mIsEventRegistered = false;
+        public static bool mIsDatabaseChangeEventRegistered = false;
 
         public void Configuration(IAppBuilder app)
         {
