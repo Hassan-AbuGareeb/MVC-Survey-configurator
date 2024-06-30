@@ -1,5 +1,7 @@
 ﻿using Microsoft.Owin;
 using Owin;
+using SharedResources;
+using System;
 
 [assembly: OwinStartup(typeof(SurveyConfiguratorWeb.SignalRHubs.Startup))]
 
@@ -11,7 +13,14 @@ namespace SurveyConfiguratorWeb.SignalRHubs
 
         public void Configuration(IAppBuilder app)
         {
-            app.MapSignalR();
+            try 
+            { 
+                app.MapSignalR();
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+            }
         }
     }
 }

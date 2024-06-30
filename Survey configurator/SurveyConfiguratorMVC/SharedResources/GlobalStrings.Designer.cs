@@ -180,6 +180,15 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occured while loading the data.
+        /// </summary>
+        public static string DataLoadingError {
+            get {
+                return ResourceManager.GetString("DataLoadingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
@@ -671,6 +680,15 @@ namespace SharedResources {
         public static string UnknownErrorTitle {
             get {
                 return ResourceManager.GetString("UnknownErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected language isn&apos;t supported.
+        /// </summary>
+        public static string UnSupportedLanguageError {
+            get {
+                return ResourceManager.GetString("UnSupportedLanguageError", resourceCulture);
             }
         }
     }

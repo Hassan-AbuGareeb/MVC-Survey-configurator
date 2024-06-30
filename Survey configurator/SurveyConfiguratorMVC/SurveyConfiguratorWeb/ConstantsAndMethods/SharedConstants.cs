@@ -55,6 +55,8 @@ namespace SurveyConfiguratorWeb.ConstantsAndMethods
         public const string cQuestionTypeDropDownId = "QuestionTypeDropDown";
         public const string cQuestionTypeOptionsId = "QuestionTypeOptions";
         public const string cQuestionOperationFormId = "QuestionOperationForm";
+        public const string cAlertDivId = "alert";
+
         #endregion
     }
 }

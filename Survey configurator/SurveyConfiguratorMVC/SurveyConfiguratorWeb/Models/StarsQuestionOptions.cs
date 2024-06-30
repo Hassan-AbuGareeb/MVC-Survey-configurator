@@ -1,4 +1,5 @@
 ﻿using SharedResources;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -22,7 +23,14 @@ namespace SurveyConfiguratorWeb.Models
 
         public StarsQuestionOptions(int numberOfStars) 
         {
-            NumberOfStars = numberOfStars;
+            try 
+            { 
+                NumberOfStars = numberOfStars;
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using SharedResources;
 
 namespace SurveyConfiguratorWeb.Models
 {
@@ -43,11 +44,17 @@ namespace SurveyConfiguratorWeb.Models
 
         public ConnectionStringViewModel(string pServer, string pDatabase, bool pIntegratedSecurity, string pUser="", string pPassword="")
         {
-            this.mServer = pServer;
-            this.mDatabase = pDatabase;
-            this.mIntegratedSecurity = pIntegratedSecurity;
-            this.mUser = pUser;
-            this.mPassword = pPassword;
+            try { 
+                mServer = pServer;
+                mDatabase = pDatabase;
+                mIntegratedSecurity = pIntegratedSecurity;
+                mUser = pUser;
+                mPassword = pPassword;
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+            }
         }
     }
 }

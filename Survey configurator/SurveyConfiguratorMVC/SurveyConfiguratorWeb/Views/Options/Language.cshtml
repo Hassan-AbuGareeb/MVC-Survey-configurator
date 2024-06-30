@@ -2,11 +2,14 @@
 @{
     ViewBag.Title = SharedResources.GlobalStrings.Options;
 }
-    
+
 @using System.Web.Configuration;
 @using SurveyConfiguratorWeb.ConstantsAndMethods
 
 <h2>@SharedResources.GlobalStrings.Language</h2>
+
+<!-- place holder for any alerts or pop up messages-->
+<div id="@SharedConstants.cAlertDivId"></div>
 
 <h4>@GlobalStrings.ChooseLanguage</h4>
 @using (Html.BeginForm())
@@ -14,7 +17,6 @@
     @Html.AntiForgeryToken()
     <div class="form-group">
         <select id="@SharedConstants.cLanguageDropDownId" name="@SharedConstants.cLanguageDropDownId">
-
         </select>
     </div>
 
@@ -27,9 +29,16 @@
 }
 @section Scripts{
     @Scripts.Render("~/bundles/jquery")
-<script>
+    <script>
     $(document).ready(function () {
         try {
+            //show alert popup if there's any
+            if ('@TempData[SharedConstants.cMessageKey]')
+            {
+                    $("#" + "@SharedConstants.cAlertDivId").html("<div class='alert alert-danger'>" + "@TempData[SharedConstants.cMessageKey]" + "</div>")
+                    setTimeout(function () { $("#" + "@SharedConstants.cAlertDivId").empty() }, 3500);
+            }
+
             //get the selected language from config file
             const tSelectedLanguage = '@WebConfigurationManager.AppSettings[SharedConstants.cLagnaugeAppSettingKey]';
 
@@ -47,5 +56,5 @@
             //log err
         }
     })
-</script>
+    </script>
 }

@@ -2,13 +2,11 @@
 @using SurveyConfiguratorWeb.ConstantsAndMethods
 @{
     ViewBag.Title = SharedResources.GlobalStrings.Questions;
-    const string cAlertDivId = "alert";
     const string cQuestionsListId = "QuestionsList";
     const string cDataUpdateNotificationId = "DataUpdateNotification";
-    const string cQuestionsListSpanId = "QuestionsList";
 }
 <!-- place holder for any alerts or pop up messages-->
-<div id="@cAlertDivId"></div>
+<span id="@SharedConstants.cAlertDivId"></span>
 
 <h2>@SharedResources.GlobalStrings.Questions</h2>
 <p>
@@ -35,9 +33,9 @@
         $(document).ready(async function () {
             try {
                 //show alert popup if there's any
-                if ('@TempData["Message"]') {
-                    $("#" + "@cAlertDivId").html("<div class='alert alert-danger'>" + "@TempData["Message"]" + "</div>")
-                    setTimeout(function () { $("#" + "@cAlertDivId").empty() }, 3500);
+                if ('@TempData[SharedConstants.cMessageKey]') {
+                    $("#" + "@SharedConstants.cAlertDivId").html("<div class='alert alert-danger'>" + "@TempData[SharedConstants.cMessageKey]" + "</div>")
+                    setTimeout(function () { $("#" + "@SharedConstants.cAlertDivId").empty() }, 3500);
                 }
 
                 //subscripe to the data base checker hub
