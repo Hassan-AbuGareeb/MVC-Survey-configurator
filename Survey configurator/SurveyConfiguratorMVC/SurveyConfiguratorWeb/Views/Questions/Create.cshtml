@@ -45,73 +45,73 @@
 <script>
         $(document).ready(function () {
             try {
-        /// </summary>
-        /// Load question-type options partial view based on the selected type
-        /// </summary>
-        function LoadQuestionTypeOptions(selectedType)
-        {
-            try {
-                $.ajax({
-                    url: '@Url.Action(SharedConstants.cGetQuestionTypeOptionsFunction, SharedConstants.cQuestionsController)',
-                    type: "GET",
-                    data: { pType: selectedType },
-                    success: function (partial) {
-                        $('#' + '@SharedConstants.cQuestionTypeOptionsId').empty();
-                        $('#' + '@SharedConstants.cQuestionTypeOptionsId').html(partial);
+            /// </summary>
+            /// Load question-type options partial view based on the selected type
+            /// </summary>
+            function LoadQuestionTypeOptions(selectedType)
+            {
+                try {
+                    $.ajax({
+                        url: '@Url.Action(SharedConstants.cGetQuestionTypeOptionsFunction, SharedConstants.cQuestionsController)',
+                        type: "GET",
+                        data: { pType: selectedType },
+                        success: function (partial) {
+                            $('#' + '@SharedConstants.cQuestionTypeOptionsId').empty();
+                            $('#' + '@SharedConstants.cQuestionTypeOptionsId').html(partial);
 
-                        // Reinitialize jQuery validator object to inculde
-                        // the new validation rules for the question-type options
-                        InitializeValidation();
-                    },
-                    error: function (xhr, status, error) {
-                        console.log(xhr.responseText);
-                    }
-                });
+                            // Reinitialize jQuery validator object to inculde
+                            // the new validation rules for the question-type options
+                            InitializeValidation();
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(xhr.responseText);
+                        }
+                    });
+                }
+                catch (ex) {
+                    //log err
+                }
             }
-            catch (ex) {
-                //log err
+
+            /// </summary>
+            /// empties the JQuery validator object from previous
+            /// validation rules, and re-initialize it, also adds
+            // any custom validations
+            /// </summary>
+            function InitializeValidation() {
+                try {
+                    // Remove previous validator data and re-parse the form
+                    $("#" + "@SharedConstants.cQuestionOperationFormId").removeData("validator").removeData("unobtrusiveValidation");
+                    $.validator.unobtrusive.parse($("#" + "@SharedConstants.cQuestionOperationFormId"));
+
+                    // Add custom validation method for comparing StartValue and EndValue
+                    $.validator.addMethod("GreaterThanStartValue", function (value, element, params) {
+                        let startValue = parseFloat(value);
+                        let endValue = parseFloat($(params).val());
+                        return startValue > endValue;
+                    }, "@GlobalStrings.SliderInvalidInput");
+
+                    // Apply the custom validation method to Endvalue field
+                    $("#EndValue").rules("add", {
+                        GreaterThanStartValue: "#StartValue"
+                    });
+                }
+                catch (ex) {
+                    //log err
+                }
             }
-        }
 
-        /// </summary>
-        /// empties the JQuery validator object from previous
-        /// validation rules, and re-initialize it, also adds
-        // any custom validations
-        /// </summary>
-        function InitializeValidation() {
-            try {
-                // Remove previous validator data and re-parse the form
-                $("#" + "@SharedConstants.cQuestionOperationFormId").removeData("validator").removeData("unobtrusiveValidation");
-                $.validator.unobtrusive.parse($("#" + "@SharedConstants.cQuestionOperationFormId"));
+            // Load question type options when the form is visited based on selected type
+            LoadQuestionTypeOptions($("#"+"@SharedConstants.cQuestionTypeDropDownId").val());
 
-                // Add custom validation method for comparing StartValue and EndValue
-                $.validator.addMethod("GreaterThanStartValue", function (value, element, params) {
-                    let startValue = parseFloat(value);
-                    let endValue = parseFloat($(params).val());
-                    return startValue > endValue;
-                }, "@GlobalStrings.SliderInvalidInput");
+            //initalize the JQuery validator
+            InitializeValidation();
 
-                // Apply the custom validation method to Endvalue field
-                $("#EndValue").rules("add", {
-                    GreaterThanStartValue: "#StartValue"
-                });
-            }
-            catch (ex) {
-                //log err
-            }
-        }
-
-        // Load question type options when the form is visited based on selected type
-        LoadQuestionTypeOptions($("#"+"@SharedConstants.cQuestionTypeDropDownId").val());
-
-        //initalize the JQuery validator
-        InitializeValidation();
-
-        // change question type options when selected type is changed
-        $("#"+"@SharedConstants.cQuestionTypeDropDownId").change(function () {
-            let selectedType = $(this).val();
-            LoadQuestionTypeOptions(selectedType);
-        });
+            // change question type options when selected type is changed
+            $("#"+"@SharedConstants.cQuestionTypeDropDownId").change(function () {
+                let selectedType = $(this).val();
+                LoadQuestionTypeOptions(selectedType);
+            });
         }
         catch (ex)
         {

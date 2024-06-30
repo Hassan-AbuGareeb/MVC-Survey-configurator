@@ -320,27 +320,21 @@ namespace SurveyConfiguratorWeb.Controllers
         }
 
         #region class utility functions
+        /// <summary>
+        /// returns a partial view containing question-type options
+        /// based on the requested question type for the "create" view
+        /// </summary>
+        /// <param name="pType"> question type </param>
+        /// <returns>partial view with the question-type options</returns>
         [HttpGet]
         public ActionResult GetQuestionTypeOptions(int pType)
         {
             try 
             {
                 eQuestionType tQuestionType = (eQuestionType)pType;
-                string tOptionsViewType = "";
-                switch (tQuestionType)
-                {
-                    case eQuestionType.Stars:
-                        tOptionsViewType = cStarsOptionsView;
-                        break;
-                    case eQuestionType.Smiley:
-                        tOptionsViewType = cSmileyOptionsView;
-                        break;
-                    case eQuestionType.Slider:
-                        tOptionsViewType = cSliderOptionsView;
-                        break;
-                }
-                //return view based on switch decision
-                return PartialView(tOptionsViewType);
+                string tOptionViewViewName = GetViewName(tQuestionType);
+                //return view based on function result
+                return PartialView(tOptionViewViewName);
             }
             catch (Exception ex)
             {
@@ -349,6 +343,12 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
+        /// <summary>
+        /// this function returns a partial view for the edit view, containing
+        /// question-type options, filled with the question data.
+        /// </summary>
+        /// <param name="id">question id</param>
+        /// <returns>partial view with question-type options</returns>
         [HttpGet]
         public ActionResult GetQuestionTypeDetailsEdit(int id)
         {
@@ -372,7 +372,12 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
-        [HttpGet]
+        /// <summary>
+        /// returns a partial view with the requested question-type
+        /// fields filled with the question data, for viewing only.
+        /// </summary>
+        /// <param name="pQuestionData"></param>
+        /// <returns> partial view with question-type fields</returns>
         private ActionResult GetQuestionTypeDetailsPartialViewEdit(Question pQuestionData)
         {
             try 
@@ -381,13 +386,13 @@ namespace SurveyConfiguratorWeb.Controllers
                 {
                     case eQuestionType.Stars:
                         StarsQuestion tStarsQuestionData = (StarsQuestion)pQuestionData;
-                        return PartialView(cStarsOptionsView, new StarsQuestionOptions(tStarsQuestionData.NumberOfStars));
+                        return PartialView(GetViewName(eQuestionType.Stars), new StarsQuestionOptions(tStarsQuestionData.NumberOfStars));
                     case eQuestionType.Smiley:
                         SmileyQuestion tSmileyQuestionData = (SmileyQuestion)pQuestionData;
-                        return PartialView(cSmileyOptionsView, new SmileyQuestionOptions(tSmileyQuestionData.NumberOfSmileyFaces));
+                        return PartialView(GetViewName(eQuestionType.Smiley), new SmileyQuestionOptions(tSmileyQuestionData.NumberOfSmileyFaces));
                     case eQuestionType.Slider:
                         SliderQuestion tSliderQuestionData = (SliderQuestion)pQuestionData;
-                        return PartialView(cSliderOptionsView, new SliderQuestionOptions(
+                        return PartialView(GetViewName(eQuestionType.Slider), new SliderQuestionOptions(
                             tSliderQuestionData.StartValue,
                             tSliderQuestionData.EndValue,
                             tSliderQuestionData.StartValueCaption,
@@ -403,25 +408,35 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
-        [HttpGet]
-        public ActionResult GetQuestionsListPartialView()
+        /// <summary>
+        /// this function returns a partial view based on the requested
+        /// question type
+        /// </summary>
+        /// <param name="tQuestionType">type of the question</param>
+        /// <returns>a string representing the requried partial view name</returns>
+        private string GetViewName(eQuestionType tQuestionType)
         {
             try
             {
-                //get all questions data
-                OperationResult tCanGetQuesitons = QuestionOperations.GetQuestions();
-                if (tCanGetQuesitons != null && tCanGetQuesitons.IsSuccess) { 
-                    //put the questions data in a list of question view model objects
-                    IEnumerable<QuestionViewModel> tQuestionsListViewModel = GetQuestionsData();
-                    return PartialView(SharedConstants.cQuestionsListView, tQuestionsListViewModel);
+                string tOptionViewName = "";
+                switch (tQuestionType)
+                {
+                    case eQuestionType.Stars:
+                        tOptionViewName = cStarsOptionsView;
+                        break;
+                    case eQuestionType.Smiley:
+                        tOptionViewName = cSmileyOptionsView;
+                        break;
+                    case eQuestionType.Slider:
+                        tOptionViewName = cSliderOptionsView;
+                        break;
                 }
-                //handle faliure case 
-                return RedirectToErrorPage(GlobalStrings.DataBaseConnectionError);
+                return tOptionViewName;
             }
-            catch( Exception ex)
+            catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
+                return string.Empty;
             }
         }
 
@@ -473,6 +488,35 @@ namespace SurveyConfiguratorWeb.Controllers
                             ));
                 }
                 return null;
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
+            }
+        }
+
+        /// <summary>
+        /// fetch the questions from the database encapsulates them in
+        /// QuestionViewModel and return a partial view with the qeustions
+        /// data
+        /// </summary>
+        /// <returns>partial view of the questions datat</returns>
+        [HttpGet]
+        public ActionResult GetQuestionsListPartialView()
+        {
+            try
+            {
+                //get all questions data
+                OperationResult tCanGetQuesitons = QuestionOperations.GetQuestions();
+                if (tCanGetQuesitons != null && tCanGetQuesitons.IsSuccess)
+                {
+                    //put the questions data in a list of question view model objects
+                    IEnumerable<QuestionViewModel> tQuestionsListViewModel = GetQuestionsData();
+                    return PartialView(SharedConstants.cQuestionsListView, tQuestionsListViewModel);
+                }
+                //handle faliure case 
+                return RedirectToErrorPage(GlobalStrings.DataBaseConnectionError);
             }
             catch (Exception ex)
             {
