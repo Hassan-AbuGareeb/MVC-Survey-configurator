@@ -157,3 +157,14 @@ D:\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SurveyConfi
 D:\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SurveyConfiguratorWeb\bin\SharedResources.dll.config
 D:\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SurveyConfiguratorWeb\bin\System.Configuration.ConfigurationManager.xml
 D:\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SurveyConfiguratorWeb\bin\System.Security.Permissions.xml
+D:\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SurveyConfiguratorWeb\bin\Microsoft.AspNet.SignalR.Core.dll
+D:\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SurveyConfiguratorWeb\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+D:\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SurveyConfiguratorWeb\bin\Microsoft.Owin.dll
+D:\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SurveyConfiguratorWeb\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SurveyConfiguratorWeb\bin\Microsoft.Owin.Security.dll
+D:\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SurveyConfiguratorWeb\bin\Owin.dll
+D:\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SurveyConfiguratorWeb\bin\Microsoft.AspNet.SignalR.Core.xml
+D:\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SurveyConfiguratorWeb\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+D:\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SurveyConfiguratorWeb\bin\Microsoft.Owin.xml
+D:\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SurveyConfiguratorWeb\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SurveyConfiguratorWeb\bin\Microsoft.Owin.Security.xml

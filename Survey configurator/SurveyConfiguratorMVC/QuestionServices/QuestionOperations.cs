@@ -41,6 +41,11 @@ namespace QuestionServices
         //and acts as a data source for the UI to faciltate data transfer and fetching.
         public static List<Question> mQuestionsList = new List<Question>();
 
+        //class members
+        private static Thread mDataBaseUpdateChecker;
+        private static Thread mDataBaseConnectionChecker;
+        public static bool mIsDataBaseConnected = true;
+
         private QuestionOperations()
         {
         }
@@ -141,7 +146,7 @@ namespace QuestionServices
                 {
                     mQuestionsList.Add(pQuestionData);
                     //notify UI of change
-                    DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
+                    //DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
                 }
 
                 return tAddQuestionResult;
@@ -183,7 +188,7 @@ namespace QuestionServices
                     //add the new Question to the list
                     mQuestionsList.Add(pUpdatedQuestionData);
                     //notify UI of change
-                    DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
+                    //DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
                 }
                 return tQuestionUpdatedResult;
 
@@ -225,7 +230,7 @@ namespace QuestionServices
                     mQuestionsList.Remove(tQuestion);
                 }
                 //notify UI of change
-                DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
+                //DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
                 return new OperationResult();
             }
             catch (Exception ex)
@@ -478,17 +483,42 @@ namespace QuestionServices
 
         /// <summary>
         /// this function create a thread and starts a funciton on it to start monitoring the database
-        /// the thread runs in the background as to not block the main thread it the function on the 
-        /// thread.
+        /// for any update, the thread runs in the background as to not block the main thread it the 
+        /// function on the thread.
         /// </summary>
         public static void StartCheckingDataBaseChange()
         {
             try
             {
                 //check if a thread is already running
-                Thread tCheckThread = new Thread(() => CheckDataBaseChange(Thread.CurrentThread));
-                tCheckThread.IsBackground = true;
-                tCheckThread.Start();
+                if (mDataBaseUpdateChecker == null) {
+                    mDataBaseUpdateChecker = new Thread(() => CheckDataBaseChange(Thread.CurrentThread));
+                    mDataBaseUpdateChecker.IsBackground = true;
+                    mDataBaseUpdateChecker.Start();
+                }
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+            }
+        }
+
+        /// <summary>
+        /// this function create a thread and starts a funciton on it to start monitoring the database
+        /// the thread runs in the background as to not block the main thread it the function on the 
+        /// thread.
+        /// </summary>
+        public static void StartCheckingDataBaseConnection()
+        {
+            try
+            {
+                //check if a thread is already running
+                if (mDataBaseConnectionChecker == null)
+                {
+                    mDataBaseConnectionChecker = new Thread(() => CheckDataBaseConnection(Thread.CurrentThread));
+                    mDataBaseConnectionChecker.IsBackground = true;
+                    mDataBaseConnectionChecker.Start();
+                }
             }
             catch (Exception ex)
             {
@@ -507,7 +537,7 @@ namespace QuestionServices
         /// this function raises an event and returns a failed operationResult object.
         /// </summary>
         /// <param name="pMainThread"></param>
-        public static void CheckDataBaseChange(Thread pMainThread)
+        private static void CheckDataBaseChange(Thread pMainThread)
         {
             try
             {
@@ -518,7 +548,7 @@ namespace QuestionServices
                 //keep the function running while main thread is running
                 while (pMainThread.IsAlive)
                 {
-                    Thread.Sleep(50000);
+                    Thread.Sleep(10000);
                     if (!mOperationOngoing)
                     {
                         //get checksum again to detect change
@@ -563,10 +593,51 @@ namespace QuestionServices
         }
 
         /// <summary>
+<<<<<<< HEAD
+        /// this funciton is responsible for maintaining the state of database connectivity
+        /// and if the database is refusing to connect the function tries to reconnect for a
+        /// number of times before changing the state of the database connectivity
+        /// </summary>
+        /// <param name="pMainThread"></param>
+        private static void CheckDataBaseConnection(Thread pMainThread)
+        {
+            try
+            {
+                int tDatabaseConnectionRetryCount = 0;
+                while (pMainThread.IsAlive)
+                {
+                    Thread.Sleep(10000);
+                    OperationResult tIsDatabaseConnnected = TestDBConnection();
+                    if (tIsDatabaseConnnected.IsSuccess)
+                    {
+                        //database is connected
+                        mIsDataBaseConnected = true;
+                        tDatabaseConnectionRetryCount = 0;
+                    }
+                    else
+                    {
+                        //data base not connected, try to reconnect for a number of times
+                        tDatabaseConnectionRetryCount++;
+                        if (tDatabaseConnectionRetryCount > cDatabaseReconnectMaxAttempts)
+                        {
+                            mIsDataBaseConnected = false;
+                            //DataBaseNotConnectedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
+                        }
+                    }
+                }                
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+            }
+        }
+
+=======
         /// get the current database checksum and store it in the ref parameter
         /// </summary>
         /// <param name="pChecksumValue">contain the value of the checksum</param>
         /// <returns></returns>
+>>>>>>> b2ec240b7fbdc21092c68df756cc6defec2646b1
         public static OperationResult GetDataBaseChecksum(ref long pChecksumValue)
         {
             try
