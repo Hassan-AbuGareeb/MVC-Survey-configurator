@@ -139,8 +139,7 @@
     <value>Connection settings</value>
   </data>
   <data name="DataBaseConnectionError" xml:space="preserve">
-    <value>An error occured while connecting to database, the application may not work properly.
-would like to continue?</value>
+    <value>An error occured while connecting to database</value>
   </data>
   <data name="DataBaseConnectionErrortitle" xml:space="preserve">
     <value>Database connection error</value>
@@ -150,6 +149,9 @@ would like to continue?</value>
   </data>
   <data name="DatabaseNotConnectedErrorTitle" xml:space="preserve">
     <value>Database not connected</value>
+  </data>
+  <data name="DatabaseUpdated" xml:space="preserve">
+    <value>Data has been updated</value>
   </data>
   <data name="DataFetchingError" xml:space="preserve">
     <value>An error occured while loading data please try again.

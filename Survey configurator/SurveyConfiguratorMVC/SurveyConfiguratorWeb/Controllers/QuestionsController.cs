@@ -366,7 +366,6 @@ namespace SurveyConfiguratorWeb.Controllers
                     //return the required partial view filled with data based on question type
                     return GetQuestionTypeDetailsPartialViewEdit(tQuestionTypeData);
                 }
-                //handle failure case
                 //show pop up
                 return RedirectToAction(SharedConstants.cQuestionsIndexAction);
             }
@@ -512,7 +511,6 @@ namespace SurveyConfiguratorWeb.Controllers
         {
             try
             {
-                
                 if (QuestionOperations.mIsDataBaseConnected) { 
                     //get all questions data
                     OperationResult tCanGetQuesitons = QuestionOperations.GetQuestions();
