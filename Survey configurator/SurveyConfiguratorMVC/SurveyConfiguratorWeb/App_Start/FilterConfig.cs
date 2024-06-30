@@ -1,4 +1,6 @@
-﻿using System.Web;
+﻿using SharedResources;
+using System;
+using System.Web;
 using System.Web.Mvc;
 
 namespace SurveyConfiguratorWeb
@@ -7,7 +9,14 @@ namespace SurveyConfiguratorWeb
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            try 
+            { 
+                filters.Add(new HandleErrorAttribute());
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+            }
         }
     }
 }

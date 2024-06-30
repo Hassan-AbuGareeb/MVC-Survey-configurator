@@ -43,17 +43,31 @@ namespace SurveyConfiguratorWeb.Models
 
         public QuestionViewModel(int pId, string pText, int pOrder, eQuestionType pType)
         {
-            Id = pId;
-            Text = pText;
-            Order = pOrder;
-            Type = pType;
+            try 
+            { 
+                Id = pId;
+                Text = pText;
+                Order = pOrder;
+                Type = pType;
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+            }
         }
 
         public QuestionViewModel(string pText, int pOrder, eQuestionType pType)
         {
-            Text = pText;
-            Order = pOrder;
-            Type = pType;
-        }
+            try
+            { 
+                Text = pText;
+                Order = pOrder;
+                Type = pType;
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+            }
+}
     }
 }

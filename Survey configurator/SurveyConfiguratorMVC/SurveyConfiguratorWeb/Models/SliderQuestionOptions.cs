@@ -1,4 +1,5 @@
 ﻿using SharedResources;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Security.RightsManagement;
@@ -40,10 +41,17 @@ namespace SurveyConfiguratorWeb.Models
 
         public SliderQuestionOptions(int startValue, int endValue, string startValueCaption, string endValueCaption)
         {
+            try 
+            { 
             StartValue = startValue;
             EndValue = endValue;
             StartValueCaption = startValueCaption;
             EndValueCaption = endValueCaption;
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using SharedResources;
+using System;
 
 namespace SurveyConfiguratorWeb.Models
 {
@@ -27,7 +28,13 @@ namespace SurveyConfiguratorWeb.Models
 
         public SmileyQuestionOptions(int numberOfSmileyFaces)
         {
+            try { 
             NumberOfSmileyFaces = numberOfSmileyFaces;
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+            }
         }
     }
 }
