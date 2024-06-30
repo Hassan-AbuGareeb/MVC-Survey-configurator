@@ -593,7 +593,6 @@ namespace QuestionServices
         }
 
         /// <summary>
-<<<<<<< HEAD
         /// this funciton is responsible for maintaining the state of database connectivity
         /// and if the database is refusing to connect the function tries to reconnect for a
         /// number of times before changing the state of the database connectivity
@@ -632,12 +631,10 @@ namespace QuestionServices
             }
         }
 
-=======
         /// get the current database checksum and store it in the ref parameter
         /// </summary>
         /// <param name="pChecksumValue">contain the value of the checksum</param>
         /// <returns></returns>
->>>>>>> b2ec240b7fbdc21092c68df756cc6defec2646b1
         public static OperationResult GetDataBaseChecksum(ref long pChecksumValue)
         {
             try

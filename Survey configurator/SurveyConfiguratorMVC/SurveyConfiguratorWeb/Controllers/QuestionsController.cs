@@ -37,44 +37,15 @@ namespace SurveyConfiguratorWeb.Controllers
         private const string cStartValueCaption = "StartValueCaption";
         private const string cEndValueCaption = "EndValueCaption";
 
-<<<<<<< HEAD
-
-=======
         /// <summary>
-        /// constructor for the controller, checks for the database connectivity before 
-        /// doing any operation
+        /// shows the questions list view
         /// </summary>
-        public QuestionsController()
-        {
-            //try
-            //{
-            //    //test connection
-            //    OperationResult tCanConnectToDb = QuestionOperations.TestDBConnection();
-            //    if (!tCanConnectToDb.IsSuccess)
-            //    {
-            //        //redirect to appropriate error page
-            //    }
-            //}
-            //catch(Exception ex)
-            //{
-            //    UtilityMethods.LogError(ex);
-            //    //the redirect here doesn't work
-            //    RedirectToErrorPage(SharedConstants.cDefaultErrorMessage);
-            //}
-        }
-
-        /// <summary>
-        /// shows the Questions list view and redirectes to error page in case of failure
-        /// </summary>
-        /// <returns>view containing questions list</returns>
->>>>>>> b2ec240b7fbdc21092c68df756cc6defec2646b1
-        [HttpGet]
+        /// <returns>a view containing the list of questions</returns>
         public ActionResult Index()
         {
             try 
             { 
                 //get all questions data
-<<<<<<< HEAD
                 if(QuestionOperations.mIsDataBaseConnected) { 
                     OperationResult canGetQuesitons = QuestionOperations.GetQuestions();
                     if (canGetQuesitons.IsSuccess && canGetQuesitons!=null)
@@ -83,12 +54,6 @@ namespace SurveyConfiguratorWeb.Controllers
                     }
                     //handle case of failure to obtain questions
                     return RedirectToErrorPage(GlobalStrings.DataFetchingError);
-=======
-                OperationResult tCanGetQuesitons = QuestionOperations.GetQuestions();
-                if (tCanGetQuesitons.IsSuccess && tCanGetQuesitons != null)
-                {
-                    return View(GetQuestionsData());
->>>>>>> b2ec240b7fbdc21092c68df756cc6defec2646b1
                 }
                 return RedirectToErrorPage(GlobalStrings.DataBaseConnectionError);
             }
@@ -102,7 +67,6 @@ namespace SurveyConfiguratorWeb.Controllers
         /// shows the create question view
         /// </summary>
         /// <returns>create question view</returns>
-
         [HttpGet]
         public ActionResult Create()
         {
@@ -142,30 +106,21 @@ namespace SurveyConfiguratorWeb.Controllers
                     Question tQuestionToAdd = CreateQuestionObject(pQuestionModelData, pFormData);
                     if (tQuestionToAdd != null)
                     {
-<<<<<<< HEAD
+                        //question object created
                         OperationResult tIsQuestionAdded = QuestionOperations.AddQuestion(tQuestionToAdd);
                         if (tIsQuestionAdded.IsSuccess)
                         {
                             //show pop up message
                             //on a successful question creation
-                            TempData[cMessageKey] = GlobalStrings.OperationSuccessful;
-                            return RedirectToAction(cQuestionsView);
+                            TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationSuccessful;
+                            return RedirectToAction(SharedConstants.cQuestionsIndexAction);
                         }
-=======
-                        return RedirectToAction(SharedConstants.cQuestionsIndexAction);
->>>>>>> b2ec240b7fbdc21092c68df756cc6defec2646b1
                     }
-                    TempData[cMessageKey] = GlobalStrings.OperationError;
                     //show error pop up
-                    return RedirectToAction(cQuestionsView);
+                    TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationError;
+                    return RedirectToAction(SharedConstants.cQuestionsIndexAction);
                 }
-<<<<<<< HEAD
                 return RedirectToErrorPage(GlobalStrings.DataBaseConnectionError);
-=======
-                TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationError;
-                //show error pop up, failed in adding the question
-                return RedirectToAction(SharedConstants.cQuestionsIndexAction);
->>>>>>> b2ec240b7fbdc21092c68df756cc6defec2646b1
             }
             catch (Exception ex)
             {
@@ -187,7 +142,6 @@ namespace SurveyConfiguratorWeb.Controllers
             {
                 if (QuestionOperations.mIsDataBaseConnected)
                 {
-<<<<<<< HEAD
                     //fetch all question data
                     Question tQuestionData = QuestionOperations.GetQuestionData(id);
                     if (tQuestionData != null)
@@ -200,22 +154,10 @@ namespace SurveyConfiguratorWeb.Controllers
                             );
                         return View(tQuestionModelData);
                     }
-                    TempData[cMessageKey] = GlobalStrings.QuestionDataFetchingError;
-                    return RedirectToAction(cQuestionsView);
-            }
-                return RedirectToErrorPage(GlobalStrings.DataBaseConnectionError);
-=======
-                    QuestionViewModel tQuestionModelData = new QuestionViewModel(
-                        tQuestionData.Id,
-                        tQuestionData.Text,
-                        tQuestionData.Order,
-                        tQuestionData.Type
-                        );
-                    return View(tQuestionModelData);
+                    TempData[SharedConstants.cMessageKey] = GlobalStrings.QuestionDataFetchingError;
+                    return RedirectToAction(SharedConstants.cQuestionsIndexAction);
                 }
-                TempData[SharedConstants.cMessageKey] = GlobalStrings.QuestionDataFetchingError;
-                return RedirectToAction(SharedConstants.cQuestionsIndexAction);
->>>>>>> b2ec240b7fbdc21092c68df756cc6defec2646b1
+                return RedirectToErrorPage(GlobalStrings.DataBaseConnectionError);
             }
             catch (Exception ex)
             {
@@ -237,7 +179,6 @@ namespace SurveyConfiguratorWeb.Controllers
         {
             try
             {
-<<<<<<< HEAD
                 if (QuestionOperations.mIsDataBaseConnected)
                 {
                     Question tQuestionToAdd = CreateQuestionObject(pQuestionModelUpdatedData, pFormData);
@@ -245,26 +186,14 @@ namespace SurveyConfiguratorWeb.Controllers
                     OperationResult tIsQuestionAdded = QuestionOperations.UpdateQuestion(tQuestionToAdd);
                     if (tIsQuestionAdded.IsSuccess)
                     {
-                        TempData[cMessageKey] = GlobalStrings.OperationSuccessful;
-                        return RedirectToAction(cQuestionsView);
+                        TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationSuccessful;
+                        return RedirectToAction(SharedConstants.cQuestionsIndexAction);
                     }
-                    TempData[cMessageKey] = GlobalStrings.OperationError;
+                    TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationError;
                     //show error pop up
-                    return RedirectToAction(cQuestionsView);
-                }
-                return RedirectToErrorPage(GlobalStrings.DataBaseConnectionError);
-=======
-                Question tQuestionToAdd = CreateQuestionObject(pQuestionModelUpdatedData, pFormData);
-                //update question data
-                OperationResult tIsQuestionAdded = QuestionOperations.UpdateQuestion(tQuestionToAdd);
-                if (tIsQuestionAdded.IsSuccess)
-                {
                     return RedirectToAction(SharedConstants.cQuestionsIndexAction);
                 }
-                TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationError;
-                //show error pop up
-                return RedirectToAction(SharedConstants.cQuestionsIndexAction);
->>>>>>> b2ec240b7fbdc21092c68df756cc6defec2646b1
+                return RedirectToErrorPage(GlobalStrings.DataBaseConnectionError);
             }
             catch (Exception ex)
             {
@@ -284,15 +213,9 @@ namespace SurveyConfiguratorWeb.Controllers
         {
             try
             {
-<<<<<<< HEAD
                 if (QuestionOperations.mIsDataBaseConnected)
-=======
-                //get question data
-                Question tQuestionData = QuestionOperations.GetQuestionData(id);
-
-                if (tQuestionData != null)
->>>>>>> b2ec240b7fbdc21092c68df756cc6defec2646b1
                 {
+                    //get question data
                     Question tQuestionData = QuestionOperations.GetQuestionData(id);
                     if (tQuestionData != null)
                     {
@@ -305,14 +228,9 @@ namespace SurveyConfiguratorWeb.Controllers
                         return View(tQuestionModelData);
                     }
                     TempData["Message"] = GlobalStrings.QuestionDataFetchingError;
-                    return RedirectToAction(cQuestionsView);
+                    return RedirectToAction(SharedConstants.cQuestionsIndexAction);
                 }
-<<<<<<< HEAD
                 return RedirectToErrorPage(GlobalStrings.DataBaseConnectionError);
-=======
-                TempData[SharedConstants.cMessageKey] = GlobalStrings.QuestionDataFetchingError;
-                return RedirectToAction(SharedConstants.cDefaultErrorMessage);
->>>>>>> b2ec240b7fbdc21092c68df756cc6defec2646b1
             }
             catch (Exception ex)
             {
@@ -334,39 +252,27 @@ namespace SurveyConfiguratorWeb.Controllers
         {
             try
             {
-<<<<<<< HEAD
                 if (QuestionOperations.mIsDataBaseConnected)
                 {
-                    List<int> tQuestionsIds = new List<int>();
-                    tQuestionsIds.Add(pQuestionData.Id);
+                    List<int> tQuestionsIds = new List<int>
+                    {
+                        pQuestionData.Id
+                    };
+                    //delete questions
                     OperationResult tAreQuestionsDeleted = QuestionOperations.DeleteQuestion(tQuestionsIds);
                     if (tAreQuestionsDeleted.IsSuccess)
                     {
-                        TempData[cMessageKey] = GlobalStrings.OperationSuccessful;
-                        return RedirectToAction(cQuestionsView);
+                        TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationSuccessful;
+                        return RedirectToAction(SharedConstants.cQuestionsIndexAction);
                     }
                     else
                     {
-                        TempData[cMessageKey] = GlobalStrings.OperationError;
-                        return RedirectToAction(cQuestionsView);
+                        //show error pop up
+                        TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationError;
+                        return RedirectToAction(SharedConstants.cQuestionsIndexAction);
                     }
                 }
                 return RedirectToErrorPage(GlobalStrings.DataBaseConnectionError);
-=======
-                List<int> tQuestionsIds = new List<int>
-                {
-                    pQuestionData.Id
-                };
-                //delete questions
-                OperationResult tAreQuestionsDeleted = QuestionOperations.DeleteQuestion(tQuestionsIds);
-                if (tAreQuestionsDeleted.IsSuccess)
-                {
-                    return RedirectToAction(SharedConstants.cQuestionsIndexAction);
-                }
-                //show error pop up
-                TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationError;
-                return RedirectToAction(SharedConstants.cQuestionsIndexAction);
->>>>>>> b2ec240b7fbdc21092c68df756cc6defec2646b1
             }
             catch (Exception ex)
             {
@@ -387,14 +293,9 @@ namespace SurveyConfiguratorWeb.Controllers
         {
             try
             {
-<<<<<<< HEAD
                 if (QuestionOperations.mIsDataBaseConnected)
-=======
-                //get question data
-                Question tQuestionData = QuestionOperations.GetQuestionData(id);
-                if (tQuestionData != null)
->>>>>>> b2ec240b7fbdc21092c68df756cc6defec2646b1
                 {
+                    //get question data
                     Question tQuestionData = QuestionOperations.GetQuestionData(id);
                     if (tQuestionData != null)
                     {
@@ -406,15 +307,10 @@ namespace SurveyConfiguratorWeb.Controllers
                             );
                         return View(tQuestionModelData);
                     }
-                    TempData[cMessageKey] = GlobalStrings.OperationError;
-                    return RedirectToAction(cQuestionsView);
+                    TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationError;
+                    return RedirectToAction(SharedConstants.cQuestionsIndexAction);
                 }
-<<<<<<< HEAD
                 return RedirectToErrorPage(GlobalStrings.DataBaseConnectionError);
-=======
-                TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationError;
-                return RedirectToAction(SharedConstants.cQuestionsIndexAction);
->>>>>>> b2ec240b7fbdc21092c68df756cc6defec2646b1
             }
             catch (Exception ex)
             {
@@ -616,34 +512,12 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
-<<<<<<< HEAD
-=======
-        /// <summary>
-        /// returns the database checksum value
-        /// </summary>
-        /// <returns>long value representing the checksum value</returns>
-        public long GetChecksumValue()
-        {
-            try
-            {
-                long tChecksumValue = 0;
-                OperationResult tCheckSumResult = QuestionOperations.GetDataBaseChecksum(ref tChecksumValue);
-                return tChecksumValue;
-            }
-            catch(Exception ex)
-            {
-                UtilityMethods.LogError(ex);
-                return 0;
-            }
-        }
-
         /// <summary>
         /// creates a question object from the QuestionViewModel object and theh form data
         /// </summary>
         /// <param name="pQuestionModelData">question general data</param>
         /// <param name="pFormData">contains question-type data</param>
         /// <returns>Question object</returns>
->>>>>>> b2ec240b7fbdc21092c68df756cc6defec2646b1
         private Question CreateQuestionObject(QuestionViewModel pQuestionModelData, FormCollection pFormData)
         {
             try
