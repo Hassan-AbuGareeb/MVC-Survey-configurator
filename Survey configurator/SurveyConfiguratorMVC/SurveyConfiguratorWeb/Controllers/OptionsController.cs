@@ -135,7 +135,7 @@ namespace SurveyConfiguratorWeb.Controllers
                     return View(tConnectionSettingsModel);
                 }
                 //return connection settings view without data from connection string
-                return View();
+                return View(new ConnectionStringViewModel());
             }
             catch (Exception ex)
             {

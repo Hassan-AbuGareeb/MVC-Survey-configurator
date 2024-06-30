@@ -39,10 +39,6 @@ namespace SurveyConfiguratorWeb
 
                 //get the connection string and set it in the database layer
                 bool tCanGetConnectionString = QuestionOperations.GetConnectionString();
-                if (!tCanGetConnectionString)
-                {
-                    //redirect to some error page or the options page
-                }
             }
             catch(Exception ex)
             {

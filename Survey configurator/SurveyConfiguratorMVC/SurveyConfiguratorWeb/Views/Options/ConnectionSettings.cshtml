@@ -138,12 +138,16 @@
             let tSeletectedAuthenticationTypeText;
             
             //set the selected auth type based on the the connection settings received from the controller if any
-            if ('@Model.mIntegratedSecurity') {
-                tSeletectedAuthenticationTypeText = '@Model.mIntegratedSecurity' === "True" ?
-                    '@cWindowsAuthenticationText' : '@cSQLAuthenticationText';
-            } else {
-                tSeletectedAuthenticationTypeText = '@cWindowsAuthenticationText';
-            }
+            ////console.log("@Model" === "")
+            //check if there was no model sent
+                if ('@Model.mIntegratedSecurity')
+                {
+                    tSeletectedAuthenticationTypeText = '@Model.mIntegratedSecurity' === "True" ?
+                        '@cWindowsAuthenticationText' : '@cSQLAuthenticationText';
+                } else
+                {
+                    tSeletectedAuthenticationTypeText = '@cWindowsAuthenticationText';
+                }
 
             //show/hide user credintials section based on the originally selected type
             ToggleUserCredintialsFields(tSeletectedAuthenticationTypeText);

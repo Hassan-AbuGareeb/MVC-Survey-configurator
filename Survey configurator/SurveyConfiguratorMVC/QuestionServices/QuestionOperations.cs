@@ -466,6 +466,11 @@ namespace QuestionServices
         {
             try
             {
+                if (!File.Exists(mFilePath))
+                {
+                    //create json file and fill it with default stuff
+                    using (FileStream tFs = File.Create(mFilePath)) ;
+                }
                 //update the shared data version on the connection string
                 SharedData.mConnectionString=pConnectionString;
                 using (StreamWriter tWriter = new StreamWriter(mFilePath))
