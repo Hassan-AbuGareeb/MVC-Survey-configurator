@@ -41,9 +41,9 @@ namespace QuestionServices
         public static List<Question> mQuestionsList = new List<Question>();
 
         //class members
-        private static Thread mDataBaseChecker;
-
-
+        private static Thread mDataBaseUpdateChecker;
+        private static Thread mDataBaseConnectionChecker;
+        public static bool mIsDataBaseConnected = true;
 
         private QuestionOperations()
         {
@@ -476,18 +476,41 @@ namespace QuestionServices
 
         /// <summary>
         /// this function create a thread and starts a funciton on it to start monitoring the database
-        /// the thread runs in the background as to not block the main thread it the function on the 
-        /// thread.
+        /// for any update, the thread runs in the background as to not block the main thread it the 
+        /// function on the thread.
         /// </summary>
         public static void StartCheckingDataBaseChange()
         {
             try
             {
                 //check if a thread is already running
-                if (mDataBaseChecker == null) {
-                mDataBaseChecker = new Thread(() => CheckDataBaseChange(Thread.CurrentThread));
-                mDataBaseChecker.IsBackground = true;
-                mDataBaseChecker.Start();
+                if (mDataBaseUpdateChecker == null) {
+                    mDataBaseUpdateChecker = new Thread(() => CheckDataBaseChange(Thread.CurrentThread));
+                    mDataBaseUpdateChecker.IsBackground = true;
+                    mDataBaseUpdateChecker.Start();
+                }
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+            }
+        }
+
+        /// <summary>
+        /// this function create a thread and starts a funciton on it to start monitoring the database
+        /// the thread runs in the background as to not block the main thread it the function on the 
+        /// thread.
+        /// </summary>
+        public static void StartCheckingDataBaseConnection()
+        {
+            try
+            {
+                //check if a thread is already running
+                if (mDataBaseConnectionChecker == null)
+                {
+                    mDataBaseConnectionChecker = new Thread(() => CheckDataBaseConnection(Thread.CurrentThread));
+                    mDataBaseConnectionChecker.IsBackground = true;
+                    mDataBaseConnectionChecker.Start();
                 }
             }
             catch (Exception ex)
@@ -507,7 +530,7 @@ namespace QuestionServices
         /// this function raises an event and returns a failed operationResult object.
         /// </summary>
         /// <param name="pMainThread"></param>
-        public static void CheckDataBaseChange(Thread pMainThread)
+        private static void CheckDataBaseChange(Thread pMainThread)
         {
             try
             {
@@ -555,6 +578,45 @@ namespace QuestionServices
                         }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+            }
+        }
+
+        /// <summary>
+        /// this funciton is responsible for maintaining the state of database connectivity
+        /// and if the database is refusing to connect the function tries to reconnect for a
+        /// number of times before changing the state of the database connectivity
+        /// </summary>
+        /// <param name="pMainThread"></param>
+        private static void CheckDataBaseConnection(Thread pMainThread)
+        {
+            try
+            {
+                int tDatabaseConnectionRetryCount = 0;
+                while (pMainThread.IsAlive)
+                {
+                    Thread.Sleep(10000);
+                    OperationResult tIsDatabaseConnnected = TestDBConnection();
+                    if (tIsDatabaseConnnected.IsSuccess)
+                    {
+                        //database is connected
+                        mIsDataBaseConnected = true;
+                        tDatabaseConnectionRetryCount = 0;
+                    }
+                    else
+                    {
+                        //data base not connected, try to reconnect for a number of times
+                        tDatabaseConnectionRetryCount++;
+                        if (tDatabaseConnectionRetryCount > cDatabaseReconnectMaxAttempts)
+                        {
+                            mIsDataBaseConnected = false;
+                            //DataBaseNotConnectedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
+                        }
+                    }
+                }                
             }
             catch (Exception ex)
             {

@@ -24,6 +24,7 @@ namespace SurveyConfiguratorWeb.SignalRHubs
         [HubMethodName("StartCheck")]
         public void StartCheck()
         {
+            QuestionOperations.StartCheckingDataBaseConnection();
             QuestionOperations.StartCheckingDataBaseChange();
         }
 
