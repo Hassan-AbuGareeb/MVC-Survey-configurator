@@ -1,4 +1,8 @@
 ﻿@using SurveyConfiguratorWeb.ConstantsAndMethods
+@using System.Web.Configuration;
+@{ 
+    string AppLanguage = WebConfigurationManager.AppSettings[SharedConstants.cLagnaugeAppSettingKey];
+}
 
 <!DOCTYPE html>
 <html>
@@ -9,7 +13,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body >
+<body style="direction:@(AppLanguage=="ar"?"rtl":"ltr")">
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
             @Html.ActionLink("Survey Configurator", SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController, new { area = "" }, new { @class = "navbar-brand" })
