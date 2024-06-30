@@ -180,6 +180,15 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occured while loading the data.
+        /// </summary>
+        public static string DataLoadingError {
+            get {
+                return ResourceManager.GetString("DataLoadingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {

@@ -50,10 +50,18 @@ namespace SurveyConfiguratorWeb.Controllers
                     OperationResult canGetQuesitons = QuestionOperations.GetQuestions();
                     if (canGetQuesitons.IsSuccess && canGetQuesitons!=null)
                     {
-                        return View(GetQuestionsData());
+                        IEnumerable<QuestionViewModel> tQuestionsData = GetQuestionsData();
+                        if (tQuestionsData != null) 
+                        { 
+                            return View(GetQuestionsData());
+                        }
+                        else
+                        {
+                            return RedirectToErrorPage(GlobalStrings.DataLoadingError);
+                        }
                     }
                     //handle case of failure to obtain questions
-                    return RedirectToErrorPage(GlobalStrings.DataFetchingError);
+                    return RedirectToErrorPage(GlobalStrings.DataLoadingError);
                 }
                 return RedirectToErrorPage(GlobalStrings.DataBaseConnectionError);
             }
@@ -110,13 +118,11 @@ namespace SurveyConfiguratorWeb.Controllers
                         OperationResult tIsQuestionAdded = QuestionOperations.AddQuestion(tQuestionToAdd);
                         if (tIsQuestionAdded.IsSuccess)
                         {
-                            //show pop up message
-                            //on a successful question creation
-                            TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationSuccessful;
+                            //redirect to questions list on successful operation
                             return RedirectToAction(SharedConstants.cQuestionsIndexAction);
                         }
                     }
-                    //show error pop up
+                    //show error pop up and redirect to questionslist page
                     TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationError;
                     return RedirectToAction(SharedConstants.cQuestionsIndexAction);
                 }
@@ -181,16 +187,16 @@ namespace SurveyConfiguratorWeb.Controllers
             {
                 if (QuestionOperations.mIsDataBaseConnected)
                 {
+                    //extract question data from the questionViewmodel object and the form data
                     Question tQuestionToAdd = CreateQuestionObject(pQuestionModelUpdatedData, pFormData);
 
                     OperationResult tIsQuestionAdded = QuestionOperations.UpdateQuestion(tQuestionToAdd);
                     if (tIsQuestionAdded.IsSuccess)
                     {
-                        TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationSuccessful;
                         return RedirectToAction(SharedConstants.cQuestionsIndexAction);
                     }
-                    TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationError;
                     //show error pop up
+                    TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationError;
                     return RedirectToAction(SharedConstants.cQuestionsIndexAction);
                 }
                 return RedirectToErrorPage(GlobalStrings.DataBaseConnectionError);
@@ -227,7 +233,7 @@ namespace SurveyConfiguratorWeb.Controllers
                             );
                         return View(tQuestionModelData);
                     }
-                    TempData["Message"] = GlobalStrings.QuestionDataFetchingError;
+                    TempData[SharedConstants.cMessageKey] = GlobalStrings.QuestionDataFetchingError;
                     return RedirectToAction(SharedConstants.cQuestionsIndexAction);
                 }
                 return RedirectToErrorPage(GlobalStrings.DataBaseConnectionError);
@@ -262,7 +268,6 @@ namespace SurveyConfiguratorWeb.Controllers
                     OperationResult tAreQuestionsDeleted = QuestionOperations.DeleteQuestion(tQuestionsIds);
                     if (tAreQuestionsDeleted.IsSuccess)
                     {
-                        TempData[SharedConstants.cMessageKey] = GlobalStrings.OperationSuccessful;
                         return RedirectToAction(SharedConstants.cQuestionsIndexAction);
                     }
                     else
@@ -507,15 +512,19 @@ namespace SurveyConfiguratorWeb.Controllers
         {
             try
             {
-                //get all questions data
-                OperationResult tCanGetQuesitons = QuestionOperations.GetQuestions();
-                if (tCanGetQuesitons != null && tCanGetQuesitons.IsSuccess)
-                {
-                    //put the questions data in a list of question view model objects
-                    IEnumerable<QuestionViewModel> tQuestionsListViewModel = GetQuestionsData();
-                    return PartialView(SharedConstants.cQuestionsListView, tQuestionsListViewModel);
+                
+                if (QuestionOperations.mIsDataBaseConnected) { 
+                    //get all questions data
+                    OperationResult tCanGetQuesitons = QuestionOperations.GetQuestions();
+                    if (tCanGetQuesitons != null && tCanGetQuesitons.IsSuccess)
+                    {
+                        //put the questions data in a list of question view model objects
+                        IEnumerable<QuestionViewModel> tQuestionsListViewModel = GetQuestionsData();
+                        return PartialView(SharedConstants.cQuestionsListView, tQuestionsListViewModel);
+                    }
+                    //handle faliure case 
+                    return RedirectToErrorPage(GlobalStrings.DataLoadingError);
                 }
-                //handle faliure case 
                 return RedirectToErrorPage(GlobalStrings.DataBaseConnectionError);
             }
             catch (Exception ex)
@@ -550,9 +559,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch( Exception ex )
             {
                 UtilityMethods.LogError(ex);
-                //handle the exception
-                //return this or null
-                return new List<QuestionViewModel>();
+                return null;
             }
         }
 
@@ -618,7 +625,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToAction(SharedConstants.cErrorPageAction, SharedConstants.cErrorController, new { ErrorMessage = pErrorMessage });
+                return RedirectToAction(SharedConstants.cErrorPageAction, SharedConstants.cErrorController);
             }
         }
         #endregion
