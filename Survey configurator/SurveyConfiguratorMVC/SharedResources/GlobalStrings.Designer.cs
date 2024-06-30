@@ -673,5 +673,14 @@ namespace SharedResources {
                 return ResourceManager.GetString("UnknownErrorTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected language isn&apos;t supported.
+        /// </summary>
+        public static string UnSupportedLanguageError {
+            get {
+                return ResourceManager.GetString("UnSupportedLanguageError", resourceCulture);
+            }
+        }
     }
 }

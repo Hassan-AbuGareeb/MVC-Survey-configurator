@@ -31,8 +31,9 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return RedirectToAction(SharedConstants.cErrorController, SharedConstants.cErrorPageAction, new { ErrorMessage = GlobalStrings.PageLoadingError });
+                return View();
             }
         }
+
     }
 }

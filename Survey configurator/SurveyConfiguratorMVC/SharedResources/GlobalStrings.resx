@@ -323,4 +323,7 @@ if you keep getting this error restart the app</value>
   <data name="UnknownErrorTitle" xml:space="preserve">
     <value>Unknown error</value>
   </data>
+  <data name="UnSupportedLanguageError" xml:space="preserve">
+    <value>The selected language isn't supported</value>
+  </data>
 </root>

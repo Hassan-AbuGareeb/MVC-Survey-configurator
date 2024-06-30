@@ -20,7 +20,7 @@ namespace SurveyConfiguratorWeb.Controllers
         /// for the connection string settings.
         /// </summary>
 
-
+        //array of supported languages 
         public static string[] cSupportedLanguages = { "en", "ar" };
 
 
@@ -38,7 +38,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return View(SharedConstants.cErrorController);
+                return RedirectToAction(SharedConstants.cErrorPageAction, SharedConstants.cErrorController, new { ErrorMessage = GlobalStrings.UnknownError });
             }
         }
 
@@ -61,7 +61,8 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return View(SharedConstants.cErrorController);
+                return RedirectToAction(SharedConstants.cErrorPageAction, SharedConstants.cErrorController, new { ErrorMessage = GlobalStrings.UnknownError });
+
             }
         }
 
@@ -80,11 +81,11 @@ namespace SurveyConfiguratorWeb.Controllers
                 //extract the selected language value from the form data
                 string tSelectedLanguage = pFormData[SharedConstants.cLanguageDropDownId];
 
-
                 //check if the received value exists in the supported Languages
                 if (!cSupportedLanguages.Contains(tSelectedLanguage))
                 {
-                    //return to index view or same view with pop up message 
+                    TempData[SharedConstants.cMessageKey] = GlobalStrings.UnSupportedLanguageError;
+                    return RedirectToAction(SharedConstants.cOptionsIndexAction);
                 }
 
                 //set the selected language as default for all threads
@@ -104,7 +105,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return View(SharedConstants.cErrorController);
+                return RedirectToAction(SharedConstants.cErrorPageAction, SharedConstants.cErrorController, new { ErrorMessage = GlobalStrings.UnknownError });
             }
         }
 
@@ -130,14 +131,16 @@ namespace SurveyConfiguratorWeb.Controllers
                         tConnectionSettings.mUser,
                         tConnectionSettings.mPassword
                         );
+                    //return connection settings view with existing data from the connectino string
                     return View(tConnectionSettingsModel);
                 }
+                //return connection settings view without data from connection string
                 return View();
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return View(SharedConstants.cErrorController);
+                return RedirectToAction(SharedConstants.cErrorPageAction, SharedConstants.cErrorController, new { ErrorMessage = GlobalStrings.UnknownError });
             }
         }
 
@@ -171,14 +174,14 @@ namespace SurveyConfiguratorWeb.Controllers
                 OperationResult tCanConnectToDatabase = QuestionOperations.TestDBConnection();
                 if (tCanConnectToDatabase.IsSuccess)
                 {
-                    //more enhancements and better redirection required
+                    //more enhancements to visuals 
 
                     ViewData[SharedConstants.cConnectionResultMessageKey] = SharedConstants.cConnectionSuccessfulMessage;
                     return View(pConnectionSettings);
                 }
                 else
                 {
-                    //more enhancements and better redirection required
+                    //more enhancements to visuals
 
                     ViewData[SharedConstants.cConnectionResultMessageKey] = SharedConstants.cConnectionFailedMessage;
                     return View(pConnectionSettings);
@@ -187,7 +190,7 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return View(SharedConstants.cErrorController);
+                return RedirectToAction(SharedConstants.cErrorPageAction, SharedConstants.cErrorController, new { ErrorMessage = GlobalStrings.UnknownError });
             }
         }
 
