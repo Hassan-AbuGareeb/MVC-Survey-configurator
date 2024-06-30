@@ -20,6 +20,7 @@ namespace QuestionServices
         /// </summary>
 
         //event handlers
+
         //event handler for any change that happens to the database from any source
         public static event EventHandler DataBaseChangedEvent;
         //event handler for when the database stops responding
@@ -292,8 +293,8 @@ namespace QuestionServices
                 {
                     //check if start and end value are in range
                     if (
-                        (pQuestionData.StartValue >= 1 && pQuestionData.StartValue <= 100)&&
-                        (pQuestionData.EndValue >= 1 && pQuestionData.EndValue <= 100)
+                        (pQuestionData.StartValue >= SharedData.cMinStartValue && pQuestionData.StartValue <= SharedData.cMaxStartValue)&&
+                        (pQuestionData.EndValue >= SharedData.cMinEndValue && pQuestionData.EndValue <= SharedData.cMaxEndValue)
                         )
                     {
                         //check if start value is less than end value
@@ -336,7 +337,7 @@ namespace QuestionServices
             {
                 if (pQuestionData!=null)
                 {
-                    if(pQuestionData.NumberOfStars >= 1 && pQuestionData.NumberOfStars <= 10)
+                    if(pQuestionData.NumberOfStars >= SharedData.cMinNumberOfStars && pQuestionData.NumberOfStars <= SharedData.cMaxNumberOfStars)
                     {
                         return new OperationResult();
                     }
@@ -368,7 +369,7 @@ namespace QuestionServices
             {
                 if (pQuestionData != null)
                 {
-                    if (pQuestionData.NumberOfSmileyFaces >= 2 && pQuestionData.NumberOfSmileyFaces <= 5)
+                    if (pQuestionData.NumberOfSmileyFaces >= SharedData.cMinNumberOfSmileyFaces && pQuestionData.NumberOfSmileyFaces <= SharedData.cMaxNumberOfSmileyFaces)
                     {
                         return new OperationResult();
                     }
@@ -437,6 +438,10 @@ namespace QuestionServices
                     string tReadConnectionString = tFileReader.ReadToEnd();
                     //de-serialize the obtained connection string and transform it to the correct format
                     ConnectionString tDesrializedConnString = JsonSerializer.Deserialize<ConnectionString>(tReadConnectionString);
+                    //assign the connectionString object to the shared data class member
+                    SharedResources.SharedData.mConnectionString = tDesrializedConnString;
+
+                    //assign the connection string to the Database layer class memeber
                     Database.mConnectionString = tDesrializedConnString.GetFormattedConnectionString();
                 }
                 return true;
@@ -461,6 +466,8 @@ namespace QuestionServices
         {
             try
             {
+                //update the shared data version on the connection string
+                SharedData.mConnectionString=pConnectionString;
                 using (StreamWriter tWriter = new StreamWriter(mFilePath))
                 {
                     string tSerializedConnectionString = JsonSerializer.Serialize<ConnectionString>(pConnectionString);
@@ -586,6 +593,7 @@ namespace QuestionServices
         }
 
         /// <summary>
+<<<<<<< HEAD
         /// this funciton is responsible for maintaining the state of database connectivity
         /// and if the database is refusing to connect the function tries to reconnect for a
         /// number of times before changing the state of the database connectivity
@@ -624,6 +632,12 @@ namespace QuestionServices
             }
         }
 
+=======
+        /// get the current database checksum and store it in the ref parameter
+        /// </summary>
+        /// <param name="pChecksumValue">contain the value of the checksum</param>
+        /// <returns></returns>
+>>>>>>> b2ec240b7fbdc21092c68df756cc6defec2646b1
         public static OperationResult GetDataBaseChecksum(ref long pChecksumValue)
         {
             try

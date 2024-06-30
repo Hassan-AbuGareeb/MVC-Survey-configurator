@@ -6,6 +6,20 @@ namespace SurveyConfiguratorWeb.Filters
 {
     public class GlobalExceptionFilter : FilterAttribute, IExceptionFilter
     {
+        /// <summary>
+        /// Custom filter attribute that acts as a global exception handler
+        /// logs exceptions and redirect to an error page
+        /// </summary>
+
+
+
+
+        /// <summary>
+        /// overriden method which is called on any unhandled exception
+        /// in this context.
+        /// </summary>
+        /// <param name="pfilterContext"></param>
+        /// 
         public void OnException(ExceptionContext pfilterContext)
         {
             try { 

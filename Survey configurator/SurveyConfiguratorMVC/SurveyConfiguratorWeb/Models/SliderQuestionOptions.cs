@@ -6,15 +6,22 @@ namespace SurveyConfiguratorWeb.Models
 {
     public class SliderQuestionOptions
     {
+        /// <summary>
+        /// view model for the Slider question object partial view
+        /// with the appropriate data annotations to help 
+        /// with the validation
+        /// the errors messages are fetched from the resource file to 
+        /// enable the localization 
+        /// </summary>
 
 
         [Required(ErrorMessageResourceType =typeof(GlobalStrings), ErrorMessageResourceName= "SliderStartValueRequiredError")]
-        [Range(0, 100, ErrorMessageResourceType = typeof(GlobalStrings), ErrorMessageResourceName = "SliderStartValueNumberError")]
+        [Range(SharedData.cMinStartValue, SharedData.cMaxStartValue, ErrorMessageResourceType = typeof(GlobalStrings), ErrorMessageResourceName = "SliderStartValueNumberError")]
         [DisplayName("Start value")]
         public int StartValue { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(GlobalStrings), ErrorMessageResourceName = "SliderEndValueRequiredError")]
-        [Range(0, 100, ErrorMessageResourceType = typeof(GlobalStrings), ErrorMessageResourceName = "SliderEndValueNumberError")]
+        [Range(SharedData.cMinEndValue, SharedData.cMaxEndValue, ErrorMessageResourceType = typeof(GlobalStrings), ErrorMessageResourceName = "SliderEndValueNumberError")]
         [DisplayName("End value")]
         public int EndValue { get; set; }
 

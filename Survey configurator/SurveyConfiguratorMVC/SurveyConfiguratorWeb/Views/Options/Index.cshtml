@@ -1,12 +1,13 @@
-﻿
+﻿@using SurveyConfiguratorWeb.ConstantsAndMethods
+@using SharedResources
 @{
-    ViewBag.Title = "Options";
+    ViewBag.Title =SharedResources.GlobalStrings.Options;
 }
 
-<h2>Options</h2>
+<h2>@GlobalStrings.Options</h2>
 <div class="flex-column">
-    <h3>@Html.ActionLink(SharedResources.GlobalStrings.Language, "Language")</h3>
-    <h3>@Html.ActionLink(SharedResources.GlobalStrings.ConnectionSettings, "ConnectionSettings")</h3>
+    <h3>@Html.ActionLink(SharedResources.GlobalStrings.Language, SharedConstants.cLanguageAction)</h3>
+    <h3>@Html.ActionLink(SharedResources.GlobalStrings.ConnectionSettings, SharedConstants.cConnectionSettingsAction)</h3>
 </div>
 
 

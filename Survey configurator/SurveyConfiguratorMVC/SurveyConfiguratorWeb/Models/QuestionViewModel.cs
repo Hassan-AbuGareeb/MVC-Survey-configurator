@@ -1,21 +1,39 @@
 ﻿using SharedResources;
+using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace SurveyConfiguratorWeb.Models
 {
     public class QuestionViewModel
     {
+        /// <summary>
+        /// view model for the question object partial view
+        /// which contains only the general question info
+        /// with the appropriate data annotations to help 
+        /// with the validation.
+        /// the errors messages are fetched from the resource file to 
+        /// enable the localization 
+        /// </summary>
+
+
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "The question text can't be empty")]
-        [MaxLength(350, ErrorMessage = "The question text can't be more than 350 characters")]
+        [Required(ErrorMessageResourceType = typeof(GlobalStrings),
+            ErrorMessageResourceName = "QuestionTextRequiredError")]
+        [MaxLength(SharedData.cQuestionTextLength,
+            ErrorMessageResourceType =typeof(GlobalStrings), ErrorMessageResourceName = "QuestionTextLengthError")]
         public string Text { get; set; }
 
-        [Required(ErrorMessage = "The question order is required")]
-        [Range(1, 120, ErrorMessage = "The question order must be between 1 and 120")]
+        [Required( ErrorMessageResourceType = typeof(GlobalStrings),
+            ErrorMessageResourceName = "QuestionOrderRequiredError")]
+        [Range(1, Int32.MaxValue, 
+            ErrorMessageResourceType =typeof(GlobalStrings),
+            ErrorMessageResourceName = "QuestionOrderValueError")]
         public int Order { get; set; }
 
-        [Required(ErrorMessage = "The question type is required")]
+        [Required(ErrorMessageResourceType = typeof(GlobalStrings), 
+            ErrorMessageResourceName = "QuestionTypeError")]
         public eQuestionType Type { get; set; }
 
         public QuestionViewModel()

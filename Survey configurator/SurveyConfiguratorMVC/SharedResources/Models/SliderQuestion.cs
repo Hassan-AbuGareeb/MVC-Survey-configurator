@@ -13,7 +13,9 @@ namespace SharedResources.Models
         public string StartValueCaption { get; set; }
         public string EndValueCaption { get; set; }
 
-        public SliderQuestion(int pId, string pText, int pOrder, int pStartValue = 0, int pEndValue = 100, string pStartCaption = "Min", string pEndCaption = "Max")
+        public SliderQuestion(int pId, string pText, int pOrder,
+            int pStartValue = SharedData.cMinStartValue, int pEndValue = SharedData.cMaxEndValue,
+            string pStartCaption = SharedData.cDefaultStartValueCaption, string pEndCaption = SharedData.cDefaultEndValueCaption)
             : base(pId, pText, pOrder, eQuestionType.Slider)
         {
             StartValue = pStartValue;
@@ -22,7 +24,9 @@ namespace SharedResources.Models
             EndValueCaption = pEndCaption;
         }
 
-        public SliderQuestion(Question pQuestionData, int pStartValue = 0, int pEndValue = 100, string pStartCaption = "Min", string pEndCaption = "Max")
+        public SliderQuestion(Question pQuestionData, 
+            int pStartValue = SharedData.cMinStartValue, int pEndValue = SharedData.cMaxEndValue,
+            string pStartCaption = SharedData.cDefaultStartValueCaption, string pEndCaption = SharedData.cDefaultEndValueCaption)
             : base(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order, eQuestionType.Slider)
         {
             StartValue = pStartValue;

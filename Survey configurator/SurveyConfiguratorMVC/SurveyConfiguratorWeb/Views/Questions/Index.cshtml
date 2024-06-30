@@ -1,28 +1,39 @@
 ﻿@model IEnumerable<SurveyConfiguratorWeb.Models.QuestionViewModel>
-
+@using SurveyConfiguratorWeb.ConstantsAndMethods
 @{
     ViewBag.Title = SharedResources.GlobalStrings.Questions;
+<<<<<<< HEAD
     const string cAlertDivId = "alert";
     const string cQuestionsListId = "QuestionsList";
     const string cDataUpdateNotificationId = "DataUpdateNotification";
+=======
+    const string cAlertDivId = "Alert";
+    const string cQuestionsListSpanId = "QuestionsList";
+>>>>>>> b2ec240b7fbdc21092c68df756cc6defec2646b1
 }
 <!-- place holder for any alerts or pop up messages-->
 <div id="@cAlertDivId"></div>
 
 <h2>@SharedResources.GlobalStrings.Questions</h2>
 <p>
-    @Html.ActionLink(SharedResources.GlobalStrings.AddQuestion, "Create", "Questions")
+    @Html.ActionLink(SharedResources.GlobalStrings.AddQuestion, SharedConstants.cQuestionCreateAction, SharedConstants.cQuestionsController)
 </p>
 
+<<<<<<< HEAD
 <span id="@cDataUpdateNotificationId"></span>
 <span id="@cQuestionsListId">
     @Html.Partial("PartialViews/_QuestionsList", Model)
+=======
+<span id="@cQuestionsListSpanId">
+    @Html.Partial(SharedConstants.cQuestionsListView, Model)
+>>>>>>> b2ec240b7fbdc21092c68df756cc6defec2646b1
 </span>
 
 
 
 @section Scripts {
     @Scripts.Render("~/bundles/jquery")
+    @* scripts for the datatable component *@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
     <!--Reference the SignalR library. -->
@@ -31,6 +42,7 @@
     <script src="~/signalr/hubs"></script>
     <script>
         $(document).ready(async function () {
+<<<<<<< HEAD
             //show alert popup if there's any
             if ('@TempData["Message"]') {
                 $("#"+"@cAlertDivId").html("<div class='alert alert-danger'>"+"@TempData["Message"]"+"</div>")
@@ -68,6 +80,77 @@
                 console.error("an error occured while connecting to the server")
             })
 
+=======
+            try {
+                /// <summary>
+                //get the database checksum value from the controller
+                /// </summary>
+                async function GetChecksum() {
+                    try {
+                        const tCheckSum = await $.ajax({
+                            url: '@Url.Action(SharedConstants.cGetChecksumValueFunction, SharedConstants.cQuestionsController)',
+                            type: "GET",
+                        })
+                        return tCheckSum;
+                    }
+                    catch (ex) {
+                        //log err
+                    }
+                }
+
+                /// <summary>
+                /// this functions checks whether the database has changed
+                /// by comparing the checksum of the database against the
+                /// checksum obtained first when visiting this view
+                /// if the database is changed re-render the partial view
+                /// containing the questions table
+                /// </summary>
+                async function CheckDatabaseForChanges() {
+                    try
+                    {
+                        //get new checksum value
+                        const tNewChecksumValue = await GetChecksum();
+
+                        if (tNewChecksumValue !== tOriginalChecksumValue) {
+                            //update the value of the orignal checksum
+                            tOriginalChecksumValue = tNewChecksumValue;
+
+                            //get the updated partial view
+                            $.ajax({
+                                url: '@Url.Action(SharedConstants.cGetQuestionsListPartialViewFunction, SharedConstants.cQuestionsController)',
+                                type: "GET",
+                                success: function (pPartial) {
+                                    //re-render partial view with new data
+                                    $("#"+"@cQuestionsListSpanId").empty();
+                                    $("#"+"@cQuestionsListSpanId").html(pPartial);
+                                },
+                                error: function (xhr, status, error) {
+                                    console.log(xhr.responseText);
+                                }
+                            })
+                        }
+                    }
+                    catch (ex) {
+                        //log err
+                    }
+                }
+
+                //show alert popup if there's any
+                if ('@TempData[SharedConstants.cMessageKey]') {
+                    $("#"+"@cAlertDivId").html("<div class='alert alert-danger'>"+"@TempData[SharedConstants.cMessageKey]"+"</div>")
+                    setTimeout(function () { $("#"+"@cAlertDivId").empty() }, 3500);
+                }
+
+                //get original checksum of db
+                let tOriginalChecksumValue = await GetChecksum();
+
+                //call the data base checker function periodically (every 10 secnods)
+                let tDatabaseCheckerInterval = setInterval(CheckDatabaseForChanges, 10000)
+            }
+            catch (ex) {
+                //log the error somehow
+            }
+>>>>>>> b2ec240b7fbdc21092c68df756cc6defec2646b1
         })
     </script>
 }
