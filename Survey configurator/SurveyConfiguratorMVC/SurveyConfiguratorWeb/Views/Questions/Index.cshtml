@@ -39,10 +39,10 @@
                 }
 
                 //subscripe to the data base checker hub
-                let checker = $.connection.DataBaseCheckHub;
+                let tChecker = $.connection.DataBaseCheckHub;
 
                 //assign a call back function to the UpdateQuestionsList function
-                checker.client.UpdateQuestionsList = function () {
+                tChecker.client.UpdateQuestionsList = function () {
                     $.ajax({
                         url: '@Url.Action("GetQuestionsListPartialView", "Questions")',
                         type: "GET",
@@ -50,10 +50,12 @@
                             //show some notfication that the data has been updated
                             //needs a timer to remove and some visual enhancement
                             $("#" + "@cDataUpdateNotificationId").empty();
-                            $("#" + "@cDataUpdateNotificationId").text("hello");
+                            $("#" + "@cDataUpdateNotificationId").css("color","red");
+                            $("#" + "@cDataUpdateNotificationId").text('@SharedResources.GlobalStrings.DatabaseUpdated');
+                            setTimeout(function () { $("#" + "@cDataUpdateNotificationId").empty() }, 4000);
                             //re-render partial view with new data
-                            $("#" + "@cQuestionsListId").empty();
-                            $("#" + "@cQuestionsListId").html(pPartial);
+                                $("#" + "@cQuestionsListId").empty();
+                                $("#" + "@cQuestionsListId").html(pPartial);
                         },
                         error: function (xhr, status, error) {
                             console.log(xhr.responseText);
@@ -64,7 +66,7 @@
                 //start the connection with the hub
                 $.connection.hub.start().done(function () {
                     //call the data base checker function
-                    checker.server.StartCheck();
+                    tChecker.server.StartCheck();
                 }).fail(function (error) {
                     console.error("an error occured while connecting to the server")
                 })

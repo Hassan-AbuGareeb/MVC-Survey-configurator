@@ -21,11 +21,11 @@ namespace SurveyConfiguratorWeb.Controllers
         /// <param name="pErrorMessage">Error message to show on the page</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult ErrorPage(string pErrorMessage)
+        public ActionResult ErrorPage(string ErrorMessage)
         {
             try 
             { 
-                ViewBag.ErrorMessage = pErrorMessage;
+                ViewBag.ErrorMessage = ErrorMessage;
                 return View();
             }
             catch (Exception ex)

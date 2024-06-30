@@ -124,8 +124,7 @@ namespace SharedResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An error occured while connecting to database, the application may not work properly.
-        ///would like to continue?.
+        ///   Looks up a localized string similar to An error occured while connecting to database.
         /// </summary>
         public static string DataBaseConnectionError {
             get {
@@ -157,6 +156,15 @@ namespace SharedResources {
         public static string DatabaseNotConnectedErrorTitle {
             get {
                 return ResourceManager.GetString("DatabaseNotConnectedErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data has been updated.
+        /// </summary>
+        public static string DatabaseUpdated {
+            get {
+                return ResourceManager.GetString("DatabaseUpdated", resourceCulture);
             }
         }
         
