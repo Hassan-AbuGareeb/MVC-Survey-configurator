@@ -3,23 +3,23 @@
   "WorkspaceRootPath": "D:\\MVC-Survey-configurator\\Survey configurator\\JWT\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{174FCA74-44D9-4094-A8EF-63DFC29E3DAE}|JWT\\JWT.csproj|D:\\MVC-Survey-configurator\\Survey configurator\\JWT\\jwt\\authentication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{174FCA74-44D9-4094-A8EF-63DFC29E3DAE}|JWT\\JWT.csproj|solutionrelative:jwt\\authentication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{174FCA74-44D9-4094-A8EF-63DFC29E3DAE}|JWT\\JWT.csproj|D:\\MVC-Survey-configurator\\Survey configurator\\JWT\\jwt\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{174FCA74-44D9-4094-A8EF-63DFC29E3DAE}|JWT\\JWT.csproj|solutionrelative:jwt\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{174FCA74-44D9-4094-A8EF-63DFC29E3DAE}|JWT\\JWT.csproj|d:\\mvc-survey-configurator\\survey configurator\\jwt\\jwt\\filters\\jwtauthattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{174FCA74-44D9-4094-A8EF-63DFC29E3DAE}|JWT\\JWT.csproj|solutionrelative:jwt\\filters\\jwtauthattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{174FCA74-44D9-4094-A8EF-63DFC29E3DAE}|JWT\\JWT.csproj|d:\\mvc-survey-configurator\\survey configurator\\jwt\\jwt\\authentication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{174FCA74-44D9-4094-A8EF-63DFC29E3DAE}|JWT\\JWT.csproj|solutionrelative:jwt\\authentication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{174FCA74-44D9-4094-A8EF-63DFC29E3DAE}|JWT\\JWT.csproj|d:\\mvc-survey-configurator\\survey configurator\\jwt\\jwt\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{174FCA74-44D9-4094-A8EF-63DFC29E3DAE}|JWT\\JWT.csproj|solutionrelative:jwt\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{174FCA74-44D9-4094-A8EF-63DFC29E3DAE}|JWT\\JWT.csproj|d:\\mvc-survey-configurator\\survey configurator\\jwt\\jwt\\models\\usercred.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{174FCA74-44D9-4094-A8EF-63DFC29E3DAE}|JWT\\JWT.csproj|D:\\MVC-Survey-configurator\\Survey configurator\\JWT\\jwt\\models\\usercred.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{174FCA74-44D9-4094-A8EF-63DFC29E3DAE}|JWT\\JWT.csproj|solutionrelative:jwt\\models\\usercred.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{174FCA74-44D9-4094-A8EF-63DFC29E3DAE}|JWT\\JWT.csproj|d:\\mvc-survey-configurator\\survey configurator\\jwt\\jwt\\views\\home\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{174FCA74-44D9-4094-A8EF-63DFC29E3DAE}|JWT\\JWT.csproj|D:\\MVC-Survey-configurator\\Survey configurator\\JWT\\jwt\\views\\home\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{174FCA74-44D9-4094-A8EF-63DFC29E3DAE}|JWT\\JWT.csproj|solutionrelative:jwt\\views\\home\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 232,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,26 +50,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "JWTAuthAttribute.cs",
               "DocumentMoniker": "D:\\MVC-Survey-configurator\\Survey configurator\\JWT\\JWT\\Filters\\JWTAuthAttribute.cs",
               "RelativeDocumentMoniker": "JWT\\Filters\\JWTAuthAttribute.cs",
               "ToolTip": "D:\\MVC-Survey-configurator\\Survey configurator\\JWT\\JWT\\Filters\\JWTAuthAttribute.cs",
               "RelativeToolTip": "JWT\\Filters\\JWTAuthAttribute.cs",
-              "ViewState": "AQIAAA0AAAAAAAAAAAAQwBQAAAAJAAAA",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAAwBQAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-02T09:13:15.719Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Authentication.cs",
               "DocumentMoniker": "D:\\MVC-Survey-configurator\\Survey configurator\\JWT\\JWT\\Authentication.cs",
               "RelativeDocumentMoniker": "JWT\\Authentication.cs",
               "ToolTip": "D:\\MVC-Survey-configurator\\Survey configurator\\JWT\\JWT\\Authentication.cs",
               "RelativeToolTip": "JWT\\Authentication.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAADEAAAAsAAAA",
+              "ViewState": "AQIAADIAAAAAAAAAAAAjwEQAAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-30T15:57:33.326Z",
               "EditorCaption": ""
@@ -84,8 +84,7 @@
               "RelativeToolTip": "JWT\\Views\\Home\\LogIn.cshtml",
               "ViewState": "AQIAAAMAAAAAAAAAAAAAAA8AAABBAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-06-30T15:52:55.932Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-30T15:52:55.932Z"
             },
             {
               "$type": "Document",
@@ -97,12 +96,11 @@
               "RelativeToolTip": "JWT\\Models\\UserCred.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-30T15:46:05.246Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-30T15:46:05.246Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "HomeController.cs",
               "DocumentMoniker": "D:\\MVC-Survey-configurator\\Survey configurator\\JWT\\JWT\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "JWT\\Controllers\\HomeController.cs",

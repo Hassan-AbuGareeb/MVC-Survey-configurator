@@ -1,12 +1,9 @@
-﻿using Microsoft.Ajax.Utilities;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Web;
 
 namespace JWT
 {
@@ -15,7 +12,7 @@ namespace JWT
         public const string secret = "supserowaejroasrhfofasdfsadfawheroiawhrf";
         public const string issuer = "hassan";
         public const string audience = "users";
-        public static string GenerateJWTAuth(string username, string password)
+        public static string GenerateJWT (string username, string password)
         {
             var claims = new[]
             {
@@ -55,8 +52,8 @@ namespace JWT
                     ValidateAudience = false,
                     ClockSkew = TimeSpan.Zero
                 }, out SecurityToken validatedToken);
-
                 var jwtToken = (JwtSecurityToken)validatedToken;
+
                 var jku = jwtToken.Claims.First(claim => claim.Type == "jku").Value;
                 var userName = jwtToken.Claims.First(claim => claim.Type == "kid").Value;
 
