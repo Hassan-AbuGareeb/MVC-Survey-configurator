@@ -18,7 +18,17 @@ namespace SurveyConfiguratorWeb.Controllers
         public ActionResult Index()
         {
             //check if the user has cookies and is validated and redirect if so
-            return View();
+            if (!States.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                //return to home page with error pop up 
+                //add an error message to view data obj
+
+                return RedirectToAction(SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController);
+            }
         }
 
         [HttpPost]
@@ -53,6 +63,10 @@ namespace SurveyConfiguratorWeb.Controllers
                     Response.AppendCookie(tAccessTokenCookie);
                     Response.AppendCookie(tRefreshTokenCookie);
                     //return to home page
+
+                    //set user authentication state to true
+                    States.IsAuthenticated = true;
+
                     return RedirectToAction(SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController);
                 }
             }
@@ -64,8 +78,18 @@ namespace SurveyConfiguratorWeb.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-            //check if the user has cookies and is validated and redirect if so
-            return View();
+            if (!States.IsAuthenticated)
+            {
+                //check if the user has cookies and is validated and redirect if so
+                return View();
+            }
+            else
+            {
+                //return to home page with error pop up 
+                //add an error message to view data obj
+
+                return RedirectToAction(SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController);
+            }
         }
 
         [HttpPost]
@@ -103,6 +127,10 @@ namespace SurveyConfiguratorWeb.Controllers
             //add cookies to response
             Response.AppendCookie(tAccessTokenCookie);
             Response.AppendCookie(tRefreshTokenCookie);
+
+            //set user authentication state to true
+            States.IsAuthenticated = true;
+
             //return to home page
             return RedirectToAction(SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController);
         }
@@ -111,8 +139,7 @@ namespace SurveyConfiguratorWeb.Controllers
         [HttpGet]
         public ActionResult LogOut()
         {
-
-            //delete access token cookie if foundfff
+            //delete access token cookie if found
             if (Request.Cookies[SharedConstants.cAccessTokenKey] != null)
             {
                 //delete cookie by setting its refresh time in the past
@@ -127,6 +154,10 @@ namespace SurveyConfiguratorWeb.Controllers
                 //invalidate cookie 
 
             }
+
+            //set user authentication state to true
+            States.IsAuthenticated = false;
+
             //send user to home page
             return RedirectToAction(SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController);
         }

@@ -26,9 +26,15 @@
                     <li>@Html.ActionLink(SharedResources.GlobalStrings.Questions, SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController, new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink(SharedResources.GlobalStrings.Options, SharedConstants.cOptionsIndexAction, SharedConstants.cOptionsController, new { area = "" }, new { @class = "nav-link" })</li>
                     @* render conditionally on whether the user is signed in or not *@
-                    <li>@Html.ActionLink(SharedResources.GlobalStrings.LogIn, SharedConstants.cLogInIndexAction, SharedConstants.cLogInController, new { area = "" }, new { @class = "nav-link" })</li>
-                    @* render conditionally on whether the user is signed in or not *@
-                    <li>@Html.ActionLink(SharedResources.GlobalStrings.LogOut, SharedConstants.cLogInLogOutAction, SharedConstants.cLogInController, new { area = "" }, new { @class = "nav-link" })</li>
+                    @if (!States.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink(SharedResources.GlobalStrings.LogIn, SharedConstants.cLogInIndexAction, SharedConstants.cLogInController, new { area = "" }, new { @class = "nav-link" })</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink(SharedResources.GlobalStrings.LogOut, SharedConstants.cLogInLogOutAction, SharedConstants.cLogInController, new { area = "" }, new { @class = "nav-link" })</li>
+                    }
+
                 </ul>
             </div>
         </div>

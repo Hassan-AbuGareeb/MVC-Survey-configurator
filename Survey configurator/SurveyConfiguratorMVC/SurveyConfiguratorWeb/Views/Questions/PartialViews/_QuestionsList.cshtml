@@ -38,9 +38,18 @@
                     @Html.DisplayFor(modelItem => item.Type)
                 </td>
                 <td>
-                    @Html.ActionLink(SharedResources.GlobalStrings.EditOperation, SharedConstants.cQuestionEditAction, new { id = item.Id }) |
-                    @Html.ActionLink(SharedResources.GlobalStrings.Details, SharedConstants.cQuestionDetailsAction, new { id = item.Id }) |
-                    @Html.ActionLink(SharedResources.GlobalStrings.Delete, SharedConstants.cQuestionDeleteAction, new { id = item.Id })
+                    @if (States.IsAuthenticated)
+                    {
+                        @Html.ActionLink(SharedResources.GlobalStrings.EditOperation, SharedConstants.cQuestionEditAction, new { id = item.Id }) <span>|</span>
+                    }
+
+                    @Html.ActionLink(SharedResources.GlobalStrings.Details, SharedConstants.cQuestionDetailsAction, new { id = item.Id })
+
+                    @if (States.IsAuthenticated)
+                    {
+                        <span> | </span>
+                        @Html.ActionLink(SharedResources.GlobalStrings.Delete, SharedConstants.cQuestionDeleteAction, new { id = item.Id })
+                    }
                 </td>
             </tr>
         }

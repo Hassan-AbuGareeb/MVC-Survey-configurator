@@ -9,10 +9,11 @@
 <span id="@SharedConstants.cAlertDivId"></span>
 
 <h2>@SharedResources.GlobalStrings.Questions</h2>
-<p>
-    @Html.ActionLink(SharedResources.GlobalStrings.AddQuestion, SharedConstants.cQuestionCreateAction, SharedConstants.cQuestionsController)
-</p>
-
+@if (States.IsAuthenticated) { 
+    <p>
+        @Html.ActionLink(SharedResources.GlobalStrings.AddQuestion, SharedConstants.cQuestionCreateAction, SharedConstants.cQuestionsController)
+    </p>
+}
 <span id="@cDataUpdateNotificationId"></span>
 <span id="@cQuestionsListId">
     @Html.Partial(SharedConstants.cQuestionsListView, Model)

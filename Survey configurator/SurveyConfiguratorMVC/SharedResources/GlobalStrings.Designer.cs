@@ -323,7 +323,7 @@ namespace SharedResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LogOut.
+        ///   Looks up a localized string similar to Log out.
         /// </summary>
         public static string LogOut {
             get {

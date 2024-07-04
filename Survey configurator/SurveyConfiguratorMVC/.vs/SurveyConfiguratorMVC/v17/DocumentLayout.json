@@ -3,24 +3,36 @@
   "WorkspaceRootPath": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|d:\\fds\\mvc-survey-configurator\\survey configurator\\surveyconfiguratormvc\\surveyconfiguratorweb\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\surveyconfiguratorweb\\attributes\\authenticatedattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|solutionrelative:surveyconfiguratorweb\\attributes\\authenticatedattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|d:\\fds\\mvc-survey-configurator\\survey configurator\\surveyconfiguratormvc\\surveyconfiguratorweb\\views\\questions\\partialviews\\_questionslist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|solutionrelative:surveyconfiguratorweb\\views\\questions\\partialviews\\_questionslist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\surveyconfiguratorweb\\views\\questions\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|solutionrelative:surveyconfiguratorweb\\views\\questions\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\surveyconfiguratorweb\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|solutionrelative:surveyconfiguratorweb\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\surveyconfiguratorweb\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|solutionrelative:surveyconfiguratorweb\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\surveyconfiguratorweb\\constantsandmethods\\states.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|solutionrelative:surveyconfiguratorweb\\constantsandmethods\\states.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\surveyconfiguratorweb\\services\\tokenmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|solutionrelative:surveyconfiguratorweb\\services\\tokenmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\surveyconfiguratorweb\\attributes\\authenticatedattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|solutionrelative:surveyconfiguratorweb\\attributes\\authenticatedattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\surveyconfiguratorweb\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|solutionrelative:surveyconfiguratorweb\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\surveyconfiguratorweb\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|solutionrelative:surveyconfiguratorweb\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5E67F9B2-CA87-4A4C-9425-4DD6D74B03A6}|SurveyConfiguratorWeb\\SurveyConfiguratorWeb.csproj|D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\surveyconfiguratorweb\\views\\login\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -86,7 +98,44 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
+              "Title": "_QuestionsList.cshtml",
+              "DocumentMoniker": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\Views\\Questions\\PartialViews\\_QuestionsList.cshtml",
+              "RelativeDocumentMoniker": "SurveyConfiguratorWeb\\Views\\Questions\\PartialViews\\_QuestionsList.cshtml",
+              "ToolTip": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\Views\\Questions\\PartialViews\\_QuestionsList.cshtml",
+              "RelativeToolTip": "SurveyConfiguratorWeb\\Views\\Questions\\PartialViews\\_QuestionsList.cshtml",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAACgAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-07-04T14:42:10.603Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\Views\\Questions\\Index.cshtml",
+              "RelativeDocumentMoniker": "SurveyConfiguratorWeb\\Views\\Questions\\Index.cshtml",
+              "ToolTip": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\Views\\Questions\\Index.cshtml",
+              "RelativeToolTip": "SurveyConfiguratorWeb\\Views\\Questions\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-07-04T14:41:31.656Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "States.cs",
+              "DocumentMoniker": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\ConstantsAndMethods\\States.cs",
+              "RelativeDocumentMoniker": "SurveyConfiguratorWeb\\ConstantsAndMethods\\States.cs",
+              "ToolTip": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\ConstantsAndMethods\\States.cs",
+              "RelativeToolTip": "SurveyConfiguratorWeb\\ConstantsAndMethods\\States.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-04T14:30:54.909Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "Web.config",
               "DocumentMoniker": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\Web.config",
               "RelativeDocumentMoniker": "SurveyConfiguratorWeb\\Web.config",
@@ -99,19 +148,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "AuthenticatedAttribute.cs",
               "DocumentMoniker": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\Attributes\\AuthenticatedAttribute.cs",
               "RelativeDocumentMoniker": "SurveyConfiguratorWeb\\Attributes\\AuthenticatedAttribute.cs",
               "ToolTip": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\Attributes\\AuthenticatedAttribute.cs",
               "RelativeToolTip": "SurveyConfiguratorWeb\\Attributes\\AuthenticatedAttribute.cs",
-              "ViewState": "AQIAAAgAAAAAAAAAAAAAwBgAAAAQAAAA",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAAwEQAAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-03T09:43:09.273Z"
+              "WhenOpened": "2024-07-03T09:43:09.273Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "TokenManager.cs",
               "DocumentMoniker": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\Services\\TokenManager.cs",
               "RelativeDocumentMoniker": "SurveyConfiguratorWeb\\Services\\TokenManager.cs",
@@ -123,32 +173,31 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "SurveyConfiguratorWeb\\Views\\Shared\\_Layout.cshtml",
               "ToolTip": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "SurveyConfiguratorWeb\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAAB4AAAB6AAAA",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAACIAAAAYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-06-30T10:15:59.59Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "LogInController.cs",
               "DocumentMoniker": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\Controllers\\LogInController.cs",
               "RelativeDocumentMoniker": "SurveyConfiguratorWeb\\Controllers\\LogInController.cs",
               "ToolTip": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\Controllers\\LogInController.cs",
               "RelativeToolTip": "SurveyConfiguratorWeb\\Controllers\\LogInController.cs",
-              "ViewState": "AQIAABEAAAAAAAAAAAAAwHAAAAAJAAAA",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAxwI0AAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-03T12:21:40.519Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-03T12:21:40.519Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "LogInViewModel.cs",
               "DocumentMoniker": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\Models\\LogIn\\LogInViewModel.cs",
               "RelativeDocumentMoniker": "SurveyConfiguratorWeb\\Models\\LogIn\\LogInViewModel.cs",
@@ -160,7 +209,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\Views\\LogIn\\Index.cshtml",
               "RelativeDocumentMoniker": "SurveyConfiguratorWeb\\Views\\LogIn\\Index.cshtml",
@@ -172,7 +221,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "Register.cshtml",
               "DocumentMoniker": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\Views\\LogIn\\Register.cshtml",
               "RelativeDocumentMoniker": "SurveyConfiguratorWeb\\Views\\LogIn\\Register.cshtml",
@@ -184,7 +233,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "RegisterViewModel.cs",
               "DocumentMoniker": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\Models\\LogIn\\RegisterViewModel.cs",
               "RelativeDocumentMoniker": "SurveyConfiguratorWeb\\Models\\LogIn\\RegisterViewModel.cs",
@@ -196,7 +245,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "QuestionOperations.cs",
               "DocumentMoniker": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\QuestionServices\\QuestionOperations.cs",
               "RelativeDocumentMoniker": "QuestionServices\\QuestionOperations.cs",
@@ -208,7 +257,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 15,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\Views\\Questions\\Edit.cshtml",
               "RelativeDocumentMoniker": "SurveyConfiguratorWeb\\Views\\Questions\\Edit.cshtml",
@@ -220,7 +269,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 14,
               "Title": "Details.cshtml",
               "DocumentMoniker": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\Views\\Questions\\Details.cshtml",
               "RelativeDocumentMoniker": "SurveyConfiguratorWeb\\Views\\Questions\\Details.cshtml",
@@ -232,7 +281,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 16,
               "Title": "Delete.cshtml",
               "DocumentMoniker": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\Views\\Questions\\Delete.cshtml",
               "RelativeDocumentMoniker": "SurveyConfiguratorWeb\\Views\\Questions\\Delete.cshtml",
@@ -244,7 +293,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "Create.cshtml",
               "DocumentMoniker": "D:\\fds\\MVC-Survey-configurator\\Survey configurator\\SurveyConfiguratorMVC\\SurveyConfiguratorWeb\\Views\\Questions\\Create.cshtml",
               "RelativeDocumentMoniker": "SurveyConfiguratorWeb\\Views\\Questions\\Create.cshtml",
