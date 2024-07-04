@@ -12,7 +12,7 @@ namespace JWT
         public const string secret = "supserowaejroasrhfofasdfsadfawheroiawhrf";
         public const string issuer = "hassan";
         public const string audience = "users";
-        public static string GenerateJWT (string username, string password)
+        public static string GenerateJWTAuth(string username, string password)
         {
             var claims = new[]
             {

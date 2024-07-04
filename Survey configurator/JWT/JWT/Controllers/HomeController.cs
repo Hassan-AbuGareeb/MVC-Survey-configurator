@@ -10,7 +10,6 @@ using System.Web.Mvc;
 
 namespace JWT.Controllers
 {
-    [JWTAuth]
     public class HomeController : Controller
     {
         [AllowAnonymous]
@@ -78,6 +77,7 @@ namespace JWT.Controllers
         {
             ViewBag.Message = "Your application description page.";
             HttpCookie cookie = Request.Cookies["token"];
+            HttpCookie cccookkiiee = Request.Cookies["test"];
             if (cookie != null)
             {
                 cookie.Expires = DateTime.Now.AddDays(-3);
