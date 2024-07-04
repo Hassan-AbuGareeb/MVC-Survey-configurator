@@ -1,5 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -27,7 +29,7 @@ namespace JWT
                 issuer: issuer,
                 audience: audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(30),
+                expires: DateTime.UtcNow.AddMinutes(1),
                 signingCredentials : creds
                 );
 
@@ -42,6 +44,9 @@ namespace JWT
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
+            JwtSecurityToken tokenObj = tokenHandler.ReadJwtToken(token);
+            IEnumerable<Claim> claims = tokenObj.Claims;
+            Debug.Write(claims.First(claim => claim.Type == ClaimTypes.Name).Value);
             try
             {
                 tokenHandler.ValidateToken(token, new TokenValidationParameters
@@ -58,7 +63,6 @@ namespace JWT
                 var userName = jwtToken.Claims.First(claim => claim.Type == "kid").Value;
 
                 return userName;
-
             }
             catch (Exception ex)
             {

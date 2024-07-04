@@ -38,14 +38,8 @@ namespace JWT.Controllers
                 if(UserInput.UserName == userName && UserInput.Password == password) {
                     string token =Authentication.GenerateJWTAuth(userName, password);
 
-                    var cookie = new HttpCookie("token", token)
-                    {
-                        HttpOnly = true,
-                    };
+                    var cookie = new HttpCookie("token", token);
                     Response.Cookies.Add(cookie);
-
-                    Session["ID"] = "ID";
-                    Session["username"] = userName;
                 }
             }
             return View("Index");
@@ -76,13 +70,6 @@ namespace JWT.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-            HttpCookie cookie = Request.Cookies["token"];
-            HttpCookie cccookkiiee = Request.Cookies["test"];
-            if (cookie != null)
-            {
-                cookie.Expires = DateTime.Now.AddDays(-3);
-                Response.Cookies.Add(cookie);
-            }
             return View();
         }
 
