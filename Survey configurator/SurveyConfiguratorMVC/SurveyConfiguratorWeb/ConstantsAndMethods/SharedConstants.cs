@@ -31,12 +31,18 @@ namespace SurveyConfiguratorWeb.ConstantsAndMethods
         public const string cGetQuestionsListPartialViewFunction = "GetQuestionsListPartialView";
         public const string cGetChecksumValueFunction = "GetChecksumValue";
 
+        //LogIn controller
+        public const string cLogInController = "LogIn";
+        public const string cLogInIndexAction = "Index";
+        public const string cLogInRegisterAction = "Register";
+        public const string cLogInLogOutAction = "LogOut";
+
+        //paths and partial views names
         public const string cPartialViewsFolder = "PartialViews";
         public const string cQuestionsListView = cPartialViewsFolder + "/_QuestionsList";
         public const string cQuestionGeneralFieldsView = cPartialViewsFolder + "/_QuestionGeneralFields";
 
         #endregion
-
 
         #region errors and messages related constants
         // messages keys
@@ -56,6 +62,15 @@ namespace SurveyConfiguratorWeb.ConstantsAndMethods
         public const string cQuestionTypeOptionsId = "QuestionTypeOptions";
         public const string cQuestionOperationFormId = "QuestionOperationForm";
         public const string cAlertDivId = "alert";
+
+        #endregion
+
+        #region Authentication related constants
+        public const string cAccessTokenKey = "token";
+        public const string cRefreshTokenKey = "refresh";
+        public const string cTestUserNameSettingsKey = "UserName";
+        public const string cTestPasswordSettingsKey = "Password";
+        public const int cCookiesForceDeletionTimeInDays = -10;
 
         #endregion
     }

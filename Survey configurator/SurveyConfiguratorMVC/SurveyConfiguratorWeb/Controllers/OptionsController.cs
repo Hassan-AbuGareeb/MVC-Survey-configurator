@@ -1,6 +1,8 @@
 ﻿using QuestionServices;
 using SharedResources;
+using SurveyConfiguratorWeb.Attributes;
 using SurveyConfiguratorWeb.ConstantsAndMethods;
+using SurveyConfiguratorWeb.Filters;
 using SurveyConfiguratorWeb.Models;
 using System;
 using System.Configuration;
@@ -12,6 +14,7 @@ using System.Web.Mvc;
 
 namespace SurveyConfiguratorWeb.Controllers
 {
+    [GlobalExceptionFilter]
     public class OptionsController : Controller
     {
         /// <summary>

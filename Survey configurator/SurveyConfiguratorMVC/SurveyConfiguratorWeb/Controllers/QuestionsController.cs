@@ -1,6 +1,7 @@
 ﻿using QuestionServices;
 using SharedResources;
 using SharedResources.Models;
+using SurveyConfiguratorWeb.Attributes;
 using SurveyConfiguratorWeb.ConstantsAndMethods;
 using SurveyConfiguratorWeb.Filters;
 using SurveyConfiguratorWeb.Models;
@@ -76,6 +77,7 @@ namespace SurveyConfiguratorWeb.Controllers
         /// </summary>
         /// <returns>create question view</returns>
         [HttpGet]
+        [Authenticated]
         public ActionResult Create()
         {
             try
@@ -103,6 +105,7 @@ namespace SurveyConfiguratorWeb.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authenticated]
         public ActionResult Create(QuestionViewModel pQuestionModelData, FormCollection pFormData)
         {
             try
@@ -142,6 +145,7 @@ namespace SurveyConfiguratorWeb.Controllers
         /// <param name="id">question Id</param>
         /// <returns>edit question view</returns>
         [HttpGet]
+        [Authenticated]
         public ActionResult Edit(int id)
         {
             try
@@ -181,6 +185,7 @@ namespace SurveyConfiguratorWeb.Controllers
         /// <returns>a view to get redirected to</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authenticated]
         public ActionResult Edit(QuestionViewModel pQuestionModelUpdatedData, FormCollection pFormData)
         {
             try
@@ -215,6 +220,7 @@ namespace SurveyConfiguratorWeb.Controllers
         /// <param name="id">question id</param>
         /// <returns>delete question view</returns>
         [HttpGet]
+        [Authenticated]
         public ActionResult Delete(int id)
         {
             try
@@ -254,6 +260,7 @@ namespace SurveyConfiguratorWeb.Controllers
         /// <returns> a view to be redirected to</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authenticated]
         public ActionResult Delete(QuestionViewModel pQuestionData)
         {
             try
@@ -627,5 +634,10 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
         #endregion
+
+        public static string get()
+        {
+            return DateTime.Now.ToString();
+        }
     }
 }

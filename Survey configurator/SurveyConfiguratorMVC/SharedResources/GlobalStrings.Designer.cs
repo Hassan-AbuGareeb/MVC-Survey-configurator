@@ -251,6 +251,24 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Incorrect email format.
+        /// </summary>
+        public static string EmailFormatError {
+            get {
+                return ResourceManager.GetString("EmailFormatError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email is required.
+        /// </summary>
+        public static string EmailRequiredError {
+            get {
+                return ResourceManager.GetString("EmailRequiredError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to End value.
         /// </summary>
         public static string EndValue {
@@ -292,6 +310,24 @@ namespace SharedResources {
         public static string Language {
             get {
                 return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log in.
+        /// </summary>
+        public static string LogIn {
+            get {
+                return ResourceManager.GetString("LogIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LogOut.
+        /// </summary>
+        public static string LogOut {
+            get {
+                return ResourceManager.GetString("LogOut", resourceCulture);
             }
         }
         
@@ -386,6 +422,33 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password must contain at least one capital letter and one special character.
+        /// </summary>
+        public static string PasswordFormatError {
+            get {
+                return ResourceManager.GetString("PasswordFormatError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password must be at lease 6 characters long.
+        /// </summary>
+        public static string PasswordLengthError {
+            get {
+                return ResourceManager.GetString("PasswordLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password is required.
+        /// </summary>
+        public static string PasswordRequiredError {
+            get {
+                return ResourceManager.GetString("PasswordRequiredError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occured while getting the questions data.
         /// </summary>
         public static string QuestionDataFetchingError {
@@ -472,6 +535,15 @@ namespace SharedResources {
         public static string QuestionTypeError {
             get {
                 return ResourceManager.GetString("QuestionTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        public static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
             }
         }
         
@@ -697,6 +769,24 @@ namespace SharedResources {
         public static string UnSupportedLanguageError {
             get {
                 return ResourceManager.GetString("UnSupportedLanguageError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User name must be at least 6 characters long.
+        /// </summary>
+        public static string UserNameLengthError {
+            get {
+                return ResourceManager.GetString("UserNameLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User name is required.
+        /// </summary>
+        public static string UserNameRequiredError {
+            get {
+                return ResourceManager.GetString("UserNameRequiredError", resourceCulture);
             }
         }
     }

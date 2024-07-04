@@ -181,6 +181,12 @@ if you keep getting this error restart the app</value>
   <data name="EditQuestion" xml:space="preserve">
     <value>Edit Question</value>
   </data>
+  <data name="EmailFormatError" xml:space="preserve">
+    <value>Incorrect email format</value>
+  </data>
+  <data name="EmailRequiredError" xml:space="preserve">
+    <value>Email is required</value>
+  </data>
   <data name="EndValue" xml:space="preserve">
     <value>End value</value>
   </data>
@@ -195,6 +201,12 @@ if you keep getting this error restart the app</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
+  </data>
+  <data name="LogIn" xml:space="preserve">
+    <value>Log in</value>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>LogOut</value>
   </data>
   <data name="MissingFields" xml:space="preserve">
     <value>The following fields must have proper values:</value>
@@ -226,6 +238,15 @@ if you keep getting this error restart the app</value>
   <data name="PageLoadingError" xml:space="preserve">
     <value>Error occured while Loading your page, please try again</value>
   </data>
+  <data name="PasswordFormatError" xml:space="preserve">
+    <value>Password must contain at least one capital letter and one special character</value>
+  </data>
+  <data name="PasswordLengthError" xml:space="preserve">
+    <value>Password must be at lease 6 characters long</value>
+  </data>
+  <data name="PasswordRequiredError" xml:space="preserve">
+    <value>Password is required</value>
+  </data>
   <data name="QuestionDataFetchingError" xml:space="preserve">
     <value>An error occured while getting the questions data</value>
   </data>
@@ -255,6 +276,9 @@ if you keep getting this error restart the app</value>
   </data>
   <data name="QuestionTypeError" xml:space="preserve">
     <value>The question type is required</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
   </data>
   <data name="RequestProcessingError" xml:space="preserve">
     <value>An error occurred while processing your request</value>
@@ -330,5 +354,11 @@ if you keep getting this error restart the app</value>
   </data>
   <data name="UnSupportedLanguageError" xml:space="preserve">
     <value>The selected language isn't supported</value>
+  </data>
+  <data name="UserNameLengthError" xml:space="preserve">
+    <value>User name must be at least 6 characters long</value>
+  </data>
+  <data name="UserNameRequiredError" xml:space="preserve">
+    <value>User name is required</value>
   </data>
 </root>

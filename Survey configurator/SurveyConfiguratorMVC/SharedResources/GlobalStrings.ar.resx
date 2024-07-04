@@ -180,6 +180,12 @@
   <data name="EditQuestion" xml:space="preserve">
     <value>تعديل سؤال</value>
   </data>
+  <data name="EmailFormatError" xml:space="preserve">
+    <value>البريد الالكتروني غير صحيح</value>
+  </data>
+  <data name="EmailRequiredError" xml:space="preserve">
+    <value>الرجاء ادخال البريد الالكتروني</value>
+  </data>
   <data name="EndValue" xml:space="preserve">
     <value>القيمة العظمى</value>
   </data>
@@ -194,6 +200,12 @@
   </data>
   <data name="Language" xml:space="preserve">
     <value>اللغة</value>
+  </data>
+  <data name="LogIn" xml:space="preserve">
+    <value>تسجيل الدخول</value>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>تسجيل الخروج</value>
   </data>
   <data name="MissingFields" xml:space="preserve">
     <value>الحقول التالية مطلوبة:</value>
@@ -225,6 +237,15 @@
   <data name="PageLoadingError" xml:space="preserve">
     <value>حدث خطأ أثناء تحميل الصفحة, قم بالمحاولة مجددا</value>
   </data>
+  <data name="PasswordFormatError" xml:space="preserve">
+    <value>كلمية المرور يجب ان تحتوي حرف كبير واحد ورمز واحد على الاقل</value>
+  </data>
+  <data name="PasswordLengthError" xml:space="preserve">
+    <value>كلمة المرور يجب ان تحتوي 6 رموز على الاقل</value>
+  </data>
+  <data name="PasswordRequiredError" xml:space="preserve">
+    <value>الرجاء ادخال كلمة المرور</value>
+  </data>
   <data name="QuestionDataFetchingError" xml:space="preserve">
     <value>حدث خطأ أثناء تحميل بيانات السؤال</value>
   </data>
@@ -254,6 +275,9 @@
   </data>
   <data name="QuestionTypeError" xml:space="preserve">
     <value>الرجاء ادخال قيمة حقل نوع السؤال</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>تسجيل</value>
   </data>
   <data name="RequestProcessingError" xml:space="preserve">
     <value>حدث خطأ اثناء معالجة طلبك</value>
@@ -329,5 +353,11 @@
   </data>
   <data name="UnSupportedLanguageError" xml:space="preserve">
     <value>اللغة التي تم اختيارها غير مدعومة</value>
+  </data>
+  <data name="UserNameLengthError" xml:space="preserve">
+    <value>اسم المستخدم يجب ان يحتوي على 6 رموز على الاقل</value>
+  </data>
+  <data name="UserNameRequiredError" xml:space="preserve">
+    <value>الرجاء ادخال اسم المستخدم</value>
   </data>
 </root>
