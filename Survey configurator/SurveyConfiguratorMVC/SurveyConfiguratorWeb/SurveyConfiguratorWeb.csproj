@@ -244,6 +244,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Attributes\AuthenticatedAttribute.cs" />
     <Compile Include="ConstantsAndMethods\SharedConstants.cs" />
+    <Compile Include="ConstantsAndMethods\States.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\OptionsController.cs" />

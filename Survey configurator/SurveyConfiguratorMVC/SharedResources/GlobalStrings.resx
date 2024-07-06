@@ -206,7 +206,7 @@ if you keep getting this error restart the app</value>
     <value>Log in</value>
   </data>
   <data name="LogOut" xml:space="preserve">
-    <value>LogOut</value>
+    <value>Log out</value>
   </data>
   <data name="MissingFields" xml:space="preserve">
     <value>The following fields must have proper values:</value>

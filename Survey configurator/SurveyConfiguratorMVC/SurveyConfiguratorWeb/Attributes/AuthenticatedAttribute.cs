@@ -1,4 +1,5 @@
 ﻿using SurveyConfiguratorWeb.ConstantsAndMethods;
+using SurveyConfiguratorWeb.Controllers;
 using SurveyConfiguratorWeb.Services;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,6 @@ namespace SurveyConfiguratorWeb.Attributes
             var tRequest = filterContext.HttpContext.Request;
             var tOriginalAccessToken = tRequest.Cookies[SharedConstants.cAccessTokenKey]?.Value;
             var tOriginalRefreshToken = tRequest.Cookies[SharedConstants.cRefreshTokenKey]?.Value;
-
             //has token
             if (tOriginalAccessToken != null)
             {
@@ -25,6 +25,8 @@ namespace SurveyConfiguratorWeb.Attributes
                 var isTokenValid = TokenManager.ValidateToken(tOriginalAccessToken);
                 if (isTokenValid)
                 {
+                    //update user auth state
+                    States.IsAuthenticated = true;
                     return;
                 }
                 else
@@ -53,12 +55,18 @@ namespace SurveyConfiguratorWeb.Attributes
                         HttpOnly = true
                     };
                     filterContext.HttpContext.Response.Cookies.Add(tRefreshtokenCookie);
+                    
+                    //update user auth state
+                    States.IsAuthenticated = true;
+
                     //proceed to resource
                     return;
                 }
             }
             else
             {
+                //update user auth state
+                States.IsAuthenticated = false;
                 //add to viewData container a message to indicate that the user needs to be signed in to perform this action
                 //no token redirect log in page
                 filterContext.Result = new RedirectToRouteResult(
