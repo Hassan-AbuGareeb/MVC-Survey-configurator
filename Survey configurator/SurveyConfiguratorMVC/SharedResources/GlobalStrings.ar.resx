@@ -123,6 +123,9 @@
   <data name="AddQuestion" xml:space="preserve">
     <value>إضافة سؤال</value>
   </data>
+  <data name="ar" xml:space="preserve">
+    <value>العربية</value>
+  </data>
   <data name="BackToList" xml:space="preserve">
     <value>العودة الى قائمة الاسئلة</value>
   </data>
@@ -185,6 +188,9 @@
   </data>
   <data name="EmailRequiredError" xml:space="preserve">
     <value>الرجاء ادخال البريد الالكتروني</value>
+  </data>
+  <data name="en" xml:space="preserve">
+    <value>English</value>
   </data>
   <data name="EndValue" xml:space="preserve">
     <value>القيمة العظمى</value>
@@ -332,6 +338,9 @@
   </data>
   <data name="StartValueCaption" xml:space="preserve">
     <value>نص القيمة الصغرى</value>
+  </data>
+  <data name="SurveyConfiguratorTitle" xml:space="preserve">
+    <value>مُكوِّن الاستطلاعات</value>
   </data>
   <data name="Text" xml:space="preserve">
     <value>النص</value>

@@ -123,6 +123,9 @@
   <data name="AddQuestion" xml:space="preserve">
     <value>Add Question</value>
   </data>
+  <data name="ar" xml:space="preserve">
+    <value>العربية</value>
+  </data>
   <data name="BackToList" xml:space="preserve">
     <value>Back to questions list</value>
   </data>
@@ -186,6 +189,9 @@ if you keep getting this error restart the app</value>
   </data>
   <data name="EmailRequiredError" xml:space="preserve">
     <value>Email is required</value>
+  </data>
+  <data name="en" xml:space="preserve">
+    <value>English</value>
   </data>
   <data name="EndValue" xml:space="preserve">
     <value>End value</value>
@@ -333,6 +339,9 @@ if you keep getting this error restart the app</value>
   </data>
   <data name="StartValueCaption" xml:space="preserve">
     <value>Start value caption</value>
+  </data>
+  <data name="SurveyConfiguratorTitle" xml:space="preserve">
+    <value>Survey Configurator</value>
   </data>
   <data name="Text" xml:space="preserve">
     <value>Text</value>

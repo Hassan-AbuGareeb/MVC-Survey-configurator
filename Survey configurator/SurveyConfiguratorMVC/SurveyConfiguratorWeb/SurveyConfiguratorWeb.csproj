@@ -328,7 +328,6 @@
     <Content Include="Views\Questions\PartialViews\_StarsQuestionDetails.cshtml" />
     <Content Include="Views\Error\ErrorPage.cshtml" />
     <Content Include="Views\Options\Index.cshtml" />
-    <Content Include="Views\Options\Language.cshtml" />
     <Content Include="Views\Options\ConnectionSettings.cshtml" />
     <Content Include="Views\Questions\PartialViews\_QuestionsList.cshtml" />
     <Content Include="Views\Questions\PartialViews\_QuestionGeneralFields.cshtml" />

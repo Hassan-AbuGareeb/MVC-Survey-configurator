@@ -36,6 +36,8 @@ namespace SurveyConfiguratorWeb
                 string tAppLanguage = WebConfigurationManager.AppSettings[SharedConstants.cLagnaugeAppSettingKey];
                 CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(tAppLanguage);
                 CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo(tAppLanguage);
+                //set the state of the current app language
+                States.CurrentAppLanguage = tAppLanguage;
 
                 //get the connection string and set it in the database layer
                 bool tCanGetConnectionString = QuestionOperations.GetConnectionString();

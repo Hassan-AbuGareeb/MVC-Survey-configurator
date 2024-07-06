@@ -17,6 +17,9 @@ namespace SurveyConfiguratorWeb.ConstantsAndMethods
         public const string cLanguageAction = "Language";
         public const string cConnectionSettingsAction = "ConnectionSettings";
         public const string cLagnaugeAppSettingKey = "Language";
+        public const string cArabicAppSettingsKey = "ar";
+        public const string cEnglishAppSettingsKey = "en";
+        public static string[] cSupportedLanguages = { cArabicAppSettingsKey, cEnglishAppSettingsKey};
 
         //Questions controller
         public const string cQuestionsController = "Questions";

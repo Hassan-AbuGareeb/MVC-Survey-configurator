@@ -16,5 +16,6 @@ namespace SurveyConfiguratorWeb.ConstantsAndMethods
         /// 
 
         public static bool IsAuthenticated { get; set; }
+        public static string CurrentAppLanguage { get; set; }
     }
 }

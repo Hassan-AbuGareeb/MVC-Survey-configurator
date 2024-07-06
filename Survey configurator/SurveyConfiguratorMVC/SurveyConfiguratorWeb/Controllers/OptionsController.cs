@@ -6,11 +6,15 @@ using SurveyConfiguratorWeb.Filters;
 using SurveyConfiguratorWeb.Models;
 using System;
 using System.Configuration;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text.Json;
+using System.Threading;
+using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace SurveyConfiguratorWeb.Controllers
 {
@@ -22,9 +26,6 @@ namespace SurveyConfiguratorWeb.Controllers
         /// options for the language as to change it, and options
         /// for the connection string settings.
         /// </summary>
-
-        //array of supported languages 
-        public static string[] cSupportedLanguages = { "en", "ar" };
 
 
         /// <summary>
@@ -46,64 +47,38 @@ namespace SurveyConfiguratorWeb.Controllers
         }
 
         /// <summary>
-        /// shows the language options page, and sends
-        /// the supported language array after serializing it
-        /// to the view as to populate the drop down list
-        /// containing the choices for the language
-        /// </summary>
-        /// <returns>language options view</returns>
-        [HttpGet]
-        public ActionResult Language()
-        {
-            try
-            {
-                //serialize the supported language array to be able to use it in the view
-                ViewBag.SupportedLanguages = JsonSerializer.Serialize(cSupportedLanguages);
-                return View();
-            }
-            catch (Exception ex)
-            {
-                UtilityMethods.LogError(ex);
-                return RedirectToAction(SharedConstants.cErrorPageAction, SharedConstants.cErrorController, new { ErrorMessage = GlobalStrings.UnknownError });
-
-            }
-        }
-
-        /// <summary>
         /// sets the received language as the default language for all
-        /// threads to change the apps language, and saves it to the
-        /// web.config file to persist when the app is accessed again
+        /// threads to change the apps language, change the state representing
+        /// the current app language and saves the new language to the
+        /// web.config file to persist when the app is accessed again,
+        /// the saving process is done on a seperate thread as to not slow
+        /// down the application.
         /// </summary>
-        /// <param name="pFormData">the submitted form data</param>
+        /// <param name="pSelectedLanguage">the selected language symbol</param>
         /// <returns>view to be redirected to</returns>
-        [HttpPost]
-        public ActionResult Language(FormCollection pFormData)
+        public ActionResult Language(string pSelectedLanguage, string pOrigianlUrl)
         {
             try
             {
-                //extract the selected language value from the form data
-                string tSelectedLanguage = pFormData[SharedConstants.cLanguageDropDownId];
-
                 //check if the received value exists in the supported Languages
-                if (!cSupportedLanguages.Contains(tSelectedLanguage))
+                if (!SharedConstants.cSupportedLanguages.Contains(pSelectedLanguage))
                 {
                     TempData[SharedConstants.cMessageKey] = GlobalStrings.UnSupportedLanguageError;
-                    return RedirectToAction(SharedConstants.cOptionsIndexAction);
+                    return RedirectToAction(SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController);
                 }
+
+                //change the state of the current app language
+                States.CurrentAppLanguage = pSelectedLanguage;
 
                 //set the selected language as default for all threads
-                CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(tSelectedLanguage);
-                CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo(tSelectedLanguage);
+                CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(States.CurrentAppLanguage);
+                CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo(States.CurrentAppLanguage);
 
-                //save to app config, so when visiting the website the next time language options will be saved.
-                Configuration tConfigObject = WebConfigurationManager.OpenWebConfiguration("~");
-                AppSettingsSection tAppSettingsObj = (AppSettingsSection)tConfigObject.GetSection("appSettings");
-                if (tAppSettingsObj != null)
-                {
-                    tAppSettingsObj.Settings[SharedConstants.cLagnaugeAppSettingKey].Value = tSelectedLanguage;
-                    tConfigObject.Save();
-                }
-                return RedirectToAction(SharedConstants.cOptionsIndexAction);
+                //create a thread to save the app settings
+                Thread tSaveNewLanguage = new Thread(() => UpdateAppSettings());
+
+                //redirect to the home page
+                return Redirect(pOrigianlUrl);
             }
             catch (Exception ex)
             {
@@ -197,5 +172,21 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
+        
+        #region class utility functions
+        private static void UpdateAppSettings()
+        {
+            //save to app config, so when visiting the website the next time language options will be saved.
+            Configuration tConfigObject = WebConfigurationManager.OpenWebConfiguration("~");
+            AppSettingsSection tAppSettingsObj = (AppSettingsSection)tConfigObject.GetSection("appSettings");
+            if (tAppSettingsObj != null)
+            {
+                tAppSettingsObj.Settings[SharedConstants.cLagnaugeAppSettingKey].Value = States.CurrentAppLanguage;
+                tConfigObject.Save();
+            }
+        }
+
+
+        #endregion
     }
 }

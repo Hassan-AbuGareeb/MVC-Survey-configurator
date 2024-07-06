@@ -1,8 +1,7 @@
 ﻿@using SurveyConfiguratorWeb.ConstantsAndMethods
 @using System.Web.Configuration;
-@{ 
-    string AppLanguage = WebConfigurationManager.AppSettings[SharedConstants.cLagnaugeAppSettingKey];
-}
+@using System.Resources;
+@using SharedResources;
 
 <!DOCTYPE html>
 <html>
@@ -13,28 +12,44 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body style="direction:@(AppLanguage=="ar"?"rtl":"ltr")">
+<body style="direction:@(States.CurrentAppLanguage==SharedConstants.cArabicAppSettingsKey?"rtl":"ltr")">
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
-            @Html.ActionLink("Survey Configurator", SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController, new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink(GlobalStrings.SurveyConfiguratorTitle, SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController, new { area = "" }, new { @class = "navbar-brand" })
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink(SharedResources.GlobalStrings.Questions, SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController, new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink(SharedResources.GlobalStrings.Options, SharedConstants.cOptionsIndexAction, SharedConstants.cOptionsController, new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink(GlobalStrings.Questions, SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController, new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink(GlobalStrings.Options, SharedConstants.cOptionsIndexAction, SharedConstants.cOptionsController, new { area = "" }, new { @class = "nav-link" })</li>
                     @* render conditionally on whether the user is signed in or not *@
                     @if (!States.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink(SharedResources.GlobalStrings.LogIn, SharedConstants.cLogInIndexAction, SharedConstants.cLogInController, new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink(GlobalStrings.LogIn, SharedConstants.cLogInIndexAction, SharedConstants.cLogInController, new { area = "" }, new { @class = "nav-link" })</li>
                     }
                     else
                     {
-                        <li>@Html.ActionLink(SharedResources.GlobalStrings.LogOut, SharedConstants.cLogInLogOutAction, SharedConstants.cLogInController, new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink(GlobalStrings.LogOut, SharedConstants.cLogInLogOutAction, SharedConstants.cLogInController, new { area = "" }, new { @class = "nav-link" })</li>
                     }
+                    @* change language *@
+                    @{
+                        ResourceManager tResourceManager = new ResourceManager("SharedResources.GlobalStrings", typeof(GlobalStrings).Assembly);
+                        string[] tSupportedLanguagesSymbols = SharedConstants.cSupportedLanguages;
+                        for (int i = 0; i < tSupportedLanguagesSymbols.Length; i++)
+                        {
+                            //fetch the language value of the current language symbol
+                            string tCurrentLanguageSymbol = tSupportedLanguagesSymbols[i];
+                            string tLanguageValue = tResourceManager.GetString(tCurrentLanguageSymbol);
 
+                            //execlude the current app language from being rendered
+                            if (!tCurrentLanguageSymbol.Equals(States.CurrentAppLanguage))
+                            {
+                                <li>@Html.ActionLink(tLanguageValue, SharedConstants.cLanguageAction, SharedConstants.cOptionsController, new { area = "", pSelectedLanguage = tCurrentLanguageSymbol, pOrigianlUrl = Request.Url.AbsoluteUri}, new { @class = "nav-link" })</li>
+                            }
+                        }
+                    }
                 </ul>
             </div>
         </div>
