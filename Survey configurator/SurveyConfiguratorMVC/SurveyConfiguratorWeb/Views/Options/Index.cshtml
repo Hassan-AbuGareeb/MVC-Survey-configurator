@@ -1,12 +1,166 @@
-﻿@using SurveyConfiguratorWeb.ConstantsAndMethods
-@using SharedResources
+﻿@model SurveyConfiguratorWeb.Models.ConnectionStringViewModel
+@using SurveyConfiguratorWeb.ConstantsAndMethods
 @{
-    ViewBag.Title =SharedResources.GlobalStrings.Options;
+    ViewBag.Title = SharedResources.GlobalStrings.ConnectionSettings;
+    const string cAuthenticationOptionId = "AuthenticationOption";
+    const string cWindowsAuthenticationText = "Windows Authentication";
+    const string cSQLAuthenticationText = "SQL Server Authentication";
 }
 
-<h2>@GlobalStrings.Options</h2>
-<div class="flex-column">
-    <h3>@Html.ActionLink(SharedResources.GlobalStrings.ConnectionSettings, SharedConstants.cConnectionSettingsAction)</h3>
+<h2>@SharedResources.GlobalStrings.ConnectionSettings</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @* Server name field *@
+        <div class="form-group">
+            @Html.LabelFor(model => model.mServer, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.mServer, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.mServer, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @* Database name field *@
+        <div class="form-group">
+            @Html.LabelFor(model => model.mDatabase, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.mDatabase, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.mDatabase, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @* Integrated security Drop down list *@
+        <div class="form-group">
+            @Html.LabelFor(model => model.mIntegratedSecurity, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.DropDownListFor(model => model.mIntegratedSecurity,
+                   new List<SelectListItem>
+                   {
+                       new SelectListItem{Selected=false, Text=cWindowsAuthenticationText, Value = "true"},
+                       new SelectListItem{Selected=true, Text=cSQLAuthenticationText, Value = "false"}
+                   }, htmlAttributes: new { id = cAuthenticationOptionId }
+                   )
+                    @Html.ValidationMessageFor(model => model.mIntegratedSecurity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div id="userCredintials">
+            @* user name field *@
+            <div class="form-group">
+                @Html.LabelFor(model => model.mUser, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.mUser, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mUser, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @* password field *@
+            <div class="form-group">
+                @Html.LabelFor(model => model.mPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(model => model.mPassword, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mPassword, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        @* submit button *@
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Connect" class="btn btn-default" />
+            </div>
+        </div>
+
+        @* show text on screen to indiciate whether
+            the connection to the database succeeded
+            needs enhancements*@
+        @if (ViewData[SharedConstants.cConnectionResultMessageKey] != null)
+        {
+            <div>@ViewData[SharedConstants.cConnectionResultMessageKey]</div>
+        }
+    </div>
+}
+
+<div>
+    @Html.ActionLink(SharedResources.GlobalStrings.BackToList, SharedConstants.cQuestionsIndexAction)
 </div>
 
 
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")
+    <script>
+    $(document).ready(function () {
+        try {
+            /// summary
+            /// shows/hides the user credintials section
+            /// summary
+            function ToggleUserCredintialsFields(pAuthenticationType) {
+                try {
+                    if (pAuthenticationType === '@cWindowsAuthenticationText') {
+                        //hide whole section
+                        cUserCredintialsDiv.css("visibility", "hidden")
+                        cUserCredintialsDiv.css("Display", "none")
+
+                        //change fields type to hidden to bypass validation
+                        cUserInputField.attr("type", "hidden");
+                        cPasswordnputField.attr("type", "hidden");
+                    } else {
+                        //show whole section
+                        cUserCredintialsDiv.css("visibility", "visible")
+                        cUserCredintialsDiv.css("Display", "block")
+
+                        //change fields type to original types to enable validation
+                        cUserInputField.attr("type", "text");
+                        cPasswordnputField.attr("type", "password");
+                    }
+                }
+                catch (ex) {
+                    //log err
+                }
+            }
+
+            //constants for the html elements
+            const cUserCredintialsDiv = $("#userCredintials");
+            const cUserInputField = $("#mUser");
+            const cPasswordnputField = $("#mPassword");
+
+            //originally selected auth type
+            let tSeletectedAuthenticationTypeText;
+
+            //set the selected auth type based on the the connection settings received from the controller if any
+            ////console.log("@Model" === "")
+            //check if there was no model sent
+                if ('@Model.mIntegratedSecurity')
+                {
+                    tSeletectedAuthenticationTypeText = '@Model.mIntegratedSecurity' === "True" ?
+                        '@cWindowsAuthenticationText' : '@cSQLAuthenticationText';
+                } else
+                {
+                    tSeletectedAuthenticationTypeText = '@cWindowsAuthenticationText';
+                }
+
+            //show/hide user credintials section based on the originally selected type
+            ToggleUserCredintialsFields(tSeletectedAuthenticationTypeText);
+
+            //on change of drop down hide/show user creditnaitlas fields
+            $("#" + "@cAuthenticationOptionId").change(function () {
+                let tNewAuthenticationType = $("#" + "@cAuthenticationOptionId" + " option:selected").text()
+                ToggleUserCredintialsFields(tNewAuthenticationType);
+            })
+        }
+        catch (ex) {
+            //log err
+        }
+    })
+    </script>
+}

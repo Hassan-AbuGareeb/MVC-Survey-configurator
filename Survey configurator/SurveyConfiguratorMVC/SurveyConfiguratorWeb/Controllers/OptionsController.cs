@@ -29,78 +29,20 @@ namespace SurveyConfiguratorWeb.Controllers
 
 
         /// <summary>
-        /// shows the options page
+        /// shows the connection string settings page
+        /// and fills the fields with the connection
+        /// string data if it exists
         /// </summary>
-        /// <returns>Options view</returns>
+        /// <returns> connection string settings view </returns>
         [HttpGet]
         public ActionResult Index()
         {
             try
             {
-                return View();
-            }
-            catch (Exception ex)
-            {
-                UtilityMethods.LogError(ex);
-                return RedirectToAction(SharedConstants.cErrorPageAction, SharedConstants.cErrorController, new { ErrorMessage = GlobalStrings.UnknownError });
-            }
-        }
-
-        /// <summary>
-        /// sets the received language as the default language for all
-        /// threads to change the apps language, change the state representing
-        /// the current app language and saves the new language to the
-        /// web.config file to persist when the app is accessed again,
-        /// the saving process is done on a seperate thread as to not slow
-        /// down the application.
-        /// </summary>
-        /// <param name="pSelectedLanguage">the selected language symbol</param>
-        /// <returns>view to be redirected to</returns>
-        public ActionResult Language(string pSelectedLanguage, string pOrigianlUrl)
-        {
-            try
-            {
-                //check if the received value exists in the supported Languages
-                if (!SharedConstants.cSupportedLanguages.Contains(pSelectedLanguage))
-                {
-                    TempData[SharedConstants.cMessageKey] = GlobalStrings.UnSupportedLanguageError;
-                    return RedirectToAction(SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController);
-                }
-
-                //change the state of the current app language
-                States.CurrentAppLanguage = pSelectedLanguage;
-
-                //set the selected language as default for all threads
-                CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(States.CurrentAppLanguage);
-                CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo(States.CurrentAppLanguage);
-
-                //create a thread to save the app settings
-                Thread tSaveNewLanguage = new Thread(() => UpdateAppSettings());
-
-                //redirect to the home page
-                return Redirect(pOrigianlUrl);
-            }
-            catch (Exception ex)
-            {
-                UtilityMethods.LogError(ex);
-                return RedirectToAction(SharedConstants.cErrorPageAction, SharedConstants.cErrorController, new { ErrorMessage = GlobalStrings.UnknownError });
-            }
-        }
-
-        /// <summary>
-        /// shows the connection string settings page
-        /// and fills the fields with the connection
-        /// string data if it's existing
-        /// </summary>
-        /// <returns> connection string settings view </returns>
-        [HttpGet]
-        public ActionResult ConnectionSettings()
-        {
-            try
-            {
                 //try to get existing connection string if it's existing
                 ConnectionString tConnectionSettings = SharedData.mConnectionString;
-                if(tConnectionSettings !=  null) { 
+                if (tConnectionSettings != null)
+                {
                     //encapsulate the connection settings to a connection settings view model
                     ConnectionStringViewModel tConnectionSettingsModel = new ConnectionStringViewModel(
                         tConnectionSettings.mServer,
@@ -132,7 +74,7 @@ namespace SurveyConfiguratorWeb.Controllers
         /// <param name="pConnectionSettings">connection string settings view model object</param>
         /// <returns>view to be redirected to</returns>
         [HttpPost]
-        public ActionResult ConnectionSettings(ConnectionStringViewModel pConnectionSettings)
+        public ActionResult Index(ConnectionStringViewModel pConnectionSettings)
         {
             try
             {
@@ -172,7 +114,49 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
-        
+        /// <summary>
+        /// sets the received language as the default language for all
+        /// threads to change the apps language, change the state representing
+        /// the current app language and saves the new language to the
+        /// web.config file to persist when the app is accessed again,
+        /// the saving process is done on a seperate thread as to not slow
+        /// down the application.
+        /// </summary>
+        /// <param name="pSelectedLanguage">the selected language symbol</param>
+        /// <param name="pOrigianlUrl">the url of the page that the user was already in</param>
+        /// <returns>view to be redirected to</returns>
+        public ActionResult Language(string pSelectedLanguage, string pOrigianlUrl)
+        {
+            try
+            {
+                //check if the received value exists in the supported Languages
+                if (!SharedConstants.cSupportedLanguages.Contains(pSelectedLanguage))
+                {
+                    TempData[SharedConstants.cMessageKey] = GlobalStrings.UnSupportedLanguageError;
+                    return RedirectToAction(SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController);
+                }
+
+                //change the state of the current app language
+                States.CurrentAppLanguage = pSelectedLanguage;
+
+                //set the selected language as default for all threads
+                CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(States.CurrentAppLanguage);
+                CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo(States.CurrentAppLanguage);
+
+                //create a thread to save the app settings
+                Thread tSaveNewLanguage = new Thread(() => UpdateAppSettings());
+
+                //redirect to the home page
+                return Redirect(pOrigianlUrl);
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return RedirectToAction(SharedConstants.cErrorPageAction, SharedConstants.cErrorController, new { ErrorMessage = GlobalStrings.UnknownError });
+            }
+        }
+
+
         #region class utility functions
         private static void UpdateAppSettings()
         {
