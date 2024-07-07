@@ -79,6 +79,15 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to العربية.
+        /// </summary>
+        public static string ar {
+            get {
+                return ResourceManager.GetString("ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back to questions list.
         /// </summary>
         public static string BackToList {
@@ -265,6 +274,15 @@ namespace SharedResources {
         public static string EmailRequiredError {
             get {
                 return ResourceManager.GetString("EmailRequiredError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string en {
+            get {
+                return ResourceManager.GetString("en", resourceCulture);
             }
         }
         
@@ -706,6 +724,15 @@ namespace SharedResources {
         public static string StartValueCaption {
             get {
                 return ResourceManager.GetString("StartValueCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Survey Configurator.
+        /// </summary>
+        public static string SurveyConfiguratorTitle {
+            get {
+                return ResourceManager.GetString("SurveyConfiguratorTitle", resourceCulture);
             }
         }
         

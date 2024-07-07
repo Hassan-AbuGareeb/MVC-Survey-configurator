@@ -12,7 +12,6 @@ namespace SurveyConfiguratorWeb.Attributes
 {
     public class AuthenticatedAttribute : AuthorizeAttribute
     {
-
         public override void OnAuthorization(System.Web.Mvc.AuthorizationContext filterContext)
         {
             var tRequest = filterContext.HttpContext.Request;
