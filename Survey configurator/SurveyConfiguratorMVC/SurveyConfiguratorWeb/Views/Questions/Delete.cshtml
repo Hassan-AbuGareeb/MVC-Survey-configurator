@@ -1,5 +1,6 @@
 ﻿@model SurveyConfiguratorWeb.Models.QuestionViewModel
 @using SurveyConfiguratorWeb.ConstantsAndMethods
+@using SharedResources;
 
 @{
     ViewBag.Title = SharedResources.GlobalStrings.Delete;
@@ -38,9 +39,9 @@
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-        <div class="form-actions no-color">
-            <input type="submit" value="@SharedResources.GlobalStrings.Delete" class="btn btn-default" /> |
-            @Html.ActionLink(SharedResources.GlobalStrings.BackToList, SharedConstants.cQuestionsIndexAction)
-        </div>
+    <div class="form-actions no-color">
+        <input type="submit" value="@SharedResources.GlobalStrings.Delete" class="btn btn-default" />|
+        @Html.ActionLink(GlobalStrings.Cancel, SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController)
+    </div>
     }
 </div>

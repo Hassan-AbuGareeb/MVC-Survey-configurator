@@ -1,4 +1,6 @@
 ﻿@model SurveyConfiguratorWeb.Models.LogIn.RegisterViewModel
+@using SharedResources;
+@using SurveyConfiguratorWeb.ConstantsAndMethods;
 
 @{
     ViewBag.Title = "Register";
@@ -46,5 +48,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink(GlobalStrings.Cancel, SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController)
 </div>

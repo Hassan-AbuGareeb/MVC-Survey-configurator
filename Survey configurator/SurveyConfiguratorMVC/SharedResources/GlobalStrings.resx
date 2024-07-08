@@ -129,6 +129,9 @@
   <data name="BackToList" xml:space="preserve">
     <value>Back to questions list</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="CancelOperation" xml:space="preserve">
     <value>Any changes made won't be saved</value>
   </data>

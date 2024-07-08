@@ -1,5 +1,6 @@
 ﻿@model SurveyConfiguratorWeb.Models.QuestionViewModel
 @using SurveyConfiguratorWeb.ConstantsAndMethods
+@using SharedResources
 
 @{
     ViewBag.Title = SharedResources.GlobalStrings.Details;
@@ -42,7 +43,7 @@
 </div>
 <p>
     @Html.ActionLink(SharedResources.GlobalStrings.EditOperation, SharedConstants.cQuestionEditAction, new { id = Model.Id }) |
-    @Html.ActionLink(SharedResources.GlobalStrings.BackToList,SharedConstants.cQuestionsIndexAction)
+    @Html.ActionLink(GlobalStrings.Cancel, SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController)
 </p>
 
 

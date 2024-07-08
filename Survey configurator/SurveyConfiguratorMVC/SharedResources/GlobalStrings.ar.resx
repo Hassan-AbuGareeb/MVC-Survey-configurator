@@ -129,6 +129,9 @@
   <data name="BackToList" xml:space="preserve">
     <value>العودة الى قائمة الاسئلة</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>إلغاء</value>
+  </data>
   <data name="CancelOperation" xml:space="preserve">
     <value>لن يتم الإحتفاظ بأية تعديلات تم القيام بها</value>
   </data>
