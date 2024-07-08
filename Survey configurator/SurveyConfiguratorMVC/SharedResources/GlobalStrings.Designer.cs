@@ -233,6 +233,15 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occured while trying to delete the question.
+        /// </summary>
+        public static string DeleteQuestionError {
+            get {
+                return ResourceManager.GetString("DeleteQuestionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Details.
         /// </summary>
         public static string Details {

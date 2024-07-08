@@ -175,6 +175,9 @@ if you keep getting this error restart the app</value>
   <data name="DeleteQuestionConfirm" xml:space="preserve">
     <value>Are you sure you want to delete the selected questions?</value>
   </data>
+  <data name="DeleteQuestionError" xml:space="preserve">
+    <value>An error occured while trying to delete the question</value>
+  </data>
   <data name="Details" xml:space="preserve">
     <value>Details</value>
   </data>

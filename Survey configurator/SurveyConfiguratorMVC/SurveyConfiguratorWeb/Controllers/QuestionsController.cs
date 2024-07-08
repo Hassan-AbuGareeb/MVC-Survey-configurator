@@ -1,4 +1,6 @@
-﻿using QuestionServices;
+﻿using Microsoft.Ajax.Utilities;
+using Newtonsoft.Json;
+using QuestionServices;
 using SharedResources;
 using SharedResources.Models;
 using SurveyConfiguratorWeb.Attributes;
@@ -7,7 +9,11 @@ using SurveyConfiguratorWeb.Filters;
 using SurveyConfiguratorWeb.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net;
+using System.Security.Cryptography;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 
 namespace SurveyConfiguratorWeb.Controllers
 {
@@ -635,9 +641,102 @@ namespace SurveyConfiguratorWeb.Controllers
         }
         #endregion
 
-        public static string get()
+        #region api functions
+        /// <summary>
+        /// return json object containing a list of question
+        /// objects data
+        /// </summary>
+        /// <returns>json containing all questions data</returns>
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult Get()
         {
-            return DateTime.Now.ToString();
+            try
+            {
+                if (QuestionOperations.mIsDataBaseConnected)
+                {
+                    OperationResult canGetQuesitons = QuestionOperations.GetQuestions();
+                    if (canGetQuesitons.IsSuccess && canGetQuesitons != null)
+                    {
+                        Response.StatusCode = (int)HttpStatusCode.OK;
+                        return Json(new { Questions = QuestionOperations.mQuestionsList }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        return Json(new {message = GlobalStrings.DataLoadingError }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return Json(new { message = GlobalStrings.DataBaseConnectionError }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return Json(new { message = GlobalStrings.UnknownError }, JsonRequestBehavior.AllowGet);
+            }
         }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult Add(Question questionData)
+        {
+            Debug.WriteLine(questionData);
+            Debug.WriteLine(questionData.Type);
+            Debug.WriteLine((int)questionData.Type);
+            return null;
+        }
+
+        //[AllowAnonymous]
+        //[HttpPut]
+        //public ActionResult Update(Question questionData)
+        //{
+        //    Debug.WriteLine(questionData);
+        //    var serParent = JsonConvert.SerializeObject(questionData);
+        //    StarsQuestion sdlaif = JsonConvert.DeserializeObject<StarsQuestion>(serParent);
+        //    //StarsQuestion daf= (StarsQuestion)questionData;
+        //    Debug.WriteLine(sda);
+        //    return null;
+        //}
+
+        [AllowAnonymous]
+        [HttpDelete]
+        public ActionResult DeleteQuestion(int id)
+        {
+            try
+            {
+                if (QuestionOperations.mIsDataBaseConnected)
+                {
+                    List<int> tQuestionsIds = new List<int>
+                    {
+                        id
+                    };
+                    //delete questions
+                    OperationResult tAreQuestionsDeleted = QuestionOperations.DeleteQuestion(tQuestionsIds);
+                    if (tAreQuestionsDeleted.IsSuccess)
+                    {
+                        Response.StatusCode = (int)HttpStatusCode.OK;
+                        return Json(new { Message = GlobalStrings.OperationSuccessful }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        return Json(new { message = GlobalStrings.DeleteQuestionError });
+                    }
+                }
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return Json(new { message = GlobalStrings.DataBaseConnectionError });
+            }
+            catch(Exception ex) 
+            {
+                UtilityMethods.LogError(ex);
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return Json(new { message = GlobalStrings.UnknownError });
+            }
+        }
+
+
+        #endregion
     }
 }
