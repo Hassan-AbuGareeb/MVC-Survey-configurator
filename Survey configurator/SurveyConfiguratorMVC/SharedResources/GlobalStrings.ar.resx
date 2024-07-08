@@ -204,6 +204,9 @@
   <data name="InvalidInputTitle" xml:space="preserve">
     <value>بينانات خاطئة</value>
   </data>
+  <data name="InvalidUserCredintialsError" xml:space="preserve">
+    <value>اسم المستخدم او كلمة المرور غير صحيحة</value>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>اللغة</value>
   </data>
@@ -345,6 +348,12 @@
   <data name="Text" xml:space="preserve">
     <value>النص</value>
   </data>
+  <data name="TokenInvalidError" xml:space="preserve">
+    <value>The received token is invalid</value>
+  </data>
+  <data name="TokenInvalidErrorTitle" xml:space="preserve">
+    <value>Invalid token</value>
+  </data>
   <data name="Type" xml:space="preserve">
     <value>النوع</value>
   </data>
@@ -362,6 +371,9 @@
   </data>
   <data name="UnSupportedLanguageError" xml:space="preserve">
     <value>اللغة التي تم اختيارها غير مدعومة</value>
+  </data>
+  <data name="UserAlreadySignedInError" xml:space="preserve">
+    <value>تم تسجيل الدخول مسبقا, قم بستجيل الخروج لتغيير المستخدم</value>
   </data>
   <data name="UserNameLengthError" xml:space="preserve">
     <value>اسم المستخدم يجب ان يحتوي على 6 رموز على الاقل</value>

@@ -323,6 +323,15 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Incorrect user name or password.
+        /// </summary>
+        public static string InvalidUserCredintialsError {
+            get {
+                return ResourceManager.GetString("InvalidUserCredintialsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string Language {
@@ -355,6 +364,24 @@ namespace SharedResources {
         public static string MissingFields {
             get {
                 return ResourceManager.GetString("MissingFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The received value is null.
+        /// </summary>
+        public static string NullValueError {
+            get {
+                return ResourceManager.GetString("NullValueError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string NullValueErrorTitle {
+            get {
+                return ResourceManager.GetString("NullValueErrorTitle", resourceCulture);
             }
         }
         
@@ -746,6 +773,24 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The received token is invalid.
+        /// </summary>
+        public static string TokenInvalidError {
+            get {
+                return ResourceManager.GetString("TokenInvalidError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid token.
+        /// </summary>
+        public static string TokenInvalidErrorTitle {
+            get {
+                return ResourceManager.GetString("TokenInvalidErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type.
         /// </summary>
         public static string Type {
@@ -796,6 +841,15 @@ namespace SharedResources {
         public static string UnSupportedLanguageError {
             get {
                 return ResourceManager.GetString("UnSupportedLanguageError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User already signed in, sign out first to sign in with another user.
+        /// </summary>
+        public static string UserAlreadySignedInError {
+            get {
+                return ResourceManager.GetString("UserAlreadySignedInError", resourceCulture);
             }
         }
         

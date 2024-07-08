@@ -31,6 +31,10 @@
         public const string cDefaultStartValueCaption = "Min";
         public const string cDefaultEndValueCaption = "Max";
 
+        //Authentication related constants
+        public const int cAccessTokenExpireTimeInMinutes = 1;
+        public const int cRefreshTokenExpireTimeInDays = 2;
+
         //class members
         public static ConnectionString mConnectionString;
 

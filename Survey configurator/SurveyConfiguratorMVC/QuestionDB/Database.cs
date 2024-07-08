@@ -218,7 +218,6 @@ namespace QuestionDB
                             UtilityMethods.LogError(ex);
                             return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
                         }
-
                     }
                 }
             }

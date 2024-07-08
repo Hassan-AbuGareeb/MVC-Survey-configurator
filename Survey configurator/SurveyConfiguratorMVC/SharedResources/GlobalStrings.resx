@@ -205,6 +205,9 @@ if you keep getting this error restart the app</value>
   <data name="InvalidInputTitle" xml:space="preserve">
     <value>Invalid input</value>
   </data>
+  <data name="InvalidUserCredintialsError" xml:space="preserve">
+    <value>Incorrect user name or password</value>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
   </data>
@@ -216,6 +219,12 @@ if you keep getting this error restart the app</value>
   </data>
   <data name="MissingFields" xml:space="preserve">
     <value>The following fields must have proper values:</value>
+  </data>
+  <data name="NullValueError" xml:space="preserve">
+    <value>The received value is null</value>
+  </data>
+  <data name="NullValueErrorTitle" xml:space="preserve">
+    <value />
   </data>
   <data name="NumberOfSmileys" xml:space="preserve">
     <value>Number of smileys</value>
@@ -346,6 +355,12 @@ if you keep getting this error restart the app</value>
   <data name="Text" xml:space="preserve">
     <value>Text</value>
   </data>
+  <data name="TokenInvalidError" xml:space="preserve">
+    <value>The received token is invalid</value>
+  </data>
+  <data name="TokenInvalidErrorTitle" xml:space="preserve">
+    <value>Invalid token</value>
+  </data>
   <data name="Type" xml:space="preserve">
     <value>Type</value>
   </data>
@@ -363,6 +378,9 @@ if you keep getting this error restart the app</value>
   </data>
   <data name="UnSupportedLanguageError" xml:space="preserve">
     <value>The selected language isn't supported</value>
+  </data>
+  <data name="UserAlreadySignedInError" xml:space="preserve">
+    <value>User already signed in, sign out first to sign in with another user</value>
   </data>
   <data name="UserNameLengthError" xml:space="preserve">
     <value>User name must be at least 6 characters long</value>
