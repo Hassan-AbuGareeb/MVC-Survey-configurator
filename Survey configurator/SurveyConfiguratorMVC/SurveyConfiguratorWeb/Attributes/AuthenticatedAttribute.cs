@@ -1,4 +1,5 @@
-﻿using QuestionServices;
+﻿using Azure;
+using QuestionServices;
 using SharedResources;
 using SurveyConfiguratorWeb.ConstantsAndMethods;
 using SurveyConfiguratorWeb.Controllers;
@@ -37,6 +38,10 @@ namespace SurveyConfiguratorWeb.Attributes
                     OperationResult tTokenValidResult = AuthenticationServices.CheckTokenValidity(tRefreshTokenId);
                     if (!tTokenValidResult.IsSuccess)
                     {
+                        //force delete cookies containing tokens 
+                        filterContext.HttpContext.Response.Cookies[SharedConstants.cAccessTokenKey].Expires = DateTime.UtcNow.AddDays(SharedConstants.cCookiesForceDeletionTimeInDays);
+                        filterContext.HttpContext.Response.Cookies[SharedConstants.cRefreshTokenKey].Expires = DateTime.UtcNow.AddDays(SharedConstants.cCookiesForceDeletionTimeInDays);
+
                         //redirect to log in page with error message
                         filterContext.Result = new RedirectToRouteResult(
                        new RouteValueDictionary(new { controller = SharedConstants.cLogInController, action = SharedConstants.cLogInIndexAction })
@@ -47,7 +52,7 @@ namespace SurveyConfiguratorWeb.Attributes
                     //token not valid (expired)
                     //get claims form original access token
                     IEnumerable<Claim> tAccessTokenClaims = TokenManager.GetClaimsFromExpiredToken(tOriginalAccessToken);
-                    string tNewAccessToken = TokenManager.CreateJWT(tAccessTokenClaims, false);
+                    string tNewAccessToken = TokenManager.RefreshJWT(tAccessTokenClaims, false);
 
                     //add tokens to cookies
                     HttpCookie tAccesstokenCookie = new HttpCookie(SharedConstants.cAccessTokenKey, tNewAccessToken);
@@ -61,7 +66,7 @@ namespace SurveyConfiguratorWeb.Attributes
                     IEnumerable<Claim> tRefreshTokenClaims = TokenManager.GetClaimsFromExpiredToken(tOriginalRefreshToken);
 
                     //generate new refresh token
-                    string tNewRefreshToken = TokenManager.CreateJWT(tRefreshTokenClaims, true);
+                    string tNewRefreshToken = TokenManager.RefreshJWT(tRefreshTokenClaims, true);
 
                     HttpCookie tRefreshtokenCookie = new HttpCookie(SharedConstants.cRefreshTokenKey, tNewRefreshToken)
                     {

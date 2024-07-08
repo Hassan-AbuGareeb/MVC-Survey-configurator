@@ -26,10 +26,10 @@ namespace SurveyConfiguratorWeb.Services
                 new Claim(JwtHeaderParameterNames.Kid, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.Name, pUserName),
             };
-            return CreateJWT(tClaims, pIsRefreshToken);
+            return RefreshJWT(tClaims, pIsRefreshToken);
         }
 
-        public static string CreateJWT(IEnumerable<Claim> pClaims, bool pIsRefreshToken)
+        public static string RefreshJWT(IEnumerable<Claim> pClaims, bool pIsRefreshToken)
         {
             
             SigningCredentials tCredintials = new SigningCredentials(GetSecurityKey(), SecurityAlgorithms.HmacSha256);
@@ -60,33 +60,29 @@ namespace SurveyConfiguratorWeb.Services
 
         public static bool ValidateToken(string pToken)
         {
-            if (pToken == null)
-            {
-                //handle better
-                return false;
-            }
-
-            JwtSecurityTokenHandler tTokenHandler = new JwtSecurityTokenHandler();
-
             try
             {
+                if (pToken == null)
+                {
+                    return false;
+                }
+
+                JwtSecurityTokenHandler tTokenHandler = new JwtSecurityTokenHandler();
+
                 tTokenHandler.ValidateToken(pToken, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = GetSecurityKey(),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
                     ClockSkew = TimeSpan.Zero
                 }, out SecurityToken validatedToken);
 
-                var jwtToken = (JwtSecurityToken)validatedToken;
-                var id = jwtToken.Claims.First(claim => claim.Type == "kid").Value;
-
                 return true;
-
             }
             catch (Exception ex)
             {
+                UtilityMethods.LogError(ex);
                 return false;
             }
         }
@@ -124,11 +120,14 @@ namespace SurveyConfiguratorWeb.Services
             return null;
         }
 
+        #region utility functions
         private static SymmetricSecurityKey GetSecurityKey() 
         {
             string cSecretKey = WebConfigurationManager.AppSettings[cSecretKeySettingsKey];
             SymmetricSecurityKey tSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(cSecretKey));
             return tSigningKey;
         }
+
+        #endregion
     }
 }

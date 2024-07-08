@@ -7,6 +7,12 @@ namespace QuestionDB
 {
     public class AuthenticationDB
     {
+        /// <summary>
+        /// this class is responsible for communicating with the 
+        /// authentication database.
+        /// </summary>
+
+
         //constants
         //RefreshTokens table constants
         private const string cAuthenticationDatabase = "Authentication_DB";
@@ -14,8 +20,20 @@ namespace QuestionDB
         private const string cIdColumn = "Id";
         private const string cExpireDateColumn = "ExpireDate";
 
+        /// <summary>
+        /// prevent the class from being instantiated
+        /// </summary>
         private AuthenticationDB() { }
 
+        /// <summary>
+        /// Add the received token id to the Refreshtokens table,
+        /// this table contains invalid tokens so any token contained
+        /// in this table shouldn't be accepted as a valid token.
+        /// also an expiration date is sent with the token id for the sql
+        /// server to delete the token from the database after that certian date
+        /// </summary>
+        /// <param name="pTokenId">Id of invalid token</param>
+        /// <returns>operationResult object indicating the success of the addition operation</returns>
         public static OperationResult AddTokenId(string pTokenId)
         {
             try 
@@ -63,6 +81,13 @@ namespace QuestionDB
             }
         }
 
+        /// <summary>
+        /// this function checks whether the token is stored in the database,
+        /// if it's found then the token is invalid and return failed operation result
+        /// else the token is still valid return a successful operation result
+        /// </summary>
+        /// <param name="pTokenId">Id of received token</param>
+        /// <returns>operationResult object indicating whether the token was found or not</returns>
         public static OperationResult CheckTokenExpire(string pTokenId)
         {
             try
