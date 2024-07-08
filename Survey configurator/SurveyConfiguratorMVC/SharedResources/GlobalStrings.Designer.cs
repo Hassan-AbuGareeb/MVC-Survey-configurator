@@ -323,6 +323,15 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Incorrect user name or password.
+        /// </summary>
+        public static string InvalidUserCredintialsError {
+            get {
+                return ResourceManager.GetString("InvalidUserCredintialsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string Language {
@@ -832,6 +841,15 @@ namespace SharedResources {
         public static string UnSupportedLanguageError {
             get {
                 return ResourceManager.GetString("UnSupportedLanguageError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User already signed in, sign out first to sign in with another user.
+        /// </summary>
+        public static string UserAlreadySignedInError {
+            get {
+                return ResourceManager.GetString("UserAlreadySignedInError", resourceCulture);
             }
         }
         
