@@ -114,8 +114,8 @@ namespace SurveyConfiguratorWeb.Services
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = GetSecurityKey(),
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
                     ClockSkew = TimeSpan.Zero
                 }, out SecurityToken validatedToken);
 
