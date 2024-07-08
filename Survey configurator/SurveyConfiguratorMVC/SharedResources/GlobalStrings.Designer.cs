@@ -764,6 +764,24 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The received token is invalid.
+        /// </summary>
+        public static string TokenInvalidError {
+            get {
+                return ResourceManager.GetString("TokenInvalidError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid token.
+        /// </summary>
+        public static string TokenInvalidErrorTitle {
+            get {
+                return ResourceManager.GetString("TokenInvalidErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type.
         /// </summary>
         public static string Type {

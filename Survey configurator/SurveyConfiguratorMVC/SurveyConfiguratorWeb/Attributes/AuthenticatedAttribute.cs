@@ -1,4 +1,5 @@
 ﻿using QuestionServices;
+using SharedResources;
 using SurveyConfiguratorWeb.ConstantsAndMethods;
 using SurveyConfiguratorWeb.Controllers;
 using SurveyConfiguratorWeb.Services;
@@ -31,6 +32,18 @@ namespace SurveyConfiguratorWeb.Attributes
                 }
                 else
                 {
+                    //check refresh token for validity
+                    string tRefreshTokenId = TokenManager.GetTokenId(tOriginalRefreshToken);
+                    OperationResult tTokenValidResult = AuthenticationServices.CheckTokenValidity(tRefreshTokenId);
+                    if (!tTokenValidResult.IsSuccess)
+                    {
+                        //redirect to log in page with error message
+                        filterContext.Result = new RedirectToRouteResult(
+                       new RouteValueDictionary(new { controller = SharedConstants.cLogInController, action = SharedConstants.cLogInIndexAction })
+                       );
+                        return;
+                    }
+
                     //token not valid (expired)
                     //get claims form original access token
                     IEnumerable<Claim> tAccessTokenClaims = TokenManager.GetClaimsFromExpiredToken(tOriginalAccessToken);

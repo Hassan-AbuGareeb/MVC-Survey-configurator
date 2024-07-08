@@ -352,6 +352,12 @@ if you keep getting this error restart the app</value>
   <data name="Text" xml:space="preserve">
     <value>Text</value>
   </data>
+  <data name="TokenInvalidError" xml:space="preserve">
+    <value>The received token is invalid</value>
+  </data>
+  <data name="TokenInvalidErrorTitle" xml:space="preserve">
+    <value>Invalid token</value>
+  </data>
   <data name="Type" xml:space="preserve">
     <value>Type</value>
   </data>

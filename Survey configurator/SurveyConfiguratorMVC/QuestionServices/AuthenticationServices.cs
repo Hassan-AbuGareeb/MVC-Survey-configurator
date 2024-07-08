@@ -30,5 +30,24 @@ namespace QuestionServices
                 return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
             }
         }
+
+        public static OperationResult CheckTokenValidity(string pTokenId)
+        {
+            try
+            {
+                if (pTokenId != null)
+                {
+                    OperationResult tIsTokenValid  = AuthenticationDB.CheckTokenExpire(pTokenId);
+                    return tIsTokenValid;
+                }
+                return new OperationResult(GlobalStrings.NullValueErrorTitle, GlobalStrings.NullValueError);
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
+
+            }
+        }
     }
 }
