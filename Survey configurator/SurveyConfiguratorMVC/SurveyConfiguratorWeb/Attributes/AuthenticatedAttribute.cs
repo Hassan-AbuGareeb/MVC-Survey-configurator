@@ -64,6 +64,9 @@ namespace SurveyConfiguratorWeb.Attributes
                             filterContext.HttpContext.Response.Cookies[SharedConstants.cAccessTokenKey].Expires = DateTime.UtcNow.AddDays(SharedConstants.cCookiesForceDeletionTimeInDays);
                             filterContext.HttpContext.Response.Cookies[SharedConstants.cRefreshTokenKey].Expires = DateTime.UtcNow.AddDays(SharedConstants.cCookiesForceDeletionTimeInDays);
 
+                            //set user Auth state
+                            States.IsAuthenticated = false;
+
                             //redirect to log in page with error message
                             filterContext.Result = new RedirectToRouteResult(
                            new RouteValueDictionary(new { controller = SharedConstants.cLogInController, action = SharedConstants.cLogInIndexAction })
