@@ -359,6 +359,24 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The received value is null.
+        /// </summary>
+        public static string NullValueError {
+            get {
+                return ResourceManager.GetString("NullValueError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string NullValueErrorTitle {
+            get {
+                return ResourceManager.GetString("NullValueErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number of smileys.
         /// </summary>
         public static string NumberOfSmileys {

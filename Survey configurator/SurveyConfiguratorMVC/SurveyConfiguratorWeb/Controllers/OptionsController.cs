@@ -145,6 +145,7 @@ namespace SurveyConfiguratorWeb.Controllers
 
                 //create a thread to save the app settings
                 Thread tSaveNewLanguage = new Thread(() => UpdateAppSettings());
+                tSaveNewLanguage.Start();
 
                 //redirect to the home page
                 return Redirect(pOrigianlUrl);

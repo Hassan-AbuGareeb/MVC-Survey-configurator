@@ -13,8 +13,7 @@ namespace SurveyConfiguratorWeb.Services
     public class TokenManager
     {
         //constants
-        private const int cAccessTokenExpireTimeInMinutes = 1;
-        private const int cRefreshTokenExpireTimeInDays = 2;
+
         private const string cSecretKeySettingsKey = "Secret";
         private const string cIssuerSettingKey = "Issuer";
         private const string cAudienceSettingKey = "Audience";
@@ -38,11 +37,11 @@ namespace SurveyConfiguratorWeb.Services
             DateTime tExpiresIn;
             if (pIsRefreshToken)
             {
-                tExpiresIn = DateTime.UtcNow.AddDays(cRefreshTokenExpireTimeInDays);
+                tExpiresIn = DateTime.UtcNow.AddDays(SharedData.cRefreshTokenExpireTimeInDays);
             }
             else
             {
-                tExpiresIn = DateTime.UtcNow.AddMinutes(cAccessTokenExpireTimeInMinutes);
+                tExpiresIn = DateTime.UtcNow.AddMinutes(SharedData.cAccessTokenExpireTimeInMinutes);
             }
 
             string tIssuer = WebConfigurationManager.AppSettings[cIssuerSettingKey];
@@ -92,12 +91,6 @@ namespace SurveyConfiguratorWeb.Services
             }
         }
 
-        public static OperationResult InvalidateToken(string token)
-        {
-            //to be implemented
-            return null;
-        }
-
         public static IEnumerable<Claim> GetClaimsFromExpiredToken(string pToken)
         {
             JwtSecurityTokenHandler tTokenHandler = new JwtSecurityTokenHandler();
@@ -110,6 +103,26 @@ namespace SurveyConfiguratorWeb.Services
             }
             return tClaims;
         } 
+
+        public static string GetTokenId(string pToken)
+        {
+            if (!string.IsNullOrEmpty(pToken))
+            {
+                JwtSecurityTokenHandler tTokenHandler = new JwtSecurityTokenHandler();
+                JwtSecurityToken tToken = tTokenHandler.ReadJwtToken(pToken);
+
+                string tTokenId="";
+                foreach (Claim tClaim in tToken.Claims)
+                {
+                    if(tClaim.Type == JwtHeaderParameterNames.Kid)
+                    {
+                        tTokenId = tClaim.Value;
+                    }
+                }
+                return tTokenId;
+            }
+            return null;
+        }
 
         private static SymmetricSecurityKey GetSecurityKey() 
         {

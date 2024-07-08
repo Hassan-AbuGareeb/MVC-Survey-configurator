@@ -1,4 +1,5 @@
-﻿using SurveyConfiguratorWeb.ConstantsAndMethods;
+﻿using QuestionServices;
+using SurveyConfiguratorWeb.ConstantsAndMethods;
 using SurveyConfiguratorWeb.Controllers;
 using SurveyConfiguratorWeb.Services;
 using System;
@@ -40,8 +41,8 @@ namespace SurveyConfiguratorWeb.Attributes
                     filterContext.HttpContext.Response.Cookies.Add(tAccesstokenCookie);
 
                     //invalidate old refresh token
-
-                    //make a call to the logic layer to communicate with db and store token unique value
+                    string tTokenId = TokenManager.GetTokenId(tOriginalRefreshToken);
+                    AuthenticationServices.AddToken(tTokenId);
 
                     //get claims form original refresh token
                     IEnumerable<Claim> tRefreshTokenClaims = TokenManager.GetClaimsFromExpiredToken(tOriginalRefreshToken);

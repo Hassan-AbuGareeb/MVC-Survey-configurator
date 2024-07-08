@@ -217,6 +217,12 @@ if you keep getting this error restart the app</value>
   <data name="MissingFields" xml:space="preserve">
     <value>The following fields must have proper values:</value>
   </data>
+  <data name="NullValueError" xml:space="preserve">
+    <value>The received value is null</value>
+  </data>
+  <data name="NullValueErrorTitle" xml:space="preserve">
+    <value />
+  </data>
   <data name="NumberOfSmileys" xml:space="preserve">
     <value>Number of smileys</value>
   </data>
