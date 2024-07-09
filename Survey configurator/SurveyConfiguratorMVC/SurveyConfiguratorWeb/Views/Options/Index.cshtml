@@ -68,26 +68,27 @@
         <div class="form-group">
             @Html.LabelFor(model => model.mPassword, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.PasswordFor(model => model.mPassword, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.PasswordFor(model => model.mPassword, new { @class = "form-control" } )
                 @Html.ValidationMessageFor(model => model.mPassword, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>
 
+    <div class="d-flex">
     @* save button *@
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" formaction="@Url.Action(SharedConstants.cOptionsSaveAction)" class="btn btn-default" />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" formaction="@Url.Action(SharedConstants.cOptionsSaveAction)" class="btn btn-default" />
+            </div>
+        </div>
+
+        @* test connection button *@
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Test" formaction="@Url.Action(SharedConstants.cOptionsTestAction)" class="btn btn-default" />
+            </div>
         </div>
     </div>
-
-    @* test connection button *@
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Test" formaction="@Url.Action(SharedConstants.cOptionsTestAction)" class="btn btn-default" />
-        </div>
-    </div>
-
     @* show text on screen to indiciate whether
         the connection to the database succeeded
         needs enhancements*@
@@ -131,6 +132,7 @@
                         //change fields type to original types to enable validation
                         cUserInputField.attr("type", "text");
                         cPasswordnputField.attr("type", "password");
+                        cPasswordnputField.val("@Model.mPassword");
                     }
                 }
                 catch (ex) {
