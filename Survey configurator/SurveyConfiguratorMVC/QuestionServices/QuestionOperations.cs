@@ -180,6 +180,12 @@ namespace QuestionServices
                     return tQuestionDataValidationResult;
                 }
 
+                //check if question exists first
+                if(GetQuestionData(pUpdatedQuestionData.Id) == null)
+                {
+                    return new OperationResult(GlobalStrings.NotFoundError, GlobalStrings.QuestionNotFoundError);
+                }
+
                 eQuestionType tOriginalQuestionType = GetQuestionData(pUpdatedQuestionData.Id).Type;
 
                 OperationResult tQuestionUpdatedResult = Database.UpdateQuestionOnDB(tOriginalQuestionType, pUpdatedQuestionData);
@@ -217,7 +223,14 @@ namespace QuestionServices
                 foreach(int tId in  pSelectedQuestionsIds)
                 {
                     Question tQuestionData = mQuestionsList.Find(question => question.Id == tId);
-                    tSelectedQuestions.Add(tQuestionData);
+                    if(tQuestionData != null) { 
+                        tSelectedQuestions.Add(tQuestionData);
+                    }
+                }
+
+                if(tSelectedQuestions.Count < 1)
+                {
+                    return new OperationResult(GlobalStrings.NotFoundError, GlobalStrings.QuestionNotFoundError);
                 }
 
                 OperationResult tDeleteQuestionsResult = Database.DeleteQuestionFromDB(tSelectedQuestions);
