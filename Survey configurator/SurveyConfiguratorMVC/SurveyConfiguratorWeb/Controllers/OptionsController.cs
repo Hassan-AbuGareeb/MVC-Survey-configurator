@@ -1,6 +1,5 @@
 ﻿using QuestionServices;
 using SharedResources;
-using SurveyConfiguratorWeb.Attributes;
 using SurveyConfiguratorWeb.ConstantsAndMethods;
 using SurveyConfiguratorWeb.Filters;
 using SurveyConfiguratorWeb.Models;
@@ -9,12 +8,9 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Text.Json;
 using System.Threading;
-using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
-using System.Web.Routing;
 
 namespace SurveyConfiguratorWeb.Controllers
 {
@@ -68,13 +64,12 @@ namespace SurveyConfiguratorWeb.Controllers
         /// creates a connection string object from the connection
         /// string view model and save it to the connectionSettings.txt file
         /// and sets it as the connection string to be used in the data base layer
-        /// shows notification on whether the connection to the database can be 
-        /// successfully established
+        /// to communicate with the database
         /// </summary>
         /// <param name="pConnectionSettings">connection string settings view model object</param>
         /// <returns>view to be redirected to</returns>
         [HttpPost]
-        public ActionResult Index(ConnectionStringViewModel pConnectionSettings)
+        public ActionResult Save(ConnectionStringViewModel pConnectionSettings)
         {
             try
             {
@@ -89,23 +84,62 @@ namespace SurveyConfiguratorWeb.Controllers
 
                 //set it as the default connection string 
                 QuestionOperations.SetConnectionString(tConnectionData);
+                TempData[SharedConstants.cMessageKey] = GlobalStrings.ChangesSaved;
+                return View(SharedConstants.cOptionsIndexAction, pConnectionSettings);
+
+                
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return RedirectToAction(SharedConstants.cErrorPageAction, SharedConstants.cErrorController, new { ErrorMessage = GlobalStrings.UnknownError });
+            }
+        }
+
+        /// <summary>
+        /// test the connection to the database using the entered
+        /// connection settings without acutally saving them
+        /// </summary>
+        /// <param name="pConnectionSettings"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Test(ConnectionStringViewModel pConnectionSettings)
+        {
+            try
+            {
+                //store the already existing connection string settings
+                ConnectionString tOriginalConnectionSettings = SharedData.mConnectionString;
+
+                //create connectionString object form user input
+                ConnectionString tNewConnectionSettings = new ConnectionString(
+                    pConnectionSettings.mServer,
+                    pConnectionSettings.mDatabase,
+                    pConnectionSettings.mIntegratedSecurity,
+                    pConnectionSettings.mUser,
+                    pConnectionSettings.mPassword
+                    );
+
+                //save the obtained connection settings to use them to test connection
+                QuestionOperations.SetConnectionString(tNewConnectionSettings);
 
                 //test connection, return notificiation result based on whether connection succeeded or not
                 OperationResult tCanConnectToDatabase = QuestionOperations.TestDBConnection();
                 if (tCanConnectToDatabase.IsSuccess)
                 {
                     //more enhancements to visuals 
-
                     ViewData[SharedConstants.cConnectionResultMessageKey] = SharedConstants.cConnectionSuccessfulMessage;
-                    return View(pConnectionSettings);
                 }
                 else
                 {
                     //more enhancements to visuals
-
                     ViewData[SharedConstants.cConnectionResultMessageKey] = SharedConstants.cConnectionFailedMessage;
-                    return View(pConnectionSettings);
                 }
+
+                //restore original connection string settings
+                QuestionOperations.SetConnectionString(tOriginalConnectionSettings);
+
+                return View(SharedConstants.cOptionsIndexAction, pConnectionSettings);
+
             }
             catch (Exception ex)
             {

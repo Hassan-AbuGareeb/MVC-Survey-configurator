@@ -14,6 +14,8 @@ namespace SurveyConfiguratorWeb.ConstantsAndMethods
         //Options controller
         public const string cOptionsController = "Options";
         public const string cOptionsIndexAction = "Index";
+        public const string cOptionsSaveAction = "Save";
+        public const string cOptionsTestAction = "Test";
         public const string cLanguageAction = "Language";
         public const string cLagnaugeAppSettingKey = "Language";
         public const string cArabicAppSettingsKey = "ar";
@@ -55,6 +57,7 @@ namespace SurveyConfiguratorWeb.ConstantsAndMethods
         public const string cConnectionSuccessfulMessage = "Database connected successfully!";
         public const string cConnectionFailedMessage = "Database refused to connect";
         public static string cDefaultErrorMessage = GlobalStrings.PageLoadingError;
+
         #endregion
 
         #region html-related constants
