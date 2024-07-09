@@ -7,6 +7,7 @@ using SurveyConfiguratorWeb.Attributes;
 using SurveyConfiguratorWeb.ConstantsAndMethods;
 using SurveyConfiguratorWeb.Filters;
 using SurveyConfiguratorWeb.Models;
+using SurveyConfiguratorWeb.Models.Quesitons;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -338,6 +339,7 @@ namespace SurveyConfiguratorWeb.Controllers
         }
 
         #region class utility functions
+
         /// <summary>
         /// returns a partial view containing question-type options
         /// based on the requested question type for the "create" view
@@ -642,6 +644,7 @@ namespace SurveyConfiguratorWeb.Controllers
         #endregion
 
         #region api functions
+
         /// <summary>
         /// return json object containing a list of question
         /// objects data
@@ -680,12 +683,23 @@ namespace SurveyConfiguratorWeb.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult Add(Question questionData)
+        public ActionResult Add(QuestionAPIModel QuestionData)
         {
-            Debug.WriteLine(questionData);
-            Debug.WriteLine(questionData.Type);
-            Debug.WriteLine((int)questionData.Type);
-            return null;
+            Question tQuestionObject = CreateQuesitonObject(QuestionData);
+            if(tQuestionObject != null)
+            {
+                //question object successfully created
+                //add to database
+                OperationResult tQuestionAddedResult = QuestionOperations.AddQuestion(tQuestionObject);
+                if (tQuestionAddedResult.IsSuccess)
+                {
+                    return Json(new { Message = GlobalStrings.OperationSuccessful });
+                }
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Message = tQuestionAddedResult.mErrorMessage });
+            }
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(new { Message = GlobalStrings.NullValueError });
         }
 
         //[AllowAnonymous]
@@ -736,6 +750,36 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
+
+        //api utility functions
+        private static Question CreateQuesitonObject(QuestionAPIModel pQuestionData)
+        {
+            try
+            {
+                switch (pQuestionData.Type)
+                {
+                    case eQuestionType.Stars:
+                        return new StarsQuestion(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order, pQuestionData.NumberOfStars);
+
+                    case eQuestionType.Smiley:
+                        return new SmileyQuestion(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order, pQuestionData.NumberOfSmileyFaces);
+
+                    case eQuestionType.Slider:
+                        return new SliderQuestion(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order,
+                            pQuestionData.StartValue,
+                            pQuestionData.EndValue,
+                            pQuestionData.StartValueCaption,
+                            pQuestionData.EndValueCaption);
+                    default:
+                        return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return null;
+            }
+        }
 
         #endregion
     }

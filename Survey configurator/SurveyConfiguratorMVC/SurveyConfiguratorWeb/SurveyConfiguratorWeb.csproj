@@ -256,6 +256,7 @@
     <Compile Include="Models\LogIn\RegisterViewModel.cs" />
     <Compile Include="Models\Options\ConnectionStringViewModel.cs" />
     <Compile Include="Models\LogIn\LogInViewModel.cs" />
+    <Compile Include="Models\Quesitons\QuestionAPIModel.cs" />
     <Compile Include="Models\Quesitons\QuestionViewModel.cs" />
     <Compile Include="Models\Quesitons\SliderQuestionOptions.cs" />
     <Compile Include="Models\Quesitons\SmileyQuestionOptions.cs" />
