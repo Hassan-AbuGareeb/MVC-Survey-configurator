@@ -800,7 +800,7 @@ namespace SurveyConfiguratorWeb.Controllers
                     {
                         //most likely an invalid question id
                         Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                        return Json(new { message = GlobalStrings.DeleteQuestionError });
+                        return Json(new { message = tAreQuestionsDeleted.mErrorMessage });
                     }
                 }
                 //db disconnected

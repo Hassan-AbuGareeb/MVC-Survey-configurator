@@ -395,6 +395,15 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not found.
+        /// </summary>
+        public static string NotFoundError {
+            get {
+                return ResourceManager.GetString("NotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The received value is null.
         /// </summary>
         public static string NullValueError {
@@ -544,6 +553,15 @@ namespace SharedResources {
         public static string QuestionDetails {
             get {
                 return ResourceManager.GetString("QuestionDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question not found.
+        /// </summary>
+        public static string QuestionNotFoundError {
+            get {
+                return ResourceManager.GetString("QuestionNotFoundError", resourceCulture);
             }
         }
         

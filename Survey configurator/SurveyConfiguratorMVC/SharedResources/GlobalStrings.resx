@@ -229,6 +229,9 @@ if you keep getting this error restart the app</value>
   <data name="MissingFields" xml:space="preserve">
     <value>The following fields must have proper values:</value>
   </data>
+  <data name="NotFoundError" xml:space="preserve">
+    <value>Not found</value>
+  </data>
   <data name="NullValueError" xml:space="preserve">
     <value>The received value is null</value>
   </data>
@@ -279,6 +282,9 @@ if you keep getting this error restart the app</value>
   </data>
   <data name="QuestionDetails" xml:space="preserve">
     <value>Question details</value>
+  </data>
+  <data name="QuestionNotFoundError" xml:space="preserve">
+    <value>Question not found</value>
   </data>
   <data name="QuestionOrderRequiredError" xml:space="preserve">
     <value>The question order is required</value>
