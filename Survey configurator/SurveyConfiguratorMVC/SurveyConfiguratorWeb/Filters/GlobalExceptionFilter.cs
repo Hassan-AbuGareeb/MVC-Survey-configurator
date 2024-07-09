@@ -1,4 +1,5 @@
 ﻿using SharedResources;
+using SurveyConfiguratorWeb.ConstantsAndMethods;
 using System;
 using System.Web.Mvc;
 
@@ -30,12 +31,12 @@ namespace SurveyConfiguratorWeb.Filters
             pfilterContext.ExceptionHandled = true;
 
             //assign the error view to the result to show it
-            ViewResult tErrorResult = new ViewResult { ViewName="Error"};
+            ViewResult tErrorResult = new ViewResult { ViewName=SharedConstants.cErrorController};
             pfilterContext.Result = tErrorResult;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                UtilityMethods.LogError(e);
+                UtilityMethods.LogError(ex);
             }
         }
     }

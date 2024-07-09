@@ -1,5 +1,7 @@
 ﻿@model SurveyConfiguratorWeb.Models.ConnectionStringViewModel
 @using SurveyConfiguratorWeb.ConstantsAndMethods
+@using SharedResources;
+
 @{
     ViewBag.Title = SharedResources.GlobalStrings.ConnectionSettings;
     const string cAuthenticationOptionId = "AuthenticationOption";
@@ -90,7 +92,7 @@
 }
 
 <div>
-    @Html.ActionLink(SharedResources.GlobalStrings.BackToList, SharedConstants.cQuestionsIndexAction)
+    @Html.ActionLink(GlobalStrings.Cancel, SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController)
 </div>
 
 

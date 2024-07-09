@@ -28,6 +28,8 @@ namespace QuestionServices
         public static event EventHandler DataBaseNotConnectedEvent;
         //contsants
         private const int cDatabaseReconnectMaxAttempts = 3;
+        private const int cDatabaseCheckWaitTimeInMS = 10000;
+        private const int cInitialDatabaseReconnectValue = 0;
         public const string cConnectionStringFileName = "\\connectionSettings.json";
 
         //class members
@@ -305,17 +307,17 @@ namespace QuestionServices
                         }
                         else
                         {
-                            return new OperationResult("Validation", "Start value must be less than end value");
+                            return new OperationResult(GlobalStrings.ValidationError, GlobalStrings.SliderInvalidInput);
 
                         }
                     }
                     else
                     {
-                        return new OperationResult("Validation", "Start value or end value is greater than 100 or less than 0");
+                        return new OperationResult(GlobalStrings.ValidationError, GlobalStrings.SliderStartValueNumberError +" "+ GlobalStrings.SliderEndValueNumberError);
                     }
                 }
                 //object is null
-                return new OperationResult("Validation Error","null object received");
+                return new OperationResult(GlobalStrings.ValidationError, GlobalStrings.NullValueError);
             }
             catch (Exception e)
             {
@@ -343,11 +345,11 @@ namespace QuestionServices
                     }
                     else
                     {
-                        return new OperationResult("Validation", "number of stars should be between 1 and 10");
+                        return new OperationResult(GlobalStrings.ValidationError, GlobalStrings.StarsNumberError);
                     }
                 }
                 //object is null
-                return new OperationResult("Validation Error", "null object received");
+                return new OperationResult(GlobalStrings.ValidationError, GlobalStrings.NullValueError);
             }
             catch(Exception ex)
             {
@@ -375,11 +377,11 @@ namespace QuestionServices
                     }
                     else
                     {
-                        return new OperationResult("Validation", "number of smiley faces should be between 2 and 5");
+                        return new OperationResult(GlobalStrings.ValidationError, GlobalStrings.SmileyNumberError);
                     }
                 }
                 //object is null
-                return new OperationResult("Validation Error", "null object received");
+                return new OperationResult(GlobalStrings.ValidationError, GlobalStrings.NullValueError);
             }
             catch (Exception ex)
             {
@@ -546,14 +548,14 @@ namespace QuestionServices
         {
             try
             {
-                int tDatabaseConnectionRetryCount = 0;
+                int tDatabaseConnectionRetryCount = cInitialDatabaseReconnectValue;
                 //get checksum of the database current version of data
                 long tcurrentChecksum = 0;
                 Database.GetChecksum(ref tcurrentChecksum);
                 //keep the function running while main thread is running
                 while (pMainThread.IsAlive)
                 {
-                    Thread.Sleep(10000);
+                    Thread.Sleep(cDatabaseCheckWaitTimeInMS);
                     if (!mOperationOngoing)
                     {
                         //get checksum again to detect change
@@ -572,7 +574,7 @@ namespace QuestionServices
                                 DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
 
                                 //reset the connection retry counter on successful data change
-                                tDatabaseConnectionRetryCount = 0;
+                                tDatabaseConnectionRetryCount = cInitialDatabaseReconnectValue;
                             }
                         }
                         else if (tNewChecksumResult.mErrorMessage == "Database was just created")

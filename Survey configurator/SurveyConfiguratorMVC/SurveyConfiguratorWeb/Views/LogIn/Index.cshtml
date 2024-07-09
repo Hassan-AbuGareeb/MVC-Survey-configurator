@@ -1,5 +1,6 @@
 ﻿@model SurveyConfiguratorWeb.Models.LogInViewModel
 @using SurveyConfiguratorWeb.ConstantsAndMethods
+@using SharedResources;
 
 @{
     ViewBag.Title = "Index";
@@ -42,5 +43,5 @@
 
 <div>
     @Html.ActionLink(SharedResources.GlobalStrings.Register, SharedConstants.cLogInRegisterAction, SharedConstants.cLogInController, new { area = "" }, new { @class = "nav-link" })
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink(GlobalStrings.Cancel, SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController)
 </div>

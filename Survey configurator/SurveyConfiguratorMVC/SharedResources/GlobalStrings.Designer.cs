@@ -97,6 +97,15 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Any changes made won&apos;t be saved.
         /// </summary>
         public static string CancelOperation {
@@ -386,7 +395,7 @@ namespace SharedResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Null Value.
         /// </summary>
         public static string NullValueErrorTitle {
             get {
@@ -877,6 +886,15 @@ namespace SharedResources {
         public static string UserNameRequiredError {
             get {
                 return ResourceManager.GetString("UserNameRequiredError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validation Error.
+        /// </summary>
+        public static string ValidationError {
+            get {
+                return ResourceManager.GetString("ValidationError", resourceCulture);
             }
         }
     }
