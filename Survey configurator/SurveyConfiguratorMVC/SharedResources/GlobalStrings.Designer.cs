@@ -332,6 +332,15 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The id value is less than 0.
+        /// </summary>
+        public static string IdMinusValueError {
+            get {
+                return ResourceManager.GetString("IdMinusValueError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid input.
         /// </summary>
         public static string InvalidInputTitle {
@@ -472,6 +481,15 @@ namespace SharedResources {
         public static string Order {
             get {
                 return ResourceManager.GetString("Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The order value is less than 0.
+        /// </summary>
+        public static string OrderMinusValueError {
+            get {
+                return ResourceManager.GetString("OrderMinusValueError", resourceCulture);
             }
         }
         
@@ -791,6 +809,15 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The text value is null or empty.
+        /// </summary>
+        public static string TextNullOrEmptyError {
+            get {
+                return ResourceManager.GetString("TextNullOrEmptyError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The received token is invalid.
         /// </summary>
         public static string TokenInvalidError {
@@ -814,6 +841,15 @@ namespace SharedResources {
         public static string Type {
             get {
                 return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The question type value is incorrect.
+        /// </summary>
+        public static string TypeValueError {
+            get {
+                return ResourceManager.GetString("TypeValueError", resourceCulture);
             }
         }
         

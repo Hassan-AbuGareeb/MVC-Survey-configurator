@@ -134,7 +134,7 @@ namespace QuestionServices
             try
             {
                 //validate the quesiton data
-                OperationResult tQuestionDataValidationResult = ValidateQuestoinData(pQuestionData);
+                OperationResult tQuestionDataValidationResult = ValidateQuestionData(pQuestionData);
                 if(!tQuestionDataValidationResult.IsSuccess) 
                 { 
                     //object data isn't valid
@@ -173,7 +173,7 @@ namespace QuestionServices
             try
             {
                 //validate the quesiton data
-                OperationResult tQuestionDataValidationResult = ValidateQuestoinData(pUpdatedQuestionData);
+                OperationResult tQuestionDataValidationResult = ValidateQuestionData(pUpdatedQuestionData);
                 if (!tQuestionDataValidationResult.IsSuccess)
                 {
                     //object data isn't valid
@@ -252,28 +252,88 @@ namespace QuestionServices
         /// </summary>
         /// <param name="pQuestion"> question data to be validated </param>
         /// <returns> OperationResult objcet to indicate whether the validation was successful or not</returns>
-        public static OperationResult ValidateQuestoinData(Question pQuestion)
+        public static OperationResult ValidateQuestionData(Question pQuestion)
         {
             try
             {
-                OperationResult tValidationResult = new OperationResult();
+                //validate general question data 
+                OperationResult tGeneralDataValidationResult = GeneralQuestionDataValidator(pQuestion);
+                if(!tGeneralDataValidationResult.IsSuccess)
+                {
+                    return tGeneralDataValidationResult;
+                }
+
+                //validate type-specific question data
+                OperationResult tTypeValidationResult = new OperationResult();
                 switch (pQuestion.Type)
                 {
                     case eQuestionType.Stars:
-                        tValidationResult = StarsQuestionValidator((StarsQuestion)pQuestion);
+                        tTypeValidationResult = StarsQuestionValidator((StarsQuestion)pQuestion);
                         break;
                     case eQuestionType.Smiley:
-                        tValidationResult = SmileyQuestionValidator((SmileyQuestion)pQuestion);
+                        tTypeValidationResult = SmileyQuestionValidator((SmileyQuestion)pQuestion);
                         break;
                     case eQuestionType.Slider:
-                        tValidationResult = SliderQuestionValidator((SliderQuestion)pQuestion);
+                        tTypeValidationResult = SliderQuestionValidator((SliderQuestion)pQuestion);
                         break;
                 }
-                return tValidationResult;
+                return tTypeValidationResult;
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
+                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
+            }
+        }
+
+        /// <summary>
+        /// validates the general data of a question (id, text, order and type)
+        /// and returns a result accordingly
+        /// </summary>
+        /// <param name="pQuestion">question data to validate</param>
+        /// <returns>result indicating whether the received data is valid</returns>
+        public static OperationResult GeneralQuestionDataValidator(Question pQuestionData)
+        {
+            try
+            {
+                //check for null
+                if (pQuestionData != null)
+                {
+                    //check id for minus values
+                    if (pQuestionData.Id<0)
+                    {
+                        return new OperationResult(GlobalStrings.ValidationError, GlobalStrings.IdMinusValueError);
+                    }
+
+                    //check text
+                    if (string.IsNullOrEmpty(pQuestionData.Text))
+                    {
+                        return new OperationResult(GlobalStrings.ValidationError, GlobalStrings.TextNullOrEmptyError);
+                    }
+
+                    //check order for minus values
+                    if(pQuestionData.Order < 0)
+                    {
+                        return new OperationResult(GlobalStrings.ValidationError, GlobalStrings.OrderMinusValueError);
+                    }
+
+                    //check type
+                    int tIntValueOfType = (int)pQuestionData.Type;
+                    //the enum comparison values should be changed if any new type is added
+                    if(tIntValueOfType < (int)eQuestionType.Stars || tIntValueOfType > (int)eQuestionType.Slider)
+                    {
+                        return new OperationResult(GlobalStrings.ValidationError, GlobalStrings.TypeValueError);
+                    }
+
+                    //all values are valid
+                    return new OperationResult();
+                }
+                //object is null
+                return new OperationResult(GlobalStrings.ValidationError, GlobalStrings.NullValueError);
+            }
+            catch (Exception e)
+            {
+                UtilityMethods.LogError(e);
                 return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
             }
         }

@@ -208,6 +208,9 @@ if you keep getting this error restart the app</value>
   <data name="Error" xml:space="preserve">
     <value>error</value>
   </data>
+  <data name="IdMinusValueError" xml:space="preserve">
+    <value>The id value is less than 0</value>
+  </data>
   <data name="InvalidInputTitle" xml:space="preserve">
     <value>Invalid input</value>
   </data>
@@ -255,6 +258,9 @@ if you keep getting this error restart the app</value>
   </data>
   <data name="Order" xml:space="preserve">
     <value>Order</value>
+  </data>
+  <data name="OrderMinusValueError" xml:space="preserve">
+    <value>The order value is less than 0</value>
   </data>
   <data name="PageLoadingError" xml:space="preserve">
     <value>Error occured while Loading your page, please try again</value>
@@ -361,6 +367,9 @@ if you keep getting this error restart the app</value>
   <data name="Text" xml:space="preserve">
     <value>Text</value>
   </data>
+  <data name="TextNullOrEmptyError" xml:space="preserve">
+    <value>The text value is null or empty</value>
+  </data>
   <data name="TokenInvalidError" xml:space="preserve">
     <value>The received token is invalid</value>
   </data>
@@ -369,6 +378,9 @@ if you keep getting this error restart the app</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>Type</value>
+  </data>
+  <data name="TypeValueError" xml:space="preserve">
+    <value>The question type value is incorrect</value>
   </data>
   <data name="UnAuthorizedAccessError" xml:space="preserve">
     <value>Unauthorized access error</value>

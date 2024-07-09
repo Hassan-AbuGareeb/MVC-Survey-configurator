@@ -7,6 +7,7 @@ using SurveyConfiguratorWeb.Attributes;
 using SurveyConfiguratorWeb.ConstantsAndMethods;
 using SurveyConfiguratorWeb.Filters;
 using SurveyConfiguratorWeb.Models;
+using SurveyConfiguratorWeb.Models.Quesitons;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -338,6 +339,7 @@ namespace SurveyConfiguratorWeb.Controllers
         }
 
         #region class utility functions
+
         /// <summary>
         /// returns a partial view containing question-type options
         /// based on the requested question type for the "create" view
@@ -642,11 +644,12 @@ namespace SurveyConfiguratorWeb.Controllers
         #endregion
 
         #region api functions
+
         /// <summary>
         /// return json object containing a list of question
         /// objects data
         /// </summary>
-        /// <returns>json containing all questions data</returns>
+        /// <returns>json object containing all questions data</returns>
         [AllowAnonymous]
         [HttpGet]
         public ActionResult Get()
@@ -658,15 +661,18 @@ namespace SurveyConfiguratorWeb.Controllers
                     OperationResult canGetQuesitons = QuestionOperations.GetQuestions();
                     if (canGetQuesitons.IsSuccess && canGetQuesitons != null)
                     {
+                        //success
                         Response.StatusCode = (int)HttpStatusCode.OK;
                         return Json(new { Questions = QuestionOperations.mQuestionsList }, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
+                        //error while loading the data
                         Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                         return Json(new {message = GlobalStrings.DataLoadingError }, JsonRequestBehavior.AllowGet);
                     }
                 }
+                //db disconnected
                 Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 return Json(new { message = GlobalStrings.DataBaseConnectionError }, JsonRequestBehavior.AllowGet);
             }
@@ -678,31 +684,101 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
+        /// <summary>
+        /// creates a question based on the received data
+        /// </summary>
+        /// <param name="QuestionData"> question data</param>
+        /// <returns>http response with a message indicating success of the operation</returns>
+
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult Add(Question questionData)
+        public ActionResult Add(QuestionAPIModel QuestionData)
         {
-            Debug.WriteLine(questionData);
-            Debug.WriteLine(questionData.Type);
-            Debug.WriteLine((int)questionData.Type);
-            return null;
+            try
+            {
+                if (QuestionOperations.mIsDataBaseConnected)
+                {
+                    Question tQuestionObject = CreateQuesitonObject(QuestionData);
+                    if (tQuestionObject != null)
+                    {
+                        //question object successfully created
+                        //add to database
+                        OperationResult tQuestionAddedResult = QuestionOperations.AddQuestion(tQuestionObject);
+                        if (tQuestionAddedResult.IsSuccess)
+                        {
+                            return Json(new { Message = GlobalStrings.OperationSuccessful });
+                        }
+                        //most likely a validation errer
+                        Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        return Json(new { Message = tQuestionAddedResult.mErrorMessage });
+                    }
+                    //error in creating question object from recived input
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json(new { Message = GlobalStrings.NullValueError });
+                }
+                //db disconnected
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return Json(new { message = GlobalStrings.DataBaseConnectionError }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return Json(new { message = GlobalStrings.UnknownError });
+            }
         }
 
-        //[AllowAnonymous]
-        //[HttpPut]
-        //public ActionResult Update(Question questionData)
-        //{
-        //    Debug.WriteLine(questionData);
-        //    var serParent = JsonConvert.SerializeObject(questionData);
-        //    StarsQuestion sdlaif = JsonConvert.DeserializeObject<StarsQuestion>(serParent);
-        //    //StarsQuestion daf= (StarsQuestion)questionData;
-        //    Debug.WriteLine(sda);
-        //    return null;
-        //}
+        /// <summary>
+        /// updates question based on the received data
+        /// </summary>
+        /// <param name="UpdatedQuestionData">new question data</param>
+        /// <returns>http response with a message indicating success of the operation</returns>
+        [AllowAnonymous]
+        [HttpPut]
+        public ActionResult Update(QuestionAPIModel UpdatedQuestionData)
+        {
+            try
+            {
+                if (QuestionOperations.mIsDataBaseConnected)
+                {
+                    Question tQuestionObject = CreateQuesitonObject(UpdatedQuestionData);
+                    if (tQuestionObject != null)
+                    {
+                        //question object successfully created
+                        //update question data to database
+                        OperationResult tQuestionUpdatedResult = QuestionOperations.UpdateQuestion(tQuestionObject);
+                        if (tQuestionUpdatedResult.IsSuccess)
+                        {
+                            return Json(new { Message = GlobalStrings.OperationSuccessful });
+                        }
+                        //most likely a validation errer
+                        Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        return Json(new { Message = tQuestionUpdatedResult.mErrorMessage });
+                    }
+                    //error in creating question object from data
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json(new { Message = GlobalStrings.NullValueError });
+                }
+                //db disconnected
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return Json(new { message = GlobalStrings.DataBaseConnectionError }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return Json(new { message = GlobalStrings.UnknownError });
+            }
+        }
 
+        /// <summary>
+        /// deletes a question object based on the received id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>http response with a message indicating success of the operation</returns>
         [AllowAnonymous]
         [HttpDelete]
-        public ActionResult DeleteQuestion(int id)
+        public ActionResult Remove(int id)
         {
             try
             {
@@ -716,15 +792,18 @@ namespace SurveyConfiguratorWeb.Controllers
                     OperationResult tAreQuestionsDeleted = QuestionOperations.DeleteQuestion(tQuestionsIds);
                     if (tAreQuestionsDeleted.IsSuccess)
                     {
+                        //successful deletion
                         Response.StatusCode = (int)HttpStatusCode.OK;
                         return Json(new { Message = GlobalStrings.OperationSuccessful }, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
+                        //most likely an invalid question id
                         Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                         return Json(new { message = GlobalStrings.DeleteQuestionError });
                     }
                 }
+                //db disconnected
                 Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 return Json(new { message = GlobalStrings.DataBaseConnectionError });
             }
@@ -736,6 +815,43 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
+
+        //api utility functions
+
+        /// <summary>
+        /// construct a question object from the question
+        /// api model object received.
+        /// </summary>
+        /// <param name="pQuestionData">full question data including all fields</param>
+        /// <returns>a quesiton object</returns>
+        private static Question CreateQuesitonObject(QuestionAPIModel pQuestionData)
+        {
+            try
+            {
+                switch (pQuestionData.Type)
+                {
+                    case eQuestionType.Stars:
+                        return new StarsQuestion(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order, pQuestionData.NumberOfStars);
+
+                    case eQuestionType.Smiley:
+                        return new SmileyQuestion(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order, pQuestionData.NumberOfSmileyFaces);
+
+                    case eQuestionType.Slider:
+                        return new SliderQuestion(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order,
+                            pQuestionData.StartValue,
+                            pQuestionData.EndValue,
+                            pQuestionData.StartValueCaption,
+                            pQuestionData.EndValueCaption);
+                    default:
+                        return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return null;
+            }
+        }
 
         #endregion
     }
