@@ -21,7 +21,7 @@
 
     @* Server name field *@
     <div class="form-group">
-        @Html.LabelFor(model => model.mServer, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label(GlobalStrings.Server, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.mServer, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.mServer, "", new { @class = "text-danger" })
@@ -30,7 +30,7 @@
 
     @* Database name field *@
     <div class="form-group">
-        @Html.LabelFor(model => model.mDatabase, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label(GlobalStrings.Database, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.mDatabase, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.mDatabase, "", new { @class = "text-danger" })
@@ -39,7 +39,7 @@
 
     @* Integrated security Drop down list *@
     <div class="form-group">
-        @Html.LabelFor(model => model.mIntegratedSecurity, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label(GlobalStrings.Authentication, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <div class="checkbox">
                 @Html.DropDownListFor(model => model.mIntegratedSecurity,
@@ -57,7 +57,7 @@
     <div id="userCredintials">
         @* user name field *@
         <div class="form-group">
-            @Html.LabelFor(model => model.mUser, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label(GlobalStrings.User, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.mUser, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.mUser, "", new { @class = "text-danger" })
@@ -66,7 +66,7 @@
 
         @* password field *@
         <div class="form-group">
-            @Html.LabelFor(model => model.mPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label(GlobalStrings.Passsword, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.PasswordFor(model => model.mPassword, new { @class = "form-control" } )
                 @Html.ValidationMessageFor(model => model.mPassword, "", new { @class = "text-danger" })
@@ -78,14 +78,14 @@
     @* save button *@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" formaction="@Url.Action(SharedConstants.cOptionsSaveAction)" class="btn btn-default" />
+                <input type="submit" value="@GlobalStrings.Save" formaction="@Url.Action(SharedConstants.cOptionsSaveAction)" class="btn btn-default" />
             </div>
         </div>
 
         @* test connection button *@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Test" formaction="@Url.Action(SharedConstants.cOptionsTestAction)" class="btn btn-default" />
+                <input type="submit" value="@GlobalStrings.Test" formaction="@Url.Action(SharedConstants.cOptionsTestAction)" class="btn btn-default" />
             </div>
         </div>
     </div>

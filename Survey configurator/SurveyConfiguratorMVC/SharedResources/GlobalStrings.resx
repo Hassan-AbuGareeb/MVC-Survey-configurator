@@ -126,6 +126,9 @@
   <data name="ar" xml:space="preserve">
     <value>العربية</value>
   </data>
+  <data name="Authentication" xml:space="preserve">
+    <value>Authentication</value>
+  </data>
   <data name="BackToList" xml:space="preserve">
     <value>Back to questions list</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="ConnectionSettings" xml:space="preserve">
     <value>Connection settings</value>
+  </data>
+  <data name="Database" xml:space="preserve">
+    <value>Database</value>
   </data>
   <data name="DataBaseConnectionError" xml:space="preserve">
     <value>An error occured while connecting to database</value>
@@ -192,6 +198,9 @@ if you keep getting this error restart the app</value>
   </data>
   <data name="EditQuestion" xml:space="preserve">
     <value>Edit Question</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
   </data>
   <data name="EmailFormatError" xml:space="preserve">
     <value>Incorrect email format</value>
@@ -271,6 +280,9 @@ if you keep getting this error restart the app</value>
   <data name="PageLoadingError" xml:space="preserve">
     <value>Error occured while Loading your page, please try again</value>
   </data>
+  <data name="Passsword" xml:space="preserve">
+    <value>Password</value>
+  </data>
   <data name="PasswordFormatError" xml:space="preserve">
     <value>Password must contain at least one capital letter and one special character</value>
   </data>
@@ -316,6 +328,9 @@ if you keep getting this error restart the app</value>
   <data name="Register" xml:space="preserve">
     <value>Register</value>
   </data>
+  <data name="RegisterNewUser" xml:space="preserve">
+    <value>Register</value>
+  </data>
   <data name="RequestProcessingError" xml:space="preserve">
     <value>An error occurred while processing your request</value>
   </data>
@@ -324,6 +339,9 @@ if you keep getting this error restart the app</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="Server" xml:space="preserve">
+    <value>Server</value>
   </data>
   <data name="SliderEndCaptionRequiredError" xml:space="preserve">
     <value>the end value caption field is requried</value>
@@ -373,6 +391,9 @@ if you keep getting this error restart the app</value>
   <data name="SurveyConfiguratorTitle" xml:space="preserve">
     <value>Survey Configurator</value>
   </data>
+  <data name="Test" xml:space="preserve">
+    <value>Test</value>
+  </data>
   <data name="Text" xml:space="preserve">
     <value>Text</value>
   </data>
@@ -406,8 +427,14 @@ if you keep getting this error restart the app</value>
   <data name="UnSupportedLanguageError" xml:space="preserve">
     <value>The selected language isn't supported</value>
   </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+  </data>
   <data name="UserAlreadySignedInError" xml:space="preserve">
     <value>User already signed in, sign out first to sign in with another user</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>User name</value>
   </data>
   <data name="UserNameLengthError" xml:space="preserve">
     <value>User name must be at least 6 characters long</value>

@@ -66,7 +66,9 @@ namespace SurveyConfiguratorWeb.ConstantsAndMethods
         public const string cQuestionTypeDropDownId = "QuestionTypeDropDown";
         public const string cQuestionTypeOptionsId = "QuestionTypeOptions";
         public const string cQuestionOperationFormId = "QuestionOperationForm";
+        public const string cQuestionsTableId = "QuestionsTable";
         public const string cAlertDivId = "alert";
+        public const int cAlertMessageLifeTimeInMS = 4000;
 
         #endregion
 

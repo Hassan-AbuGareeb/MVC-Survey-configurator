@@ -1,10 +1,7 @@
 ﻿@model IEnumerable<SurveyConfiguratorWeb.Models.QuestionViewModel>
 @using SurveyConfiguratorWeb.ConstantsAndMethods
-@{ 
-    const string cQuestionsTableId = "QuestionsTable";
-}
 
-<table class="table" id="@cQuestionsTableId">
+<table class="table" id="@SharedConstants.cQuestionsTableId">
 
     <thead>
         <tr>
@@ -57,16 +54,3 @@
 
 </table>
 
-@section Scripts{
-    @Scripts.Render("~/bundles/jquery")
-    @* scripts for the datatable component *@
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
-    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            //initialize the datatable
-            $("#" + '@cQuestionsTableId').DataTable({});
-        })
-    </script>
-}
