@@ -241,7 +241,6 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
-
         #endregion
     }
 }

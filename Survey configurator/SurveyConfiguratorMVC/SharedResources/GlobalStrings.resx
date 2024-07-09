@@ -230,7 +230,7 @@ if you keep getting this error restart the app</value>
     <value>The received value is null</value>
   </data>
   <data name="NullValueErrorTitle" xml:space="preserve">
-    <value />
+    <value>Null Value</value>
   </data>
   <data name="NumberOfSmileys" xml:space="preserve">
     <value>Number of smileys</value>
@@ -393,5 +393,8 @@ if you keep getting this error restart the app</value>
   </data>
   <data name="UserNameRequiredError" xml:space="preserve">
     <value>User name is required</value>
+  </data>
+  <data name="ValidationError" xml:space="preserve">
+    <value>Validation Error</value>
   </data>
 </root>
