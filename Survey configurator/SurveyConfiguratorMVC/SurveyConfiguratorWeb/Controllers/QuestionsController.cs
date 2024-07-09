@@ -702,21 +702,30 @@ namespace SurveyConfiguratorWeb.Controllers
             return Json(new { Message = GlobalStrings.NullValueError });
         }
 
-        //[AllowAnonymous]
-        //[HttpPut]
-        //public ActionResult Update(Question questionData)
-        //{
-        //    Debug.WriteLine(questionData);
-        //    var serParent = JsonConvert.SerializeObject(questionData);
-        //    StarsQuestion sdlaif = JsonConvert.DeserializeObject<StarsQuestion>(serParent);
-        //    //StarsQuestion daf= (StarsQuestion)questionData;
-        //    Debug.WriteLine(sda);
-        //    return null;
-        //}
+        [AllowAnonymous]
+        [HttpPatch]
+        public ActionResult Update(QuestionAPIModel UpdatedQuestionData)
+        {
+            Question tQuestionObject = CreateQuesitonObject(UpdatedQuestionData);
+            if (tQuestionObject != null)
+            {
+                //question object successfully created
+                //update question data to database
+                OperationResult tQuestionUpdatedResult = QuestionOperations.UpdateQuestion(tQuestionObject);
+                if (tQuestionUpdatedResult.IsSuccess)
+                {
+                    return Json(new { Message = GlobalStrings.OperationSuccessful });
+                }
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Message = tQuestionUpdatedResult.mErrorMessage });
+            }
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(new { Message = GlobalStrings.NullValueError });
+        }
 
         [AllowAnonymous]
         [HttpDelete]
-        public ActionResult DeleteQuestion(int id)
+        public ActionResult Remove(int id)
         {
             try
             {
