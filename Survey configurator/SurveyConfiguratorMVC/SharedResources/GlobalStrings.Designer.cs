@@ -124,6 +124,15 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Changes have been saved successfully.
+        /// </summary>
+        public static string ChangesSaved {
+            get {
+                return ResourceManager.GetString("ChangesSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose language:.
         /// </summary>
         public static string ChooseLanguage {

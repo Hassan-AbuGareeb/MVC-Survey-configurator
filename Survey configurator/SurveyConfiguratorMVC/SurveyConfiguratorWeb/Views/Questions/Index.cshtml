@@ -34,6 +34,7 @@
     <script>
         $(document).ready(async function () {
             try {
+
                 //show alert popup if there's any
                 if ('@TempData[SharedConstants.cMessageKey]') {
                     $("#" + "@SharedConstants.cAlertDivId").html("<div class='alert alert-danger'>" + "@TempData[SharedConstants.cMessageKey]" + "</div>")
