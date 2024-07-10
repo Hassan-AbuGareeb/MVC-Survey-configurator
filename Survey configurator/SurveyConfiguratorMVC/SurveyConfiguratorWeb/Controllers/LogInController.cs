@@ -6,8 +6,6 @@ using SurveyConfiguratorWeb.Models;
 using SurveyConfiguratorWeb.Models.LogIn;
 using SurveyConfiguratorWeb.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
@@ -86,10 +84,14 @@ namespace SurveyConfiguratorWeb.Controllers
                         return RedirectToAction(SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController);
                     }
                 }
+
+                //check if the user entered anu input at all
+                if (ModelState.IsValid) { 
                 //user creds not found or not matching password
-                //add error message to modelState and return the same view
-                ModelState.AddModelError(cInvalidUserErrorKey, GlobalStrings.InvalidUserCredintialsError);
-                return View();
+                ViewData[SharedConstants.cMessageKey] = GlobalStrings.InvalidUserCredintialsError;
+                }
+
+                return View(pUserCredintials);
             }
             catch (Exception ex)
             {
