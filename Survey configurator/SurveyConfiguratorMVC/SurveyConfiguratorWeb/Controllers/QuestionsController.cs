@@ -1,6 +1,4 @@
-﻿using Microsoft.Ajax.Utilities;
-using Newtonsoft.Json;
-using QuestionServices;
+﻿using QuestionServices;
 using SharedResources;
 using SharedResources.Models;
 using SurveyConfiguratorWeb.Attributes;
@@ -10,12 +8,8 @@ using SurveyConfiguratorWeb.Models;
 using SurveyConfiguratorWeb.Models.Quesitons;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net;
-using System.Security.Cryptography;
 using System.Web.Mvc;
-using System.Web.Services.Description;
-using System.Xml;
 
 namespace SurveyConfiguratorWeb.Controllers
 {
@@ -662,7 +656,7 @@ namespace SurveyConfiguratorWeb.Controllers
         /// objects data
         /// </summary>
         /// <returns>json object containing all questions data</returns>
-        [AllowAnonymous]
+        [AuthenticatedAPI]
         [HttpGet]
         public ActionResult Get()
         {
@@ -702,7 +696,7 @@ namespace SurveyConfiguratorWeb.Controllers
         /// <param name="QuestionData"> question data</param>
         /// <returns>http response with a message indicating success of the operation</returns>
 
-        [AllowAnonymous]
+        [AuthenticatedAPI]
         [HttpPost]
         public ActionResult Add(QuestionAPIModel QuestionData)
         {
@@ -710,7 +704,7 @@ namespace SurveyConfiguratorWeb.Controllers
             {
                 if (QuestionOperations.mIsDataBaseConnected)
                 {
-                    Question tQuestionObject = CreateQuesitonObject(QuestionData);
+                    Question tQuestionObject = CreateQuestionObject(QuestionData);
                     if (tQuestionObject != null)
                     {
                         //question object successfully created
@@ -745,7 +739,7 @@ namespace SurveyConfiguratorWeb.Controllers
         /// </summary>
         /// <param name="UpdatedQuestionData">new question data</param>
         /// <returns>http response with a message indicating success of the operation</returns>
-        [AllowAnonymous]
+        [AuthenticatedAPI]
         [HttpPut]
         public ActionResult Update(QuestionAPIModel UpdatedQuestionData)
         {
@@ -753,7 +747,7 @@ namespace SurveyConfiguratorWeb.Controllers
             {
                 if (QuestionOperations.mIsDataBaseConnected)
                 {
-                    Question tQuestionObject = CreateQuesitonObject(UpdatedQuestionData);
+                    Question tQuestionObject = CreateQuestionObject(UpdatedQuestionData);
                     if (tQuestionObject != null)
                     {
                         //question object successfully created
@@ -788,7 +782,7 @@ namespace SurveyConfiguratorWeb.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>http response with a message indicating success of the operation</returns>
-        [AllowAnonymous]
+        [AuthenticatedAPI]
         [HttpDelete]
         public ActionResult Remove(int id)
         {
@@ -836,7 +830,7 @@ namespace SurveyConfiguratorWeb.Controllers
         /// </summary>
         /// <param name="pQuestionData">full question data including all fields</param>
         /// <returns>a quesiton object</returns>
-        private static Question CreateQuesitonObject(QuestionAPIModel pQuestionData)
+        private static Question CreateQuestionObject(QuestionAPIModel pQuestionData)
         {
             try
             {

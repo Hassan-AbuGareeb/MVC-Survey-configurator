@@ -19,8 +19,6 @@
 
     <div class="form-horizontal d-flex flex-column gap-2">
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
         @* Server name field *@
         <div class="form-group d-flex flex-column gap-1">
             @Html.Label(GlobalStrings.Server, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -74,17 +72,16 @@
                 @Html.ValidationMessageFor(model => model.mPassword, "", new { @class = "text-danger" })
             </div>
         </div>
-        </div>
+    </div>
 
         <div class="form-group d-flex flex-row gap-2 mt-2">
             @* save button *@
-                <input type="submit" value="@GlobalStrings.Save" formaction="@Url.Action(SharedConstants.cOptionsSaveAction)" class="btn btn-success" />
+            <input type="submit" value="@GlobalStrings.Save" formaction="@Url.Action(SharedConstants.cOptionsSaveAction)" class="btn btn-success" />
 
             @* test connection button *@
-                 <input type="submit" value="@GlobalStrings.Test" formaction="@Url.Action(SharedConstants.cOptionsTestAction)" class="btn btn-info" />
+            <input type="submit" value="@GlobalStrings.Test" formaction="@Url.Action(SharedConstants.cOptionsTestAction)" class="btn btn-warning" />
 
-            @Html.ActionLink(GlobalStrings.Cancel, SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController, new {@class = "btn btn-danger"})
-
+            @Html.ActionLink(GlobalStrings.Cancel, SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController, null, new { @class = "btn btn-danger" })
         </div>
         @* show text on screen to indiciate whether
             the connection to the database succeeded
@@ -111,17 +108,17 @@
             function ToggleUserCredintialsFields(pAuthenticationType) {
                 try {
                     if (pAuthenticationType === '@cWindowsAuthenticationText') {
-                        //hide whole section
-                        cUserCredintialsDiv.css("visibility", "hidden")
-                        cUserCredintialsDiv.css("Display", "none")
-
                         //change fields type to hidden to bypass validation
                         cUserInputField.attr("type", "hidden");
                         cPasswordnputField.attr("type", "hidden");
+
+                        //hide whole section
+                        cUserCredintialsDiv.css("visibility", "hidden")
+                        cUserCredintialsDiv.css("display", "none")
                     } else {
                         //show whole section
                         cUserCredintialsDiv.css("visibility", "visible")
-                        cUserCredintialsDiv.css("Display", "block")
+                        cUserCredintialsDiv.css("display", "block")
 
                         //change fields type to original types to enable validation
                         cUserInputField.attr("type", "text");

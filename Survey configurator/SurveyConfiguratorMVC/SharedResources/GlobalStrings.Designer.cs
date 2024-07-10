@@ -377,11 +377,29 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Token is in incorrect format, expired or tempered with.
+        /// </summary>
+        public static string IncorrectToken {
+            get {
+                return ResourceManager.GetString("IncorrectToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid input.
         /// </summary>
         public static string InvalidInputTitle {
             get {
                 return ResourceManager.GetString("InvalidInputTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Token is invalid.
+        /// </summary>
+        public static string InvalidToken {
+            get {
+                return ResourceManager.GetString("InvalidToken", resourceCulture);
             }
         }
         
@@ -427,6 +445,15 @@ namespace SharedResources {
         public static string MissingFields {
             get {
                 return ResourceManager.GetString("MissingFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing refresh token.
+        /// </summary>
+        public static string MissingRefreshToken {
+            get {
+                return ResourceManager.GetString("MissingRefreshToken", resourceCulture);
             }
         }
         
@@ -922,6 +949,15 @@ namespace SharedResources {
         public static string TokenInvalidErrorTitle {
             get {
                 return ResourceManager.GetString("TokenInvalidErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unauthorized access, access token is missing.
+        /// </summary>
+        public static string TokenUnAuthorizedError {
+            get {
+                return ResourceManager.GetString("TokenUnAuthorizedError", resourceCulture);
             }
         }
         

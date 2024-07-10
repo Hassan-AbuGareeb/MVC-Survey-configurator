@@ -1,4 +1,5 @@
-﻿using QuestionServices;
+﻿using Azure;
+using QuestionServices;
 using SharedResources;
 using SurveyConfiguratorWeb.Attributes;
 using SurveyConfiguratorWeb.ConstantsAndMethods;
@@ -6,9 +7,13 @@ using SurveyConfiguratorWeb.Models;
 using SurveyConfiguratorWeb.Models.LogIn;
 using SurveyConfiguratorWeb.Services;
 using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace SurveyConfiguratorWeb.Controllers
 {
@@ -240,6 +245,105 @@ namespace SurveyConfiguratorWeb.Controllers
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
+            }
+        }
+
+        #endregion
+
+        #region auth api functions
+
+        [HttpPost]
+        public ActionResult GetTokens(string UserName, string Password)
+        {
+            try 
+            {
+                //check user credintials
+                string tStoredUserName = WebConfigurationManager.AppSettings[SharedConstants.cTestUserNameSettingsKey];
+                if (!string.IsNullOrEmpty(UserName) && tStoredUserName.Equals(UserName))
+                {
+                    //user credintials found
+                    string tEncryptedPassword = WebConfigurationManager.AppSettings[SharedConstants.cTestPasswordSettingsKey];
+                    if (!string.IsNullOrEmpty(Password) && tEncryptedPassword.Equals(Password))
+                    {
+                        //user is valid 
+                        //generate access and refresh tokens and send them back with 200 status
+                        string tAccessToken = TokenManager.GenerateJWT(UserName, false);
+                        string tRefreshToken = TokenManager.GenerateJWT(UserName, true);
+                        Response.StatusCode = (int)HttpStatusCode.OK;
+                        return Json(new { AccessToken = tAccessToken, RefreshToken = tRefreshToken }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+
+                //invalid user, return 401 with wrong credintials message
+                Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                return Json(new { Message = GlobalStrings.InvalidUserCredintialsError }, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return Json(new { Message = GlobalStrings.UnknownError }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult RefreshTokens()
+        {
+            try
+            {
+                //extract the refresh token from the headers
+                var tRefreshToken = Request.Headers[SharedConstants.cRefreshTokenHeaderName];
+                //check refresh token for null or empty
+                if (!string.IsNullOrEmpty(tRefreshToken))
+                {
+                    //validate token 
+                    var tIsTokenValid = TokenManager.ValidateToken(tRefreshToken);
+                    if (tIsTokenValid)
+                    {
+                        //token not expired check for validity in database
+                        string tTokenId = TokenManager.GetTokenId(tRefreshToken);
+                        OperationResult tTokenValidityResult = AuthenticationServices.CheckTokenValidity(tTokenId);
+
+                        if (tTokenValidityResult.IsSuccess)
+                        {
+                            //invalidate old refresh token
+                            AuthenticationServices.AddToken(tTokenId);
+
+                            //create new tokens and send them
+                            //get claims form original refresh token
+                            IEnumerable<Claim> tTokenClaims = TokenManager.GetClaimsFromExpiredToken(tTokenId);
+
+                            //generate new access and refresh token
+                            string tNewAccessToken = TokenManager.RefreshJWT(tTokenClaims, false);
+                            string tNewRefreshToken = TokenManager.RefreshJWT(tTokenClaims, true);
+                            
+                            Response.StatusCode = (int) HttpStatusCode.OK;
+                            return Json(new
+                            {
+                                AccessToken = tNewAccessToken,
+                                RefreshToken = tNewRefreshToken,
+                            }, JsonRequestBehavior.AllowGet);
+                        }
+                        //token is not valid
+                        Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                        return Json(new { Message = GlobalStrings.InvalidToken }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        //token is in incorrect format, expired or tempered with
+                        Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                        return Json(new { Message = GlobalStrings.IncorrectToken }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                //null or empty refresh token
+                Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                return Json(new { Message = GlobalStrings.MissingRefreshToken }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return Json(new { Message = GlobalStrings.UnknownError }, JsonRequestBehavior.AllowGet);
             }
         }
 

@@ -1,8 +1,6 @@
-﻿using Azure;
-using QuestionServices;
+﻿using QuestionServices;
 using SharedResources;
 using SurveyConfiguratorWeb.ConstantsAndMethods;
-using SurveyConfiguratorWeb.Controllers;
 using SurveyConfiguratorWeb.Services;
 using System;
 using System.Collections.Generic;
@@ -44,8 +42,8 @@ namespace SurveyConfiguratorWeb.Attributes
                 if (tOriginalAccessToken != null)
                 {
                     //check token for validity
-                    var isTokenValid = TokenManager.ValidateToken(tOriginalAccessToken);
-                    if (isTokenValid)
+                    var tIsTokenValid = TokenManager.ValidateToken(tOriginalAccessToken);
+                    if (tIsTokenValid)
                     {
                         //update user auth state
                         States.IsAuthenticated = true;

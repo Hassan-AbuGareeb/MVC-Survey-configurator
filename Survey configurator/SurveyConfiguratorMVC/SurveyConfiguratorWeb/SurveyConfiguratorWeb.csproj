@@ -242,6 +242,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Attributes\AuthenticatedAPIAttribute.cs" />
     <Compile Include="Attributes\AuthenticatedAttribute.cs" />
     <Compile Include="ConstantsAndMethods\SharedConstants.cs" />
     <Compile Include="ConstantsAndMethods\SharedMethods.cs" />
