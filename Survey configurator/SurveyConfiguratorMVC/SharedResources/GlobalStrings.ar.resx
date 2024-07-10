@@ -166,7 +166,7 @@
     <value>قاعدة البيانات غير متصلة</value>
   </data>
   <data name="DatabaseUpdated" xml:space="preserve">
-    <value>تم اجراء تعديلات على البيانات</value>
+    <value>تم اجراء تعديلات على البيانات*</value>
   </data>
   <data name="DataFetchingError" xml:space="preserve">
     <value>حدث خطأ اثناء تحميل البيانات</value>

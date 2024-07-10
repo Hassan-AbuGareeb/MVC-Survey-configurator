@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<SurveyConfiguratorWeb.Models.QuestionViewModel>
 @using SurveyConfiguratorWeb.ConstantsAndMethods
 
-<table class="table" id="@SharedConstants.cQuestionsTableId">
+<table class="table table-bordered table-striped"  id="@SharedConstants.cQuestionsTableId">
 
     <thead>
         <tr>
@@ -17,7 +17,7 @@
             @*invisible to hide the sorting buttons provided by
                 the data table component as they're not necessary 
                 for this column*@
-            <th class="invisible"></th>
+            <th class="invisible w-25"></th>
         </tr>
     </thead>
 
@@ -34,18 +34,18 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Type)
                 </td>
-                <td>
+                <td class="d-flex gap-3 justify-content-center">
                     @if (States.IsAuthenticated)
                     {
-                        @Html.ActionLink(SharedResources.GlobalStrings.EditOperation, SharedConstants.cQuestionEditAction, new { id = item.Id }) <span>|</span>
+                        @Html.ActionLink(SharedResources.GlobalStrings.EditOperation, SharedConstants.cQuestionEditAction, new { id = item.Id }, new { @class = "btn btn-success"}) 
                     }
 
-                    @Html.ActionLink(SharedResources.GlobalStrings.Details, SharedConstants.cQuestionDetailsAction, new { id = item.Id })
+                    @Html.ActionLink(SharedResources.GlobalStrings.Details, SharedConstants.cQuestionDetailsAction, new { id = item.Id }, new { @class = "btn btn-secondary" })
 
                     @if (States.IsAuthenticated)
                     {
-                        <span> | </span>
-                        @Html.ActionLink(SharedResources.GlobalStrings.Delete, SharedConstants.cQuestionDeleteAction, new { id = item.Id })
+                        
+                        @Html.ActionLink(SharedResources.GlobalStrings.Delete, SharedConstants.cQuestionDeleteAction, new { id = item.Id }, new { @class = "btn btn-danger" })
                     }
                 </td>
             </tr>

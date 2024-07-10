@@ -1,48 +1,47 @@
 ﻿@model SurveyConfiguratorWeb.Models.QuestionViewModel
 @using SharedResources
-@using SurveyConfiguratorWeb.ConstantsAndMethods 
+@using SurveyConfiguratorWeb.ConstantsAndMethods
 @{
     ViewBag.Title = SharedResources.GlobalStrings.AddQuestion;
 }
 
 <h3>@SharedResources.GlobalStrings.AddQuestion</h3>
 
+<hr />
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = SharedConstants.cQuestionOperationFormId }))
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
+    <div class="form-horizontal d-flex flex-column gap-2">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         @* Questions general data *@
         @Html.Partial(SharedConstants.cQuestionGeneralFieldsView)
 
-        @*question-type options partial view*@ 
+        @*question-type options partial view*@
         <div id="@SharedConstants.cQuestionTypeOptionsId">
         </div>
 
-        @* submit button *@
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="@SharedResources.GlobalStrings.AddOperation" class="btn btn-default" />
-            </div>
+        @* form buttons *@
+        <div class="form-group d-flex flex-row gap-2 mt-2">
+            @* submit button *@
+            <input type="submit" value="@SharedResources.GlobalStrings.AddOperation" class="btn btn-success" />
+
+            @* back to list button *@
+            @Html.ActionLink(GlobalStrings.Cancel, SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController, new { @class = "btn btn-danger" })
         </div>
 
     </div>
 }
 
-@* back to list button *@
-<div>
-    @Html.ActionLink(GlobalStrings.Cancel, SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController)
-</div>
+
 
 
 @section Scripts {
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
-<script>
+    <script>
         $(document).ready(function () {
             try {
             /// </summary>
@@ -118,5 +117,5 @@
             //log err
         }
 });
-</script>
+    </script>
 }

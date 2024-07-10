@@ -1,7 +1,7 @@
 ﻿@model SurveyConfiguratorWeb.Models.StarsQuestionOptions
 
 @* number of stars field *@
-<div class="form-group">
+<div class="form-group d-flex flex-column gap-1">
     @Html.Label(SharedResources.GlobalStrings.NumberOfStars, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @Html.EditorFor(model => model.NumberOfStars, new { htmlAttributes = new { @class = "form-control" } })

@@ -1,7 +1,7 @@
 ﻿@model SurveyConfiguratorWeb.Models.SliderQuestionOptions
 
 @* start value field *@
-<div class="form-group">
+<div class="form-group d-flex flex-column gap-1">
     @Html.Label(SharedResources.GlobalStrings.StartValue, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @Html.EditorFor(model => model.StartValue, new { htmlAttributes = new { @class = "form-control", id = "StartValue" } })
@@ -11,7 +11,7 @@
 
 @* end value field *@
 
-<div class="form-group">
+<div class="form-group d-flex flex-column gap-1">
     @Html.Label(SharedResources.GlobalStrings.EndValue, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @Html.EditorFor(model => model.EndValue, new { htmlAttributes = new { @class = "form-control", id = "EndValue" } })
@@ -21,7 +21,7 @@
 
 @* start value caption field *@
 
-<div class="form-group">
+<div class="form-group d-flex flex-column gap-1">
     @Html.Label(SharedResources.GlobalStrings.StartValueCaption, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @Html.EditorFor(model => model.StartValueCaption, new { htmlAttributes = new { @class = "form-control" } })
@@ -31,7 +31,7 @@
 
 @* end value caption field *@
 
-<div class="form-group">
+<div class="form-group d-flex flex-column gap-1">
     @Html.Label(SharedResources.GlobalStrings.EndValueCaption, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @Html.EditorFor(model => model.EndValueCaption, new { htmlAttributes = new { @class = "form-control" } })

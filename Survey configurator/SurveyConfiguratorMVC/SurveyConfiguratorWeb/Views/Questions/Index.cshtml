@@ -9,18 +9,23 @@
 <!-- place holder for any alerts or pop up messages-->
 <span id="@SharedConstants.cAlertDivId"></span>
 
-<h2>@SharedResources.GlobalStrings.Questions</h2>
-@if (States.IsAuthenticated) { 
-    <p>
-        @Html.ActionLink(SharedResources.GlobalStrings.AddQuestion, SharedConstants.cQuestionCreateAction, SharedConstants.cQuestionsController)
-    </p>
-}
-<span id="@cDataUpdateNotificationId"></span>
+<h2 class="mb-3">@SharedResources.GlobalStrings.Questions</h2>
+
+
+
+@* shows a text notfication on database change *@
+<div class="h-25" id="@cDataUpdateNotificationId"></div>
+
 <span id="@cQuestionsListId">
     @Html.Partial(SharedConstants.cQuestionsListView, Model)
 </span>
 
-
+@if (States.IsAuthenticated)
+{
+    <p>
+        @Html.ActionLink(SharedResources.GlobalStrings.AddQuestion, SharedConstants.cQuestionCreateAction, SharedConstants.cQuestionsController, new { @class = "btn btn-outline-primary mt-2" })
+    </p>
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jquery")

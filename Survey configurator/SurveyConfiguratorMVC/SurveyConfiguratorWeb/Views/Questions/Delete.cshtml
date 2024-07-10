@@ -6,15 +6,17 @@
     ViewBag.Title = SharedResources.GlobalStrings.Delete;
 }
 
-<h3>@SharedResources.GlobalStrings.DeleteQuestionConfirm</h3>
+<h2>@SharedResources.GlobalStrings.DeleteQuestionConfirm</h2>
+
+<hr />
+
 <div>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             @SharedResources.GlobalStrings.Text
         </dt>
 
-        <dd>
+        <dd style="margin-inline-start: 0">
             @Html.DisplayFor(model => model.Text)
         </dd>
 
@@ -22,7 +24,7 @@
             @SharedResources.GlobalStrings.Order
         </dt>
 
-        <dd>
+        <dd style="margin-inline-start: 0">
             @Html.DisplayFor(model => model.Order)
         </dd>
 
@@ -30,7 +32,7 @@
             @SharedResources.GlobalStrings.Type
         </dt>
 
-        <dd>
+        <dd style="margin-inline-start: 0">
             @Html.DisplayFor(model => model.Type)
         </dd>
 
@@ -39,9 +41,9 @@
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-    <div class="form-actions no-color">
-        <input type="submit" value="@SharedResources.GlobalStrings.Delete" class="btn btn-default" />|
-        @Html.ActionLink(GlobalStrings.Cancel, SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController)
-    </div>
+        <div class="form-group d-flex flex-row gap-2 mt-2">
+            <input type="submit" value="@SharedResources.GlobalStrings.Delete" class="btn btn-success" />
+            @Html.ActionLink(GlobalStrings.Cancel, SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController, new { @class = "btn btn-danger" })
+        </div>
     }
 </div>
