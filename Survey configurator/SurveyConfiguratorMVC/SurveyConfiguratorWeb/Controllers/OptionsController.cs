@@ -176,9 +176,12 @@ namespace SurveyConfiguratorWeb.Controllers
                 CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(States.CurrentAppLanguage);
                 CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo(States.CurrentAppLanguage);
 
-                //create a thread to save the app settings
-                Thread tSaveNewLanguage = new Thread(() => UpdateAppSettings());
-                tSaveNewLanguage.Start();
+                SharedMethods.SetAppLanguage(States.CurrentAppLanguage);
+
+
+                ////create a thread to save the app settings
+                //Thread tSaveNewLanguage = new Thread(() => UpdateAppSettings());
+                //tSaveNewLanguage.Start();
 
                 //redirect to the home page
                 return Redirect(pOrigianlUrl);
@@ -189,22 +192,5 @@ namespace SurveyConfiguratorWeb.Controllers
                 return RedirectToAction(SharedConstants.cErrorPageAction, SharedConstants.cErrorController, new { ErrorMessage = GlobalStrings.UnknownError });
             }
         }
-
-
-        #region class utility functions
-        private static void UpdateAppSettings()
-        {
-            //save to app config, so when visiting the website the next time language options will be saved.
-            Configuration tConfigObject = WebConfigurationManager.OpenWebConfiguration("~");
-            AppSettingsSection tAppSettingsObj = (AppSettingsSection)tConfigObject.GetSection("appSettings");
-            if (tAppSettingsObj != null)
-            {
-                tAppSettingsObj.Settings[SharedConstants.cLagnaugeAppSettingKey].Value = States.CurrentAppLanguage;
-                tConfigObject.Save();
-            }
-        }
-
-
-        #endregion
     }
 }

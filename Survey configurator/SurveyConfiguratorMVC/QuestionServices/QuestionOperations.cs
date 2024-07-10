@@ -313,7 +313,7 @@ namespace QuestionServices
                 if (pQuestionData != null)
                 {
                     //check id for minus values
-                    if (pQuestionData.Id<0)
+                    if (pQuestionData.Id < 0)
                     {
                         return new OperationResult(GlobalStrings.ValidationError, GlobalStrings.IdMinusValueError);
                     }

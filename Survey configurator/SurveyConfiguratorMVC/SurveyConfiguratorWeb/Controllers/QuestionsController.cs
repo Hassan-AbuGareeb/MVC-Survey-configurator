@@ -15,6 +15,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Web.Mvc;
 using System.Web.Services.Description;
+using System.Xml;
 
 namespace SurveyConfiguratorWeb.Controllers
 {
@@ -459,6 +460,12 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
+        /// <summary>
+        /// gets a view containing the requested question general data
+        /// for the details view
+        /// </summary>
+        /// <param name="id">question id</param>
+        /// <returns>question details view</returns>
         [HttpGet]
         public ActionResult GetQuestionTypeDetails(int id)
         {
@@ -483,6 +490,11 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
+        /// <summary>
+        /// gets a partial view containing the question-type specific data
+        /// </summary>
+        /// <param name="id">question id</param>
+        /// <returns>question details view</returns>
         private ActionResult GetQuestionTypeDetailsPartialView(Question pQuestionData)
         {
             try

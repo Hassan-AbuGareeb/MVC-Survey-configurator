@@ -244,6 +244,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Attributes\AuthenticatedAttribute.cs" />
     <Compile Include="ConstantsAndMethods\SharedConstants.cs" />
+    <Compile Include="ConstantsAndMethods\SharedMethods.cs" />
     <Compile Include="ConstantsAndMethods\States.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
@@ -286,6 +287,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="LanguageSettings.xml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
