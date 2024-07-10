@@ -8,28 +8,30 @@
     const string cWindowsAuthenticationText = "Windows Authentication";
     const string cSQLAuthenticationText = "SQL Server Authentication";
 }
-<span id="@SharedConstants.cAlertDivId"></span>
+<span id="@SharedConstants.cAlertDivId" class="w-75 position-fixed" style="z-index:999; top:33px"></span>
 <h2>@SharedResources.GlobalStrings.ConnectionSettings</h2>
+
+<hr />
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-horizontal d-flex flex-column gap-2">
 
-    @* Server name field *@
-    <div class="form-group">
-        @Html.Label(GlobalStrings.Server, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.mServer, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.mServer, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @* Server name field *@
+        <div class="form-group d-flex flex-column gap-1">
+            @Html.Label(GlobalStrings.Server, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.mServer, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.mServer, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    @* Database name field *@
-    <div class="form-group">
+        @* Database name field *@
+    <div class="form-group d-flex flex-column gap-1">
         @Html.Label(GlobalStrings.Database, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.mDatabase, new { htmlAttributes = new { @class = "form-control" } })
@@ -37,9 +39,9 @@
         </div>
     </div>
 
-    @* Integrated security Drop down list *@
-    <div class="form-group">
-        @Html.Label(GlobalStrings.Authentication, htmlAttributes: new { @class = "control-label col-md-2" })
+        @* Integrated security Drop down list *@
+    <div class="form-group d-flex flex-column gap-1">
+            @Html.Label(GlobalStrings.Authentication, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <div class="checkbox">
                 @Html.DropDownListFor(model => model.mIntegratedSecurity,
@@ -47,68 +49,60 @@
                {
                    new SelectListItem{Selected=false, Text=cWindowsAuthenticationText, Value = "true"},
                    new SelectListItem{Selected=true, Text=cSQLAuthenticationText, Value = "false"}
-               }, htmlAttributes: new { id = cAuthenticationOptionId }
+               }, htmlAttributes: new { id = cAuthenticationOptionId, @class = "form-select" }
                )
                 @Html.ValidationMessageFor(model => model.mIntegratedSecurity, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>
 
-    <div id="userCredintials">
-        @* user name field *@
-        <div class="form-group">
-            @Html.Label(GlobalStrings.User, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mUser, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mUser, "", new { @class = "text-danger" })
+        <div id="userCredintials">
+            @* user name field *@
+            <div class="form-group d-flex flex-column gap-1">
+                @Html.Label(GlobalStrings.User, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.mUser, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mUser, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        @* password field *@
-        <div class="form-group">
+            @* password field *@
+        <div class="form-group d-flex flex-column gap-1">
             @Html.Label(GlobalStrings.Passsword, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.PasswordFor(model => model.mPassword, new { @class = "form-control" } )
+                @Html.PasswordFor(model => model.mPassword, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.mPassword, "", new { @class = "text-danger" })
             </div>
         </div>
-    </div>
-
-    <div class="d-flex">
-    @* save button *@
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="@GlobalStrings.Save" formaction="@Url.Action(SharedConstants.cOptionsSaveAction)" class="btn btn-default" />
-            </div>
         </div>
 
-        @* test connection button *@
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="@GlobalStrings.Test" formaction="@Url.Action(SharedConstants.cOptionsTestAction)" class="btn btn-default" />
-            </div>
+        <div class="form-group d-flex flex-row gap-2 mt-2">
+            @* save button *@
+                <input type="submit" value="@GlobalStrings.Save" formaction="@Url.Action(SharedConstants.cOptionsSaveAction)" class="btn btn-success" />
+
+            @* test connection button *@
+                 <input type="submit" value="@GlobalStrings.Test" formaction="@Url.Action(SharedConstants.cOptionsTestAction)" class="btn btn-info" />
+
+            @Html.ActionLink(GlobalStrings.Cancel, SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController, new {@class = "btn btn-danger"})
+
         </div>
+        @* show text on screen to indiciate whether
+            the connection to the database succeeded
+            needs enhancements*@
+        @if (ViewData[SharedConstants.cConnectionResultMessageKey] != null)
+        {
+            <div>@ViewData[SharedConstants.cConnectionResultMessageKey]</div>
+        }
     </div>
-    @* show text on screen to indiciate whether
-        the connection to the database succeeded
-        needs enhancements*@
-    @if (ViewData[SharedConstants.cConnectionResultMessageKey] != null)
-    {
-        <div>@ViewData[SharedConstants.cConnectionResultMessageKey]</div>
-    }
-</div>
 }
 
-<div>
-    @Html.ActionLink(GlobalStrings.Cancel, SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController)
-</div>
 
 
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jquery")
-<script>
+    <script>
     $(document).ready(function () {
         try {
             /// summary
@@ -181,5 +175,5 @@
             //log err
         }
     })
-</script>
+    </script>
 }

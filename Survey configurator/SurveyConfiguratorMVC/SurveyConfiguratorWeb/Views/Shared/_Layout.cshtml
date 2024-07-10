@@ -24,15 +24,9 @@
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink(GlobalStrings.Questions, SharedConstants.cQuestionsIndexAction, SharedConstants.cQuestionsController, new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink(GlobalStrings.Options, SharedConstants.cOptionsIndexAction, SharedConstants.cOptionsController, new { area = "" }, new { @class = "nav-link" })</li>
-                    @* render conditionally on whether the user is signed in or not *@
-                    @if (!States.IsAuthenticated)
-                    {
-                        <li>@Html.ActionLink(GlobalStrings.LogIn, SharedConstants.cLogInIndexAction, SharedConstants.cLogInController, new { area = "" }, new { @class = "nav-link" })</li>
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink(GlobalStrings.LogOut, SharedConstants.cLogInLogOutAction, SharedConstants.cLogInController, new { area = "" }, new { @class = "nav-link" })</li>
-                    }
+                </ul>
+
+                <ul class="navbar-nav flex-grow-1 justify-content-end">
                     @* change language *@
                     @{
                         ResourceManager tResourceManager = new ResourceManager("SharedResources.GlobalStrings", typeof(GlobalStrings).Assembly);
@@ -46,9 +40,19 @@
                             //execlude the current app language from being rendered
                             if (!tCurrentLanguageSymbol.Equals(States.CurrentAppLanguage))
                             {
-                                <li>@Html.ActionLink(tLanguageValue, SharedConstants.cLanguageAction, SharedConstants.cOptionsController, new { area = "", pSelectedLanguage = tCurrentLanguageSymbol, pOrigianlUrl = Request.Url.AbsoluteUri}, new { @class = "nav-link" })</li>
+                                <li>@Html.ActionLink(tLanguageValue, SharedConstants.cLanguageAction, SharedConstants.cOptionsController, new { area = "", pSelectedLanguage = tCurrentLanguageSymbol, pOrigianlUrl = Request.Url.AbsoluteUri }, new { @class = "nav-link" })</li>
                             }
                         }
+                    }
+
+                    @* render conditionally on whether the user is signed in or not *@
+                    @if (!States.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink(GlobalStrings.LogIn, SharedConstants.cLogInIndexAction, SharedConstants.cLogInController, new { area = "" }, new { @class = "nav-link" })</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink(GlobalStrings.LogOut, SharedConstants.cLogInLogOutAction, SharedConstants.cLogInController, new { area = "" }, new { @class = "nav-link" })</li>
                     }
                 </ul>
             </div>
