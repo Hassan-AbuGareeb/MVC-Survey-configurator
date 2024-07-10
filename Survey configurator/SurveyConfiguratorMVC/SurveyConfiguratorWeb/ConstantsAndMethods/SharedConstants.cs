@@ -17,10 +17,13 @@ namespace SurveyConfiguratorWeb.ConstantsAndMethods
         public const string cOptionsSaveAction = "Save";
         public const string cOptionsTestAction = "Test";
         public const string cLanguageAction = "Language";
-        public const string cLagnaugeAppSettingKey = "Language";
         public const string cArabicAppSettingsKey = "ar";
         public const string cEnglishAppSettingsKey = "en";
         public static string[] cSupportedLanguages = { cArabicAppSettingsKey, cEnglishAppSettingsKey};
+        public const string cLanguageSettingsFilePath = @"D:\fds\MVC-Survey-configurator\Survey configurator\SurveyConfiguratorMVC\SurveyConfiguratorWeb\LanguageSettings.xml";
+        public const string cAppLanguageNode = "appLanguage";
+        public const string cAppLanguageSettingsValue = "value";
+
 
         //Questions controller
         public const string cQuestionsController = "Questions";

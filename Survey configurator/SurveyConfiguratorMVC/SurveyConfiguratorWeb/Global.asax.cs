@@ -32,8 +32,8 @@ namespace SurveyConfiguratorWeb
                 RouteConfig.RegisterRoutes(RouteTable.Routes);
                 BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-                //get app language from app config and set it as default for any thread created
-                string tAppLanguage = WebConfigurationManager.AppSettings[SharedConstants.cLagnaugeAppSettingKey];
+                //get app language from language settings xml and set it as default for any thread created
+                string tAppLanguage = SharedMethods.GetAppLanguage();
                 CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(tAppLanguage);
                 CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo(tAppLanguage);
                 //set the state of the current app language
