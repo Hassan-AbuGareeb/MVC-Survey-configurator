@@ -377,6 +377,15 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Incorrect question type.
+        /// </summary>
+        public static string IncorrectQuestionTypeError {
+            get {
+                return ResourceManager.GetString("IncorrectQuestionTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Token is in incorrect format, expired or tempered with.
         /// </summary>
         public static string IncorrectToken {

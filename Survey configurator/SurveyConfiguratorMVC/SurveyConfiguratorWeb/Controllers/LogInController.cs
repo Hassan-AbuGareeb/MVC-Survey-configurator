@@ -251,7 +251,15 @@ namespace SurveyConfiguratorWeb.Controllers
         #endregion
 
         #region auth api functions
-
+        
+        /// <summary>
+        /// receives username and password, check their validity and if the user exists
+        /// if the received credintials are correct generate access and refresh tokens
+        /// and sends them back to the request sender in the response body
+        /// </summary>
+        /// <param name="UserName"></param>
+        /// <param name="Password"></param>
+        /// <returns>json object containing generated tokens</returns>
         [HttpPost]
         public ActionResult GetTokens(string UserName, string Password)
         {
@@ -286,6 +294,13 @@ namespace SurveyConfiguratorWeb.Controllers
             }
         }
 
+        /// <summary>
+        /// receives a string representing a refresh token in the request
+        /// headers, checks for its validity and whether it has been invalidated
+        /// before, if the token is staill valid then create access and refresh
+        /// tokens and send them as a json object
+        /// </summary>
+        /// <returns>json object containing access and refresh tokens</returns>
         [HttpPost]
         public ActionResult RefreshTokens()
         {

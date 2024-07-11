@@ -704,10 +704,11 @@ namespace SurveyConfiguratorWeb.Controllers
             {
                 if (QuestionOperations.mIsDataBaseConnected)
                 {
-                    Question tQuestionObject = CreateQuestionObject(QuestionData);
-                    if (tQuestionObject != null)
+                    Question tQuestionObject = null;
+                    OperationResult tCreateQuestionResult = CreateQuestionObject(QuestionData, ref tQuestionObject);
+                    if (tCreateQuestionResult.IsSuccess)
                     {
-                        //question object successfully created
+                        //entered question data is correct
                         //add to database
                         OperationResult tQuestionAddedResult = QuestionOperations.AddQuestion(tQuestionObject);
                         if (tQuestionAddedResult.IsSuccess)
@@ -720,7 +721,7 @@ namespace SurveyConfiguratorWeb.Controllers
                     }
                     //error in creating question object from recived input
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    return Json(new { Message = GlobalStrings.NullValueError });
+                    return Json(new { Message = tCreateQuestionResult.mErrorMessage });
                 }
                 //db disconnected
                 Response.StatusCode = (int)HttpStatusCode.InternalServerError;
@@ -747,8 +748,9 @@ namespace SurveyConfiguratorWeb.Controllers
             {
                 if (QuestionOperations.mIsDataBaseConnected)
                 {
-                    Question tQuestionObject = CreateQuestionObject(UpdatedQuestionData);
-                    if (tQuestionObject != null)
+                    Question tQuestionObject = null;
+                    OperationResult tCreateQuestionResult = CreateQuestionObject(UpdatedQuestionData, ref tQuestionObject);
+                    if (tCreateQuestionResult.IsSuccess)
                     {
                         //question object successfully created
                         //update question data to database
@@ -761,9 +763,9 @@ namespace SurveyConfiguratorWeb.Controllers
                         Response.StatusCode = (int)HttpStatusCode.BadRequest;
                         return Json(new { Message = tQuestionUpdatedResult.mErrorMessage });
                     }
-                    //error in creating question object from data
+                    //error in creating question object from recived input
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    return Json(new { Message = GlobalStrings.NullValueError });
+                    return Json(new { Message = tCreateQuestionResult.mErrorMessage });
                 }
                 //db disconnected
                 Response.StatusCode = (int)HttpStatusCode.InternalServerError;
@@ -830,32 +832,36 @@ namespace SurveyConfiguratorWeb.Controllers
         /// </summary>
         /// <param name="pQuestionData">full question data including all fields</param>
         /// <returns>a quesiton object</returns>
-        private static Question CreateQuestionObject(QuestionAPIModel pQuestionData)
+        private static OperationResult CreateQuestionObject(QuestionAPIModel pQuestionData, ref Question pQuestionObject)
         {
             try
             {
                 switch (pQuestionData.Type)
                 {
                     case eQuestionType.Stars:
-                        return new StarsQuestion(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order, pQuestionData.NumberOfStars);
-
+                        pQuestionObject = new StarsQuestion(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order, pQuestionData.NumberOfStars);
+                        break;
                     case eQuestionType.Smiley:
-                        return new SmileyQuestion(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order, pQuestionData.NumberOfSmileyFaces);
-
+                        pQuestionObject = new SmileyQuestion(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order, pQuestionData.NumberOfSmileyFaces);
+                        break;
                     case eQuestionType.Slider:
-                        return new SliderQuestion(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order,
+                        pQuestionObject = new SliderQuestion(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order,
                             pQuestionData.StartValue,
                             pQuestionData.EndValue,
                             pQuestionData.StartValueCaption,
                             pQuestionData.EndValueCaption);
+                        break;
                     default:
-                        return null;
+                        //incorrect question type
+                        return new OperationResult(GlobalStrings.QuestionTypeError, GlobalStrings.IncorrectQuestionTypeError);
                 }
+                //entered data is correct
+                return new OperationResult();
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return null;
+                return new OperationResult(GlobalStrings.NullValueErrorTitle, GlobalStrings.NullValueError);
             }
         }
 
