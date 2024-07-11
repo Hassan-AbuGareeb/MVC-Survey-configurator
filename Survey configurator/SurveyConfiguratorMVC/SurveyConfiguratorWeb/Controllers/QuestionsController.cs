@@ -1,6 +1,4 @@
-﻿using Microsoft.Ajax.Utilities;
-using Newtonsoft.Json;
-using QuestionServices;
+﻿using QuestionServices;
 using SharedResources;
 using SharedResources.Models;
 using SurveyConfiguratorWeb.Attributes;
@@ -10,12 +8,8 @@ using SurveyConfiguratorWeb.Models;
 using SurveyConfiguratorWeb.Models.Quesitons;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net;
-using System.Security.Cryptography;
 using System.Web.Mvc;
-using System.Web.Services.Description;
-using System.Xml;
 
 namespace SurveyConfiguratorWeb.Controllers
 {
@@ -662,7 +656,7 @@ namespace SurveyConfiguratorWeb.Controllers
         /// objects data
         /// </summary>
         /// <returns>json object containing all questions data</returns>
-        [AllowAnonymous]
+        [AuthenticatedAPI]
         [HttpGet]
         public ActionResult Get()
         {
@@ -702,7 +696,7 @@ namespace SurveyConfiguratorWeb.Controllers
         /// <param name="QuestionData"> question data</param>
         /// <returns>http response with a message indicating success of the operation</returns>
 
-        [AllowAnonymous]
+        [AuthenticatedAPI]
         [HttpPost]
         public ActionResult Add(QuestionAPIModel QuestionData)
         {
@@ -710,10 +704,11 @@ namespace SurveyConfiguratorWeb.Controllers
             {
                 if (QuestionOperations.mIsDataBaseConnected)
                 {
-                    Question tQuestionObject = CreateQuesitonObject(QuestionData);
-                    if (tQuestionObject != null)
+                    Question tQuestionObject = null;
+                    OperationResult tCreateQuestionResult = CreateQuestionObject(QuestionData, ref tQuestionObject);
+                    if (tCreateQuestionResult.IsSuccess)
                     {
-                        //question object successfully created
+                        //entered question data is correct
                         //add to database
                         OperationResult tQuestionAddedResult = QuestionOperations.AddQuestion(tQuestionObject);
                         if (tQuestionAddedResult.IsSuccess)
@@ -726,7 +721,7 @@ namespace SurveyConfiguratorWeb.Controllers
                     }
                     //error in creating question object from recived input
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    return Json(new { Message = GlobalStrings.NullValueError });
+                    return Json(new { Message = tCreateQuestionResult.mErrorMessage });
                 }
                 //db disconnected
                 Response.StatusCode = (int)HttpStatusCode.InternalServerError;
@@ -745,7 +740,7 @@ namespace SurveyConfiguratorWeb.Controllers
         /// </summary>
         /// <param name="UpdatedQuestionData">new question data</param>
         /// <returns>http response with a message indicating success of the operation</returns>
-        [AllowAnonymous]
+        [AuthenticatedAPI]
         [HttpPut]
         public ActionResult Update(QuestionAPIModel UpdatedQuestionData)
         {
@@ -753,8 +748,9 @@ namespace SurveyConfiguratorWeb.Controllers
             {
                 if (QuestionOperations.mIsDataBaseConnected)
                 {
-                    Question tQuestionObject = CreateQuesitonObject(UpdatedQuestionData);
-                    if (tQuestionObject != null)
+                    Question tQuestionObject = null;
+                    OperationResult tCreateQuestionResult = CreateQuestionObject(UpdatedQuestionData, ref tQuestionObject);
+                    if (tCreateQuestionResult.IsSuccess)
                     {
                         //question object successfully created
                         //update question data to database
@@ -767,9 +763,9 @@ namespace SurveyConfiguratorWeb.Controllers
                         Response.StatusCode = (int)HttpStatusCode.BadRequest;
                         return Json(new { Message = tQuestionUpdatedResult.mErrorMessage });
                     }
-                    //error in creating question object from data
+                    //error in creating question object from recived input
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    return Json(new { Message = GlobalStrings.NullValueError });
+                    return Json(new { Message = tCreateQuestionResult.mErrorMessage });
                 }
                 //db disconnected
                 Response.StatusCode = (int)HttpStatusCode.InternalServerError;
@@ -788,7 +784,7 @@ namespace SurveyConfiguratorWeb.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>http response with a message indicating success of the operation</returns>
-        [AllowAnonymous]
+        [AuthenticatedAPI]
         [HttpDelete]
         public ActionResult Remove(int id)
         {
@@ -836,32 +832,36 @@ namespace SurveyConfiguratorWeb.Controllers
         /// </summary>
         /// <param name="pQuestionData">full question data including all fields</param>
         /// <returns>a quesiton object</returns>
-        private static Question CreateQuesitonObject(QuestionAPIModel pQuestionData)
+        private static OperationResult CreateQuestionObject(QuestionAPIModel pQuestionData, ref Question pQuestionObject)
         {
             try
             {
                 switch (pQuestionData.Type)
                 {
                     case eQuestionType.Stars:
-                        return new StarsQuestion(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order, pQuestionData.NumberOfStars);
-
+                        pQuestionObject = new StarsQuestion(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order, pQuestionData.NumberOfStars);
+                        break;
                     case eQuestionType.Smiley:
-                        return new SmileyQuestion(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order, pQuestionData.NumberOfSmileyFaces);
-
+                        pQuestionObject = new SmileyQuestion(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order, pQuestionData.NumberOfSmileyFaces);
+                        break;
                     case eQuestionType.Slider:
-                        return new SliderQuestion(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order,
+                        pQuestionObject = new SliderQuestion(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order,
                             pQuestionData.StartValue,
                             pQuestionData.EndValue,
                             pQuestionData.StartValueCaption,
                             pQuestionData.EndValueCaption);
+                        break;
                     default:
-                        return null;
+                        //incorrect question type
+                        return new OperationResult(GlobalStrings.QuestionTypeError, GlobalStrings.IncorrectQuestionTypeError);
                 }
+                //entered data is correct
+                return new OperationResult();
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return null;
+                return new OperationResult(GlobalStrings.NullValueErrorTitle, GlobalStrings.NullValueError);
             }
         }
 

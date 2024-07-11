@@ -223,8 +223,17 @@ if you keep getting this error restart the app</value>
   <data name="IdMinusValueError" xml:space="preserve">
     <value>The id value is less than 0</value>
   </data>
+  <data name="IncorrectQuestionTypeError" xml:space="preserve">
+    <value>Incorrect question type</value>
+  </data>
+  <data name="IncorrectToken" xml:space="preserve">
+    <value>Token is in incorrect format, expired or tempered with</value>
+  </data>
   <data name="InvalidInputTitle" xml:space="preserve">
     <value>Invalid input</value>
+  </data>
+  <data name="InvalidToken" xml:space="preserve">
+    <value>Token is invalid</value>
   </data>
   <data name="InvalidUserCredintialsError" xml:space="preserve">
     <value>Incorrect user name or password</value>
@@ -240,6 +249,9 @@ if you keep getting this error restart the app</value>
   </data>
   <data name="MissingFields" xml:space="preserve">
     <value>The following fields must have proper values:</value>
+  </data>
+  <data name="MissingRefreshToken" xml:space="preserve">
+    <value>Missing refresh token</value>
   </data>
   <data name="NotFoundError" xml:space="preserve">
     <value>Not found</value>
@@ -405,6 +417,9 @@ if you keep getting this error restart the app</value>
   </data>
   <data name="TokenInvalidErrorTitle" xml:space="preserve">
     <value>Invalid token</value>
+  </data>
+  <data name="TokenUnAuthorizedError" xml:space="preserve">
+    <value>Unauthorized access, access token is missing</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>Type</value>

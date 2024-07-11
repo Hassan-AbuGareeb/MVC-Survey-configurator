@@ -32,7 +32,7 @@
         public const string cDefaultEndValueCaption = "Max";
 
         //Authentication related constants
-        public const int cAccessTokenExpireTimeInMinutes = 1;
+        public const int cAccessTokenExpireTimeInMinutes = 15;
         public const int cRefreshTokenExpireTimeInDays = 2;
 
         //class members

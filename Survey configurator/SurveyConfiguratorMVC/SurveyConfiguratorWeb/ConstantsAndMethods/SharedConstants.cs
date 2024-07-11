@@ -78,6 +78,8 @@ namespace SurveyConfiguratorWeb.ConstantsAndMethods
         #region Authentication related constants
         public const string cAccessTokenKey = "token";
         public const string cRefreshTokenKey = "refresh";
+        public const string cAccessTokenHeaderName = "Authorization";
+        public const string cRefreshTokenHeaderName = "RefreshToken";
         public const string cTestUserNameSettingsKey = "UserName";
         public const string cTestPasswordSettingsKey = "Password";
         public const int cCookiesForceDeletionTimeInDays = -10;
